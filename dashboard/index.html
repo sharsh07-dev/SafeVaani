@@ -1077,6 +1077,28 @@
           Dashboards
         </a>
         <a href="/blog/" class="hd-link">Blog</a>
+        <div class="lang-toggle-wrap">
+          <div class="lang-toggle-box" title="Change Language / भाषा बदलें">
+            <span class="lang-globe-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </span>
+            <select class="sv-lang-select" aria-label="Language Selector">
+              <option value="en">English (EN)</option>
+              <option value="hi">हिन्दी (Hindi)</option>
+              <option value="mr">मराठी (Marathi)</option>
+              <option value="gu">ગુજરાતી (Gujarati)</option>
+              <option value="ta">தமிழ் (Tamil)</option>
+              <option value="te">తెలుగు (Telugu)</option>
+              <option value="kn">ಕನ್ನಡ (Kannada)</option>
+              <option value="bn">বাংলা (Bengali)</option>
+              <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+            </select>
+          </div>
+        </div>
         <button type="button" class="btn-theme-toggle" id="theme-toggle-btn" aria-label="Toggle Dark and Light Mode" title="Toggle Theme">
           <span class="theme-toggle-track">
             <span class="theme-toggle-thumb">
@@ -1695,6 +1717,6 @@
     });
     updateThemeLabels(getSafeVaaniTheme());
   </script>
-
+  <script src="/google-translate.js"></script>
 </body>
 </html>
