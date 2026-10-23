@@ -4096,18 +4096,27 @@
             </button>
           ` : '';
 
+          const contactsSnippet = (alt.contactsAlerted && alt.contactsAlerted.length > 0)
+            ? `<div style="font-size:0.75rem;color:var(--dash-ink-soft);margin-top:4px;">👥 Notified: ${alt.contactsAlerted.map(c => `<strong>${c.name}</strong> (${c.relationship}): <a href="tel:${c.phone}" style="color:var(--dash-blue);text-decoration:none;">${c.phone}</a>`).join(" • ")}</div>`
+            : '';
+
+          const mapLink = (alt.mapUrl && alt.mapUrl.startsWith("http"))
+            ? `<a href="${alt.mapUrl}" target="_blank" rel="noopener" style="font-size:0.75rem;color:var(--dash-blue);text-decoration:none;margin-left:6px;font-weight:600;">[Live Google Map ↗]</a>`
+            : '';
+
           return `
             <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:12px 16px;background:${bg};border:${border};border-radius:12px;font-size:0.85rem;gap:12px;flex-wrap:wrap;">
               <div style="display:flex;align-items:flex-start;gap:12px;flex:1;min-width:240px;">
                 <span style="font-size:1.3rem;line-height:1;">${icon}</span>
-                <div>
+                <div style="flex:1;">
                   <strong style="color:var(--dash-ink);font-size:0.92rem;">${alt.emotion || "Voice SOS Alert"}</strong>
                   <div style="font-size:0.80rem;color:var(--dash-ink-soft);margin-top:2px;">
-                    ${alt.triggerSource || "SOS Sensor Trigger"} • ${alt.userName || wardName}
+                    ${alt.triggerSource || "SOS Sensor Trigger"} • ${alt.userName || wardName} (${alt.userPhone || ""})
                   </div>
                   <div style="font-size:0.78rem;color:var(--dash-ink-soft);margin-top:2px;">
-                    📍 ${alt.locationName || (alt.latitude ? `${Number(alt.latitude).toFixed(4)}° N, ${Number(alt.longitude).toFixed(4)}° E` : "Location fix pending")}
+                    📍 ${alt.locationName || (alt.latitude ? `${Number(alt.latitude).toFixed(4)}° N, ${Number(alt.longitude).toFixed(4)}° E` : "Location fix pending")} ${mapLink}
                   </div>
+                  ${contactsSnippet}
                   ${audioBtn}
                 </div>
               </div>
@@ -4128,6 +4137,12 @@
         if (latestAlert.longitude) shamNode.lastLongitude = Number(latestAlert.longitude);
         shamNode.dangerZoneActive = isEmergency;
         shamNode.history = { [latestAlert.id || "live"]: latestAlert };
+        if (latestAlert.contactsAlerted && Array.isArray(latestAlert.contactsAlerted)) {
+          shamNode.contacts = shamNode.contacts || {};
+          latestAlert.contactsAlerted.forEach((c, i) => {
+            shamNode.contacts[`alerted_${i}`] = c;
+          });
+        }
         if (typeof renderSafetyMarkers === 'function') {
           renderSafetyMarkers();
         }
@@ -4161,19 +4176,15 @@
       } catch(e){}
     }
 
-    // Realtime Firebase RTDB Sync for Parent Portal (with cache-busting)
+    // Realtime Firebase RTDB Sync for Parent Portal (with cache-busting & fallback)
     async function loadParentRealtimeData() {
       try {
-        const fetchTimeout = (url, ms = 8000) => {
+        const fetchTimeout = (url, ms = 6000) => {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), ms);
           const noCacheUrl = url + (url.includes('?') ? '&' : '?') + `_t=${Date.now()}`;
           return fetch(noCacheUrl, { 
             cache: "no-store",
-            headers: {
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              "Pragma": "no-cache"
-            },
             signal: controller.signal 
           })
             .then(res => { clearTimeout(timer); return res; })
@@ -4189,6 +4200,30 @@
         let liveAlerts = null;
         if (usersRes && usersRes.ok) liveUsers = await usersRes.json().catch(() => null);
         if (sosRes && sosRes.ok) liveAlerts = await sosRes.json().catch(() => null);
+
+        // Fallback to local export if needed
+        if (!liveAlerts || Object.keys(liveAlerts).length === 0) {
+          try {
+            const locRes = await fetch("/woshild-f4df5-default-rtdb-export.json?_t=" + Date.now(), { cache: "no-store" });
+            if (locRes.ok) {
+              const locData = await locRes.json();
+              if (locData.sos_alerts) liveAlerts = locData.sos_alerts;
+              if (locData.users && !liveUsers) liveUsers = locData.users;
+            }
+          } catch(e) {}
+        }
+
+        if (liveUsers && liveUsers["vUyAvPgDTYNzzqt01kNHol5316E3"]) {
+          const u = liveUsers["vUyAvPgDTYNzzqt01kNHol5316E3"];
+          const shamNode = childWaypointsData.find(n => n.id === "vUyAvPgDTYNzzqt01kNHol5316E3");
+          if (shamNode) {
+            shamNode.name = u.displayName || u.name || shamNode.name;
+            shamNode.phone = u.phone || shamNode.phone;
+            shamNode.batteryLevel = u.batteryLevel || shamNode.batteryLevel;
+            if (u.contacts) shamNode.contacts = u.contacts;
+            if (u.history) shamNode.history = u.history;
+          }
+        }
 
         if (liveAlerts && typeof liveAlerts === 'object') {
           applyParentAlertsData(liveAlerts);
