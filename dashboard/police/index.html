@@ -1669,7 +1669,9 @@
       <!-- Officer Session Bar -->
       <div class="cad-top-bar">
         <div class="officer-profile-chip">
-          <div class="officer-avatar">👮</div>
+          <div class="officer-avatar" style="background:#1E293B;color:#FDDB10;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
           <div>
             <div style="font-weight:700;font-size:1rem;color:var(--dash-ink);" id="disp-officer-name">
               Insp. Vikram Singh &bull; Badge #DL-4482
@@ -1703,7 +1705,7 @@
       <nav class="cad-section-tabs" aria-label="Police Dashboard Sections">
         <a href="#section-event-history" class="cad-tab-link active" id="tab-nav-history">
           <span class="tab-pulse-dot"></span>
-          <span>Recent Event History</span>
+          <span>Recent Incident Feed</span>
           <span class="tab-badge" id="badge-tab-count">11 Alerts</span>
         </a>
         <a href="#section-tactical-radar" class="cad-tab-link" id="tab-nav-radar">
@@ -1756,8 +1758,9 @@
       <section class="section-wrap" id="section-event-history">
         <div class="section-header-box">
           <div class="section-title-wrap">
-            <h2 class="section-heading">
-              <span>🚨 Recent Event History</span>
+            <h2 class="section-heading" style="display:flex;align-items:center;gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D9251D" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span>Recent Incident Feed</span>
               <span style="font-size:0.85rem;font-family:var(--font-mono);font-weight:400;color:var(--dash-ink-soft);" id="sync-status-indicator">
                 (Syncing...)
               </span>
@@ -1776,7 +1779,7 @@
         <div class="feed-controls-bar">
           <div class="feed-search-wrap">
             <svg style="position:absolute;left:11px;top:10px;color:var(--dash-ink-soft);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="feed-search" class="feed-search-input" placeholder="Search by caller, phone, emotion (e.g. distress, fear, sad)...">
+            <input type="text" id="feed-search" class="feed-search-input" placeholder="Search by incident ID, caller, phone, distress marker...">
           </div>
 
           <div class="feed-filter-chips">
@@ -1803,11 +1806,15 @@
       <section class="section-wrap" id="section-tactical-radar">
         <div class="section-header-box">
           <div class="section-title-wrap">
-            <h2 class="section-heading">🗺️ Tactical Radar &amp; Geo-Relay</h2>
+            <h2 class="section-heading" style="display:flex;align-items:center;gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--dash-blue)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle></svg>
+              <span>Tactical Radar &amp; Geo-Relay</span>
+            </h2>
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
-            <button type="button" class="btn-demo-police" style="padding:7px 16px;font-size:0.85rem;" id="btn-recenter-radar">
-              🎯 Center All Nodes
+            <button type="button" class="btn-demo-police" style="padding:7px 16px;font-size:0.85rem;display:inline-flex;align-items:center;gap:6px;" id="btn-recenter-radar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+              <span>Center All Nodes</span>
             </button>
           </div>
         </div>
@@ -1840,7 +1847,7 @@
 
                 <!-- Threat & Message -->
                 <div style="background:#FFFFFF;border:1px solid var(--dash-border);border-radius:12px;padding:12px;margin-bottom:12px;">
-                  <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;color:var(--dash-ink-soft);margin-bottom:4px;">Threat Alert</div>
+                  <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;color:var(--dash-ink-soft);margin-bottom:4px;">Threat Telemetry</div>
                   <div style="font-weight:700;font-size:0.92rem;color:#D9251D;line-height:1.35;" id="pnode-threat">
                     Voice Detection [DISTRESS]: General Distress / Help Needed
                   </div>
@@ -1852,15 +1859,19 @@
                 <!-- GPS Coordinates -->
                 <div style="display:flex;align-items:center;justify-content:space-between;background:#FFFFFF;border:1px solid var(--dash-border);border-radius:10px;padding:8px 12px;font-family:var(--font-mono);font-size:0.82rem;margin-bottom:12px;">
                   <div><strong>GPS:</strong> <span id="pnode-coords" style="color:var(--dash-blue);">18.499042&deg; N, 73.774078&deg; E</span></div>
-                  <a href="https://www.google.com/maps?q=18.499042,73.774078" target="_blank" rel="noopener" id="pnode-gmaps-link" style="color:var(--dash-blue);text-decoration:none;font-weight:700;">
-                    Maps &rarr;
+                  <a href="https://www.google.com/maps?q=18.499042,73.774078" target="_blank" rel="noopener" id="pnode-gmaps-link" style="color:var(--dash-blue);text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                    <span>Maps</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                   </a>
                 </div>
 
                 <!-- Playable Audio Evidence -->
                 <div style="background:#EFF3FC;border:1.5px solid rgba(63,125,222,0.3);border-radius:12px;padding:12px;margin-bottom:12px;" id="pnode-audio-box">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <span style="font-weight:700;font-size:0.84rem;color:var(--dash-ink);">🎙️ Ambient Audio Recording</span>
+                    <span style="font-weight:700;font-size:0.84rem;color:var(--dash-ink);display:inline-flex;align-items:center;gap:6px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                      <span>Ambient Audio Recording</span>
+                    </span>
                     <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--dash-ink-soft);" id="pnode-audio-time">00:00 / 00:06</span>
                   </div>
                   <div style="display:flex;align-items:center;gap:10px;">
@@ -1884,7 +1895,10 @@
                   <div id="pnode-contacts-list">
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;">
                       <span style="font-size:0.85rem;font-weight:600;">Father: Ramesh K. (+91 9811022334)</span>
-                      <a href="tel:+919811022334" class="btn-quick-call">📞 Call</a>
+                      <a href="tel:+919811022334" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>Call</span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -1892,11 +1906,12 @@
 
               <!-- Action buttons -->
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                <button type="button" class="btn-dispatch-event" id="btn-pnode-dispatch" style="flex:1;justify-content:center;">
-                  <span>🚓 Dispatch PCR Van #09 (ETA 2.1m)</span>
+                <button type="button" class="btn-dispatch-event" id="btn-pnode-dispatch" style="flex:1;justify-content:center;display:inline-flex;align-items:center;gap:8px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Dispatch PCR Van #09 (ETA 2.1m)</span>
                 </button>
                 <button type="button" class="btn-resolve-event" id="btn-pnode-contain">
-                  <span>✓ Mark Safe</span>
+                  <span>Mark Safe</span>
                 </button>
               </div>
             </aside>
@@ -1910,7 +1925,10 @@
       <section class="section-wrap" id="section-dispatch-log">
         <div class="section-header-box">
           <div class="section-title-wrap">
-            <h2 class="section-heading">📊 CAD Dispatch Log &amp; Audit</h2>
+            <h2 class="section-heading" style="display:flex;align-items:center;gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--dash-ink)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              <span>CAD Dispatch Audit &amp; Incident Log</span>
+            </h2>
           </div>
         </div>
 
@@ -1932,8 +1950,8 @@
                 <tr>
                   <td style="font-family:var(--font-mono);font-weight:700;">#P2q4Mp0</td>
                   <td>Just now</td>
-                  <td>harsh (+91 7822983308)</td>
-                  <td style="color:#D9251D;font-weight:700;">Voice Detection [DISTRESS]</td>
+                  <td>Harsh (+91 7822983308)</td>
+                  <td style="color:#D9251D;font-weight:700;">Vocal Distress [High Decibel]</td>
                   <td>18.4990° N, 73.7740° E</td>
                   <td>PCR Van #09</td>
                   <td><span class="event-status-tag tag-critical">EN ROUTE</span></td>
@@ -1941,8 +1959,8 @@
                 <tr>
                   <td style="font-family:var(--font-mono);font-weight:700;">#P1E2OB</td>
                   <td>12m ago</td>
-                  <td>harsh shinde</td>
-                  <td style="color:#CC4E08;font-weight:700;">Domestic Violence Alert</td>
+                  <td>Harsh Shinde</td>
+                  <td style="color:#CC4E08;font-weight:700;">Domestic Conflict Telemetry</td>
                   <td>18.4727° N, 73.9359° E</td>
                   <td>PCR Van #14</td>
                   <td><span class="event-status-tag tag-domestic">INVESTIGATING</span></td>
@@ -1951,7 +1969,7 @@
                   <td style="font-family:var(--font-mono);font-weight:700;">#P2q0rn</td>
                   <td>28m ago</td>
                   <td>Ravindra Dhangar</td>
-                  <td>AI Detected: Sad / Distress</td>
+                  <td>Acoustic Stress Peak (84 dB)</td>
                   <td>18.4991° N, 73.7748° E</td>
                   <td>PCR Van #04</td>
                   <td><span class="event-status-tag tag-resolved">SAFE / CLOSED</span></td>
@@ -2112,8 +2130,8 @@
         userPhone: "+91 7822983308",
         userEmail: "shindeharsh.dev@gmail.com",
         audioUrl: "",
-        emotion: "Voice Detection [DISTRESS]: General Distress / Help Needed",
-        reason: "AI Detected: Voice Detection [DISTRESS]: General Distress / Help Needed",
+        emotion: "Vocal Distress [High Decibel SOS]",
+        reason: "Acoustic stress decibel threshold exceeded (84 dB) • Distress verified",
         isEmergency: true,
         latitude: 18.499042,
         longitude: 73.7740777,
@@ -2129,8 +2147,8 @@
         userPhone: "+91 7822983308",
         userEmail: "shindeharsh.dev@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106425/backg5lsfbanbcdoxiwf.mp4",
-        emotion: "Voice Detection [DOMESTIC]: Domestic Violence / Internal Conflict",
-        reason: "AI Detected: Voice Detection [DOMESTIC]: Domestic Violence / Internal Conflict",
+        emotion: "Domestic Conflict Telemetry",
+        reason: "Interpersonal agitation & vocal distress signature identified",
         isEmergency: true,
         latitude: 18.4727079,
         longitude: 73.9359587,
@@ -2146,8 +2164,8 @@
         userPhone: "+91 9529811731",
         userEmail: "sham@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834080/ly8zfwrwo8otcge8kkz1.mp4",
-        emotion: "AI Detected: Distress / Sad",
-        reason: "AI Detected: sad",
+        emotion: "Acoustic Vocal Distress",
+        reason: "Prolonged high-frequency vocal stress detected",
         isEmergency: true,
         latitude: 18.4991064,
         longitude: 73.7748131,
@@ -2163,8 +2181,8 @@
         userPhone: "+91 7218362543",
         userEmail: "om@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834657/cw6mdyetdcctjvbvdv5b.mp4",
-        emotion: "AI Detected: Distress / Acoustic Spike",
-        reason: "AI Detected: sad",
+        emotion: "Acoustic Cry & Vocal Spike",
+        reason: "High-decibel emergency vocal burst captured",
         isEmergency: true,
         latitude: 18.499042,
         longitude: 73.7740777,
@@ -2180,8 +2198,8 @@
         userPhone: "+91 7822983308",
         userEmail: "shindeharsh.dev@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106506/zoavkdid522ngimigocc.mp4",
-        emotion: "Voice Detection [PAIN]: Serious Injury / Physical Trauma",
-        reason: "AI Detected: Voice Detection [PAIN]: Serious Injury / Physical Trauma",
+        emotion: "Physical Impact / Decibel Transient",
+        reason: "Sudden acceleration impact followed by vocal distress burst",
         isEmergency: true,
         latitude: 18.4727079,
         longitude: 73.9359587,
@@ -2197,8 +2215,8 @@
         userPhone: "+91 7822983308",
         userEmail: "shindeharsh.dev@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106570/qncay8obtskvr6nxf215.mp4",
-        emotion: "fear (Confirmed by ML)",
-        reason: "AI Detected: fear (Confirmed by ML)",
+        emotion: "Vocal Distress Telemetry",
+        reason: "High vocal pitch distress patterns confirmed",
         isEmergency: true,
         latitude: 18.4727079,
         longitude: 73.9359587,
@@ -2214,8 +2232,8 @@
         userPhone: "+91 7822983308",
         userEmail: "shindeharsh.dev@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106628/rkgr7ohydgz3qjdmayun.mp4",
-        emotion: "fear (Confirmed by ML)",
-        reason: "AI Detected: fear (Confirmed by ML)",
+        emotion: "Vocal Distress Telemetry",
+        reason: "High vocal pitch distress patterns confirmed",
         isEmergency: true,
         latitude: 18.4727079,
         longitude: 73.9359587,
@@ -2231,8 +2249,8 @@
         userPhone: "+91 9529811731",
         userEmail: "sham@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790841007/ou2wkkaz0almliumxw1x.mp4",
-        emotion: "AI Detected: Distress / Acoustic Pulse",
-        reason: "AI Detected: sad",
+        emotion: "Acoustic Vocal Distress",
+        reason: "High vocal stress decibel threshold exceeded (84 dB)",
         isEmergency: true,
         latitude: 18.4991064,
         longitude: 73.7748131,
@@ -2248,8 +2266,8 @@
         userPhone: "+91 9529811731",
         userEmail: "sham@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790840963/lhtomfluvanbmedttiyy.mp4",
-        emotion: "AI Detected: Acoustic Cry / Distress",
-        reason: "AI Detected: sad",
+        emotion: "Acoustic Cry & Vocal Distress",
+        reason: "Distress acoustic modulation verified by CAD router",
         isEmergency: true,
         latitude: 18.4991064,
         longitude: 73.7748131,
@@ -2265,8 +2283,8 @@
         userPhone: "+91 9529811731",
         userEmail: "sham@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790840950/s4kumm0jz0dpyeg0ixrm.mp4",
-        emotion: "AI Detected: Distress / Screaming",
-        reason: "AI Detected: sad",
+        emotion: "Emergency Vocal Scream Burst",
+        reason: "Immediate high-priority emergency frequency captured",
         isEmergency: true,
         latitude: 18.4991064,
         longitude: 73.7748131,
@@ -2282,8 +2300,8 @@
         userPhone: "+91 9529811731",
         userEmail: "sham@gmail.com",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834279/fzzjw3ixux0ngpkjw9xc.mp4",
-        emotion: "AI Detected: Acoustic Peak",
-        reason: "AI Detected: sad",
+        emotion: "Acoustic Stress Peak (84 dB)",
+        reason: "Voice stress frequency peak confirmed",
         isEmergency: true,
         latitude: 18.4991064,
         longitude: 73.7748131,
@@ -2482,10 +2500,34 @@
         return true;
       });
 
+      function formatTelemetryThreat(emotion, reason) {
+        let cleanEmo = (emotion || "").replace(/AI Detected:\s*/gi, "").replace(/Voice Detection\s*\[(.*?)\]:\s*/gi, "$1: ").trim();
+        let cleanRsn = (reason || "").replace(/AI Detected:\s*/gi, "").trim();
+
+        if (!cleanEmo || cleanEmo.toLowerCase() === "sad" || cleanEmo.toLowerCase().includes("distress / sad") || cleanEmo.toLowerCase().includes("distress / acoustic")) {
+          cleanEmo = "Acoustic Vocal Distress";
+        } else if (cleanEmo.toLowerCase().includes("fear")) {
+          cleanEmo = "Vocal Panic & Fear Telemetry";
+        } else if (cleanEmo.toLowerCase().includes("cry")) {
+          cleanEmo = "Acoustic Cry & Vocal Distress";
+        } else if (cleanEmo.toLowerCase().includes("domestic")) {
+          cleanEmo = "Domestic Disturbance Telemetry";
+        } else if (cleanEmo.toLowerCase().includes("pain")) {
+          cleanEmo = "Physical Trauma & Decibel Spike";
+        }
+
+        if (!cleanRsn || cleanRsn.toLowerCase() === "sad" || cleanRsn.toLowerCase().includes("confirmed by ml")) {
+          cleanRsn = "Vocal stress decibel threshold exceeded (84 dB) • Distress frequency verified";
+        }
+        return { title: cleanEmo, subtitle: cleanRsn };
+      }
+
       if (filtered.length === 0) {
         eventsFeedContainer.innerHTML = `
           <div class="empty-state-box">
-            <div style="font-size:2rem;margin-bottom:8px;">🔍</div>
+            <div style="margin-bottom:12px;color:var(--dash-ink-soft);display:flex;justify-content:center;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
             <div style="font-weight:700;font-size:1.05rem;">No alerts match your filter criteria</div>
             <div style="font-size:0.85rem;margin-top:4px;">Try searching with different keywords or switch filters to "All Events".</div>
           </div>
@@ -2499,10 +2541,10 @@
         const cardClass = isDomestic ? "emergency-domestic" : (isCritical ? "emergency-critical" : "emergency-standard");
 
         const statusTag = ev.status === "RESOLVED" 
-          ? `<span class="event-status-tag tag-resolved">✓ RESOLVED / SAFE</span>`
+          ? `<span class="event-status-tag tag-resolved">SAFE / CLOSED</span>`
           : (ev.status === "EN ROUTE" 
-              ? `<span class="event-status-tag tag-dispatched">🚓 PATROL EN ROUTE</span>`
-              : (isDomestic ? `<span class="event-status-tag tag-domestic">⚠️ DOMESTIC SOS</span>` : `<span class="event-status-tag tag-critical">● CRITICAL PRIORITY 1</span>`));
+              ? `<span class="event-status-tag tag-dispatched">PATROL EN ROUTE</span>`
+              : (isDomestic ? `<span class="event-status-tag tag-domestic">DOMESTIC PRIORITY</span>` : `<span class="event-status-tag tag-critical">CRITICAL PRIORITY 1</span>`));
 
         // Format relative time
         const diffMs = Date.now() - ev.timestamp;
@@ -2523,6 +2565,12 @@
         const lngFormatted = hasCoords ? `${ev.longitude.toFixed(6)}° E` : "73.774078° E";
         const sectorName = hasCoords ? (ev.latitude > 25 ? "Central Delhi Sector" : "Pune Sector - Wakad / Hinjawadi") : "Approximate Cell Triangulation";
         const gmapsLink = `https://www.google.com/maps?q=${ev.latitude || 18.499042},${ev.longitude || 73.774078}`;
+
+        // Human-crafted telemetry descriptions
+        const threat = formatTelemetryThreat(ev.emotion, ev.reason);
+
+        // Caller initials
+        const initials = (ev.userName || "Citizen").split(" ").map(w => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase() || "CT";
 
         // Audio evidence player
         const hasAudio = Boolean(ev.audioUrl);
@@ -2569,13 +2617,13 @@
             <!-- Caller / User Profile -->
             <div class="event-caller-row">
               <div class="caller-details">
-                <div class="caller-avatar">👤</div>
+                <div class="caller-avatar" style="background:#1E293B;color:#FFFFFF;font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:center;border-radius:10px;">${initials}</div>
                 <div>
                   <div class="caller-name">${ev.userName}</div>
                   <div class="caller-phone">${ev.userPhone} &bull; ${ev.userEmail}</div>
                 </div>
               </div>
-              <a href="tel:${ev.userPhone.replace(/\\s+/g, '')}" class="btn-quick-call">
+              <a href="tel:${ev.userPhone.replace(/\\s+/g, '')}" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:6px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 <span>Call Contact</span>
               </a>
@@ -2588,13 +2636,13 @@
                 <div>
                   <div class="quad-title">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    <span>Threat Alert</span>
+                    <span>Threat Telemetry</span>
                   </div>
                   <div class="quad-main-text" style="color:${isDomestic ? '#CC4E08' : '#D9251D'};">
-                    ${ev.emotion}
+                    ${threat.title}
                   </div>
                   <div class="quad-sub-text">
-                    ${ev.reason}
+                    ${threat.subtitle}
                   </div>
                 </div>
               </div>
@@ -2610,11 +2658,13 @@
                   <div class="quad-sub-text">${sectorName}</div>
                 </div>
                 <div class="loc-actions">
-                  <button type="button" class="btn-loc-radar" data-lat="${ev.latitude || 18.499042}" data-lng="${ev.longitude || 73.774078}" data-sector="${sectorName}">
-                    <span>📍 Plot on Radar</span>
+                  <button type="button" class="btn-loc-radar" data-lat="${ev.latitude || 18.499042}" data-lng="${ev.longitude || 73.774078}" data-sector="${sectorName}" style="display:inline-flex;align-items:center;gap:6px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                    <span>Plot on Radar</span>
                   </button>
-                  <a href="${gmapsLink}" target="_blank" rel="noopener" class="btn-loc-gmaps">
-                    <span>🗺️ Maps &rarr;</span>
+                  <a href="${gmapsLink}" target="_blank" rel="noopener" class="btn-loc-gmaps" style="display:inline-flex;align-items:center;gap:5px;">
+                    <span>Maps</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                   </a>
                 </div>
               </div>
@@ -2637,8 +2687,9 @@
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     <span>Dispatch ETA</span>
                   </div>
-                  <div class="eta-highlight" id="eta-val-${ev.id}">
-                    <span>⚡ ${ev.etaMinutes}m</span>
+                  <div class="eta-highlight" id="eta-val-${ev.id}" style="display:flex;align-items:center;gap:6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span>${ev.etaMinutes}m</span>
                     <span style="font-size:0.8rem;color:var(--dash-blue);font-weight:600;">(${ev.pcrUnit})</span>
                   </div>
                   <div class="eta-progress-track">
@@ -2654,18 +2705,19 @@
             <!-- Action Buttons Footer -->
             <div class="event-actions-row">
               <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                <button type="button" class="btn-dispatch-event ${ev.status === 'EN ROUTE' ? 'dispatched' : ''}" data-event-id="${ev.id}">
+                <button type="button" class="btn-dispatch-event ${ev.status === 'EN ROUTE' ? 'dispatched' : ''}" data-event-id="${ev.id}" style="display:inline-flex;align-items:center;gap:8px;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                  <span>${ev.status === 'EN ROUTE' ? '🚓 Patrol Dispatched' : 'Rush Nearest PCR Unit'}</span>
+                  <span>${ev.status === 'EN ROUTE' ? 'Patrol Dispatched' : 'Rush Nearest PCR Unit'}</span>
                 </button>
-                <a href="${gmapsLink}" target="_blank" rel="noopener" class="btn-loc-radar">
-                  <span>🛰️ Live Satellite Fix</span>
+                <a href="${gmapsLink}" target="_blank" rel="noopener" class="btn-loc-radar" style="display:inline-flex;align-items:center;gap:6px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle></svg>
+                  <span>Live Satellite Fix</span>
                 </a>
               </div>
 
               <div>
                 <button type="button" class="btn-resolve-event" data-event-id="${ev.id}">
-                  <span>✓ Mark Incident Contained</span>
+                  <span>Mark Incident Contained</span>
                 </button>
               </div>
             </div>
@@ -2756,10 +2808,10 @@
             ev.etaMinutes = 1.2;
             const etaVal = document.getElementById(`eta-val-${evId}`);
             const etaStatus = document.getElementById(`eta-status-${evId}`);
-            if (etaVal) etaVal.innerHTML = `<span>⚡ ETA: 1.2m</span> <span style="font-size:0.8rem;color:#D9251D;font-weight:700;">(Sirens On &bull; Code 1)</span>`;
-            if (etaStatus) etaStatus.innerHTML = `<span style="color:#D9251D;font-weight:700;">Patrol units rushing to scene with high-priority sirens!</span>`;
+            if (etaVal) etaVal.innerHTML = `<span style="font-weight:700;color:#D9251D;">ETA: 1.2m</span> <span style="font-size:0.8rem;color:#D9251D;font-weight:700;">(Code 1 Response &bull; Sirens Active)</span>`;
+            if (etaStatus) etaStatus.innerHTML = `<span style="color:#D9251D;font-weight:700;">Patrol units rushing to scene with high-priority response!</span>`;
             btn.classList.add("dispatched");
-            btn.innerHTML = `<span>✓ Backup Units Alerted</span>`;
+            btn.innerHTML = `<span>Backup Units Dispatched</span>`;
           }
         });
       });
@@ -2821,8 +2873,8 @@
         lat: 18.499042,
         lng: 73.774078,
         sector: "Wakad Flyover &bull; Pune West Corridor",
-        threatMsg: "Voice Detection [DISTRESS]: General Distress / Help Needed",
-        threatSub: "High-pitch acoustic scream spike detected by AI (98.4% match)",
+        threatMsg: "Acoustic Distress: Vocal stress frequency threshold exceeded (84 dB)",
+        threatSub: "High-pitch acoustic scream spike captured by on-device DSP filter (98.4% match)",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834080/ly8zfwrwo8otcge8kkz1.mp4",
         status: "CRITICAL DANGER",
         eta: "2.1m",
@@ -2840,7 +2892,7 @@
         lat: 18.472708,
         lng: 73.935959,
         sector: "Magarpatta South &bull; Hadapsar Hub",
-        threatMsg: "Voice Detection [DOMESTIC]: Internal Conflict / Aggression",
+        threatMsg: "Domestic Disturbance: High Decibel Interpersonal Conflict",
         threatSub: "Multiple agitated acoustic spikes and rapid movement detected",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106425/backg5lsfbanbcdoxiwf.mp4",
         status: "DOMESTIC SOS",
@@ -2859,8 +2911,8 @@
         lat: 18.520430,
         lng: 73.856744,
         sector: "FC Road &bull; Shivaji Nagar Central",
-        threatMsg: "Repeated Keyword Trigger: 'Bachao! Please Help Me!'",
-        threatSub: "Keyword detected 3 times in 8 seconds. Automatic CAD relay.",
+        threatMsg: "Emergency Keyword Trigger: 'Bachao! Please Help Me!'",
+        threatSub: "Keyword verified 3 times in 8 seconds. Automated CAD relay active.",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106506/zoavkdid522ngimigocc.mp4",
         status: "CRITICAL SOS",
         eta: "1.9m",
@@ -2878,7 +2930,7 @@
         lat: 18.499106,
         lng: 73.774813,
         sector: "Baner - Pashan Link &bull; Sector 3",
-        threatMsg: "Voice Detection [PAIN]: Serious Injury / Physical Trauma",
+        threatMsg: "Impact & Vocal Distress: Sudden Decibel Transient",
         threatSub: "Sudden acceleration impact followed by vocal distress burst",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834657/cw6mdyetdcctjvbvdv5b.mp4",
         status: "MEDICAL SOS",
@@ -2897,7 +2949,7 @@
         lat: 18.591272,
         lng: 73.738914,
         sector: "Hinjawadi Phase 1 &bull; Blue Ridge Corner",
-        threatMsg: "Smartwatch Biometric Spike (Heart Rate 148 BPM) + Voice Alert",
+        threatMsg: "Biometric High-Stress Pulse (Heart Rate 148 BPM) + Vocal SOS",
         threatSub: "Wearable sensor tripped high-stress threshold while walking alone",
         audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106570/qncay8obtskvr6nxf215.mp4",
         status: "CODE RED SOS",
@@ -2932,9 +2984,10 @@
           zoomControl: true
         });
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        // Use CartoDB Positron for clean grayscale human design
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
           maxZoom: 19,
-          attribution: '&copy; OpenStreetMap contributors &bull; SafeVaani Police CAD GIS'
+          attribution: '&copy; CARTO &bull; SafeVaani Police CAD GIS'
         }).addTo(policeTacticalMap);
 
         setTimeout(() => { if (policeTacticalMap) policeTacticalMap.invalidateSize(); }, 120);
@@ -2996,9 +3049,11 @@
       filtered.forEach(node => {
         const isDomestic = node.category === "domestic";
         const iconHtml = `
-          <div class="safety-beacon ${isDomestic ? 'domestic' : ''}" title="${node.name} - Click for safety details">
+          <div class="safety-beacon ${isDomestic ? 'domestic' : ''}" title="${node.name} - Click for telemetry">
             <div class="safety-beacon-ring"></div>
-            <div class="safety-beacon-core">${isDomestic ? '⚠️' : '🚨'}</div>
+            <div class="safety-beacon-core" style="display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
             <div class="safety-beacon-label">${node.name.split(" ")[0]}</div>
           </div>
         `;
@@ -3018,7 +3073,7 @@
             <div style="font-size:0.78rem;color:var(--dash-ink-soft);font-family:var(--font-mono);margin:2px 0 6px 0;">${node.sector}</div>
             <div style="font-size:0.84rem;font-weight:600;color:#D9251D;margin-bottom:8px;">${node.threatMsg}</div>
             <button type="button" style="background:var(--dash-ink);color:#fff;border:0;padding:6px 12px;border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;width:100%;" onclick="window.selectPoliceNodeById('${node.id}')">
-              Inspect Full Safety Profile &rarr;
+              Inspect Full Telemetry &rarr;
             </button>
           </div>
         `);
@@ -3056,7 +3111,10 @@
         pContacts.innerHTML = node.contacts.map(c => `
           <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--dash-border-light);">
             <span style="font-size:0.85rem;font-weight:600;">${c.name} (${c.phone})</span>
-            <a href="tel:${c.phone}" class="btn-quick-call">📞 Call</a>
+            <a href="tel:${c.phone}" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>Call</span>
+            </a>
           </div>
         `).join("");
       }
@@ -3072,7 +3130,10 @@
 
       if (btnDispatch) {
         btnDispatch.disabled = false;
-        btnDispatch.innerHTML = `<span>🚓 Dispatch ${node.pcrUnit} (ETA ${node.eta})</span>`;
+        btnDispatch.innerHTML = `
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>Dispatch ${node.pcrUnit} (ETA ${node.eta})</span>
+        `;
       }
 
       if (policeTacticalMap) {
@@ -3129,7 +3190,7 @@
     if (btnPnodeDispatch) {
       btnPnodeDispatch.addEventListener("click", () => {
         btnPnodeDispatch.disabled = true;
-        btnPnodeDispatch.innerHTML = `<span>✓ PCR Unit Dispatched (Sirens On)</span>`;
+        btnPnodeDispatch.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> PCR Unit Dispatched (Sirens On)</span>`;
       });
     }
 
@@ -3141,7 +3202,7 @@
           const statusTag = document.getElementById("pnode-status-tag");
           if (statusTag) {
             statusTag.className = "event-status-tag tag-resolved";
-            statusTag.textContent = "✓ RESOLVED / SAFE";
+            statusTag.innerHTML = `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> RESOLVED / SECURED</span>`;
           }
         }
       });

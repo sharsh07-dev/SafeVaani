@@ -1105,8 +1105,14 @@
         <a href="/features/" class="hd-sheet-link">Features</a>
         <a href="/voice-sos/" class="hd-sheet-link">Voice SOS</a>
         <a href="/blog/" class="hd-sheet-link">Blog</a>
-        <a href="/dashboard/parent/" class="hd-sheet-link" style="font-size: 1.2rem;">👨‍👩‍👧 Parent Dashboard &rarr;</a>
-        <a href="/dashboard/police/" class="hd-sheet-link" style="font-size: 1.2rem;">🚓 Police CAD Center &rarr;</a>
+        <a href="/dashboard/parent/" class="hd-sheet-link" style="font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Parent Dashboard &rarr;
+        </a>
+        <a href="/dashboard/police/" class="hd-sheet-link" style="font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Police CAD Center &rarr;
+        </a>
       </nav>
     </div>
   </header>
@@ -1348,11 +1354,13 @@
 
           <!-- Perspective Switcher Tabs -->
           <div class="sim-tabs" role="tablist">
-            <button class="sim-tab-btn active" id="tab-btn-parent" onclick="switchTab('parent')">
-              👨‍👩‍👧 Parent Perspective
+            <button class="sim-tab-btn active" id="tab-btn-parent" onclick="switchTab('parent')" style="display:inline-flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              Parent Perspective
             </button>
-            <button class="sim-tab-btn" id="tab-btn-police" onclick="switchTab('police')">
-              🚓 Police CAD Room
+            <button class="sim-tab-btn" id="tab-btn-police" onclick="switchTab('police')" style="display:inline-flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              Police CAD Room
             </button>
           </div>
         </div>
@@ -1368,8 +1376,9 @@
                 Child Profile: Sneha Patil (ID: #SV-9182)
               </div>
               <div>
-                <button class="sim-btn-trigger" id="test-alert-btn" onclick="simulateAlert()">
-                  ⚡ Simulate Test SOS Trigger
+                <button class="sim-btn-trigger" id="test-alert-btn" onclick="simulateAlert()" style="display:inline-flex;align-items:center;gap:6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Simulate Test SOS Trigger
                 </button>
               </div>
             </div>
@@ -1633,7 +1642,7 @@
       if (!btn || !stateEl || !logList) return;
 
       btn.disabled = true;
-      btn.textContent = '🚨 Emergency SOS Triggered...';
+      btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Emergency SOS Triggered...</span>`;
       btn.style.background = '#EF5B4C';
       btn.style.color = '#FFFFFF';
 
@@ -1657,7 +1666,7 @@
 
       setTimeout(() => {
         btn.disabled = false;
-        btn.textContent = '⚡ Simulate Test SOS Trigger';
+        btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Simulate Test SOS Trigger</span>`;
         btn.style.background = '#FDDB10';
         btn.style.color = 'var(--dash-ink)';
       }, 5000);
