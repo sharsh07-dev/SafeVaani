@@ -1683,6 +1683,10 @@
         </div>
 
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <button type="button" id="btn-toggle-siren" class="btn-siren-toggle" style="background:#FFECEC;border:1.5px solid #D9251D;color:#D9251D;padding:6px 14px;border-radius:999px;font-weight:700;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);" title="Emergency Siren Active (Click to Test Siren)">
+            <span>🚨</span>
+            <span id="siren-status-text">Siren: Active (Test)</span>
+          </button>
           <button type="button" class="btn-theme-toggle" id="cad-theme-toggle" aria-label="Toggle Theme" title="Toggle Dark/Light Mode">
             <span class="theme-toggle-track">
               <span class="theme-toggle-thumb">
@@ -1837,9 +1841,9 @@
               <div>
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:10px;">
                   <div>
-                    <h3 style="margin:0;font-family:var(--font-serif);font-size:1.35rem;color:var(--dash-ink);" id="pnode-name">Sneha K. (19 yrs)</h3>
+                    <h3 style="margin:0;font-family:var(--font-serif);font-size:1.35rem;color:var(--dash-ink);" id="pnode-name">Sham Dhangar (+91 9529811731)</h3>
                     <div style="font-size:0.8rem;color:var(--dash-ink-soft);font-family:var(--font-mono);margin-top:2px;" id="pnode-sector">
-                      Wakad Flyover &bull; Pune West Corridor
+                      Sangamner / Akole Region, Maharashtra
                     </div>
                   </div>
                   <span class="event-status-tag tag-critical" id="pnode-status-tag">● CRITICAL SOS</span>
@@ -1849,17 +1853,17 @@
                 <div style="background:#FFFFFF;border:1px solid var(--dash-border);border-radius:12px;padding:12px;margin-bottom:12px;">
                   <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;color:var(--dash-ink-soft);margin-bottom:4px;">Threat Telemetry</div>
                   <div style="font-weight:700;font-size:0.92rem;color:#D9251D;line-height:1.35;" id="pnode-threat">
-                    Voice Detection [DISTRESS]: General Distress / Help Needed
+                    Voice SOS [High Threat • 98.4% Confidence]
                   </div>
                   <div style="font-size:0.8rem;color:var(--dash-ink-soft);margin-top:3px;" id="pnode-threat-sub">
-                    Distress Scream detected by AI on-device (Confidence: 98.4%)
+                    Manual Voice Shield (SOS Button) • Emergency SMS Dispatched
                   </div>
                 </div>
 
                 <!-- GPS Coordinates -->
                 <div style="display:flex;align-items:center;justify-content:space-between;background:#FFFFFF;border:1px solid var(--dash-border);border-radius:10px;padding:8px 12px;font-family:var(--font-mono);font-size:0.82rem;margin-bottom:12px;">
-                  <div><strong>GPS:</strong> <span id="pnode-coords" style="color:var(--dash-blue);">18.499042&deg; N, 73.774078&deg; E</span></div>
-                  <a href="https://www.google.com/maps?q=18.499042,73.774078" target="_blank" rel="noopener" id="pnode-gmaps-link" style="color:var(--dash-blue);text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  <div><strong>GPS:</strong> <span id="pnode-coords" style="color:var(--dash-blue);">19.614112&deg; N, 74.184358&deg; E</span></div>
+                  <a href="https://www.google.com/maps?q=19.614112,74.184358" target="_blank" rel="noopener" id="pnode-gmaps-link" style="color:var(--dash-blue);text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
                     <span>Maps</span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                   </a>
@@ -1875,7 +1879,7 @@
                     <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--dash-ink-soft);" id="pnode-audio-time">00:00 / 00:06</span>
                   </div>
                   <div style="display:flex;align-items:center;gap:10px;">
-                    <button type="button" class="btn-audio-play" id="btn-pnode-play" aria-label="Play recording" style="width:32px;height:32px;">
+                    <button type="button" class="btn-audio-play" id="btn-pnode-play" data-src="https://res.cloudinary.com/dbbzoslvi/video/upload/v1792730053/ir2b5241d5dn1x2k6re5.mp4" aria-label="Play recording" style="width:32px;height:32px;">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     </button>
                     <div class="waveform-visualizer" id="pnode-waveforms">
@@ -1894,8 +1898,8 @@
                   <div style="font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;color:var(--dash-ink-soft);margin-bottom:6px;">Emergency Contacts</div>
                   <div id="pnode-contacts-list">
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;">
-                      <span style="font-size:0.85rem;font-weight:600;">Father: Ramesh K. (+91 9811022334)</span>
-                      <a href="tel:+919811022334" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:4px;">
+                      <span style="font-size:0.85rem;font-weight:600;">Pooja Dhangar (Sister): +91 9822334455</span>
+                      <a href="tel:+919822334455" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:4px;">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                         <span>Call</span>
                       </a>
@@ -2014,7 +2018,137 @@
   </footer>
 
   <script>
-    // State management
+    // ========================================================
+    // FIREBASE REALTIME DATABASE SYNC CONFIG & BASELINE ALERTS
+    // ========================================================
+    const RTDB_ALERTS_URL = "https://woshild-f4df5-default-rtdb.firebaseio.com/alerts.json";
+    const RTDB_SOS_ALERTS_URL = "https://woshild-f4df5-default-rtdb.firebaseio.com/sos_alerts.json";
+    const RTDB_USERS_URL = "https://woshild-f4df5-default-rtdb.firebaseio.com/users.json";
+
+    // Baseline data strictly using verified real RTDB alert records (No demo/Ananya data)
+    const fallbackAlerts = [
+      {
+        "alertId": "-P4b1QtzLkCBXwzBIRKX",
+        "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792730053/ir2b5241d5dn1x2k6re5.mp4",
+        "confidence": 98.4,
+        "contactsAlerted": [
+          { "name": "sham", "phone": "9529811731", "relationship": "Self / Family" },
+          { "name": "Pooja Dhangar", "phone": "9822334455", "relationship": "Sister" }
+        ],
+        "emotion": "Voice SOS",
+        "etaMinutes": 1.5,
+        "formattedTime": "Oct 23, 2026 | 10:04 am",
+        "id": "-P4b1QtzLkCBXwzBIRKX",
+        "isEmergency": true,
+        "latitude": 19.6141118,
+        "locationName": "Sangamner / Akole Region, Maharashtra",
+        "longitude": 74.1843575,
+        "mapUrl": "https://maps.google.com/?q=19.6141118,74.1843575",
+        "pcrUnit": "PCR Van #07",
+        "reason": "Manual Voice Shield (SOS Button) • Emergency SMS Dispatched",
+        "smsMessage": "🚨 SURAKSHAVAANI EMERGENCY 🚨\nHelp needed! Status: Voice SOS\nMy Location: https://maps.google.com/?q=19.6141118,74.1843575\n\n🎤 Voice Evidence Link: https://res.cloudinary.com/dbbzoslvi/video/upload/v1792730053/ir2b5241d5dn1x2k6re5.mp4",
+        "status": "ACTIVE",
+        "threatLevel": "High",
+        "timestamp": 1792730052811,
+        "triggerSource": "Manual Voice Shield (SOS Button)",
+        "userEmail": "sham@gmail.com",
+        "userId": "vUyAvPgDTYNzzqt01kNHol5316E3",
+        "userName": "Sham Dhangar",
+        "userPhone": "+91 9529811731"
+      },
+      {
+        "alertId": "-P4b18Tr-hC425yrz3rJ",
+        "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792729978/ac8uziixfbj9pubww8qd.mp4",
+        "confidence": 97.8,
+        "contactsAlerted": [
+          { "name": "sham", "phone": "9529811731", "relationship": "Self / Family" },
+          { "name": "Pooja Dhangar", "phone": "9822334455", "relationship": "Sister" }
+        ],
+        "emotion": "Voice SOS",
+        "etaMinutes": 1.9,
+        "formattedTime": "Oct 23, 2026 | 10:02 am",
+        "id": "-P4b18Tr-hC425yrz3rJ",
+        "isEmergency": true,
+        "latitude": 19.6141158,
+        "locationName": "Sangamner / Akole Region, Maharashtra",
+        "longitude": 74.184337,
+        "mapUrl": "https://maps.google.com/?q=19.6141158,74.184337",
+        "pcrUnit": "PCR Van #07",
+        "reason": "Manual Voice Shield (SOS Button) • Emergency SMS Dispatched",
+        "smsMessage": "🚨 SURAKSHAVAANI EMERGENCY 🚨\nHelp needed! Status: Voice SOS\nMy Location: https://maps.google.com/?q=19.6141158,74.184337\n\n🎤 Voice Evidence Link: https://res.cloudinary.com/dbbzoslvi/video/upload/v1792729978/ac8uziixfbj9pubww8qd.mp4",
+        "status": "ACTIVE",
+        "threatLevel": "High",
+        "timestamp": 1792729977178,
+        "triggerSource": "Manual Voice Shield (SOS Button)",
+        "userEmail": "sham@gmail.com",
+        "userId": "vUyAvPgDTYNzzqt01kNHol5316E3",
+        "userName": "Sham Dhangar",
+        "userPhone": "+91 9529811731"
+      },
+      {
+        "alertId": "-P4atY920hi-VXLcrlOa",
+        "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792727722/b4awqqvweqdgwqhp1fl3.mp4",
+        "confidence": 98.0,
+        "contactsAlerted": [
+          { "name": "sham", "phone": "9529811731", "relationship": "Self / Family" },
+          { "name": "Pooja Dhangar", "phone": "9822334455", "relationship": "Sister" }
+        ],
+        "emotion": "Voice SOS",
+        "etaMinutes": 2.2,
+        "formattedTime": "Oct 23, 2026 | 09:25 am",
+        "id": "-P4atY920hi-VXLcrlOa",
+        "isEmergency": true,
+        "latitude": 19.6131142,
+        "locationName": "Sangamner / Akole Region, Maharashtra",
+        "longitude": 74.1860269,
+        "mapUrl": "https://maps.google.com/?q=19.6131142,74.1860269",
+        "pcrUnit": "PCR Van #07",
+        "reason": "Manual Voice Shield (SOS Button) • Emergency SMS Dispatched",
+        "smsMessage": "🚨 SURAKSHAVAANI EMERGENCY 🚨\nHelp needed! Status: Voice SOS\nMy Location: https://maps.google.com/?q=19.6131142,74.1860269\n\n🎤 Voice Evidence Link: https://res.cloudinary.com/dbbzoslvi/video/upload/v1792727722/b4awqqvweqdgwqhp1fl3.mp4",
+        "status": "ACTIVE",
+        "threatLevel": "High",
+        "timestamp": 1792727722783,
+        "triggerSource": "Manual Voice Shield (SOS Button)",
+        "userEmail": "sham@gmail.com",
+        "userId": "vUyAvPgDTYNzzqt01kNHol5316E3",
+        "userName": "Sham Dhangar",
+        "userPhone": "+91 9529811731"
+      },
+      {
+        "alertId": "-P4ae6kBBLuM1JRlH2gA",
+        "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792723679/idg6hy8ncdvqyuibm3z9.mp4",
+        "confidence": 98.4,
+        "contactsAlerted": [
+          {
+            "name": "sham",
+            "phone": "9529811731",
+            "relationship": "me"
+          }
+        ],
+        "emotion": "Voice SOS",
+        "etaMinutes": 2.1,
+        "formattedTime": "Oct 23, 2026 | 08:17 am",
+        "id": "-P4ae6kBBLuM1JRlH2gA",
+        "isEmergency": true,
+        "latitude": 19.6133123,
+        "locationName": "Sangamner / Akole Region, Maharashtra",
+        "longitude": 74.1850968,
+        "mapUrl": "https://maps.google.com/?q=19.6133123,74.1850968",
+        "pcrUnit": "PCR Van #07",
+        "reason": "Manual Voice Shield (SOS Button) • Emergency SMS Dispatched",
+        "smsMessage": "🚨 SURAKSHAVAANI EMERGENCY 🚨\nHelp needed! Status: Voice SOS\nMy Location: https://maps.google.com/?q=19.6133123,74.1850968\n\n🎤 Voice Evidence Link: https://res.cloudinary.com/dbbzoslvi/video/upload/v1792723679/idg6hy8ncdvqyuibm3z9.mp4",
+        "status": "ACTIVE",
+        "threatLevel": "High",
+        "timestamp": 1792724105375,
+        "triggerSource": "Manual Voice Shield (SOS Button)",
+        "userEmail": "sham@gmail.com",
+        "userId": "vUyAvPgDTYNzzqt01kNHol5316E3",
+        "userName": "Sham Dhangar",
+        "userPhone": "+91 9529811731"
+      }
+    ];
+
+    // State management & DOM elements
     const authView = document.getElementById("police-auth-view");
     const consoleView = document.getElementById("police-console-view");
     const loginForm = document.getElementById("police-login-form");
@@ -2032,7 +2166,20 @@
     const counterAudio = document.getElementById("counter-audio");
     const badgeTabCount = document.getElementById("badge-tab-count");
 
+    // Restore cached real events if present, otherwise initialize with real fallback records
     let currentEvents = [];
+    try {
+      const cached = localStorage.getItem("cached_police_events");
+      if (cached) {
+        const parsedCached = JSON.parse(cached);
+        if (Array.isArray(parsedCached) && parsedCached.length > 0) {
+          currentEvents = parsedCached;
+        }
+      }
+    } catch(e){}
+    if (!currentEvents || currentEvents.length === 0) {
+      currentEvents = [...fallbackAlerts];
+    }
     let currentFilter = "all";
     let activeAudioEl = null;
     let activeWaveform = null;
@@ -2053,6 +2200,8 @@
       } catch(e){}
 
       startPatrolAnimation();
+      updateDashboardCounters();
+      renderEventFeed();
       loadRealtimeEvents();
       setTimeout(() => {
         initPoliceTacticalMap();
@@ -2060,15 +2209,26 @@
     }
 
     // Auto-restore police CAD session on refresh
+    let sessionRestored = false;
     try {
       const savedPoliceSession = localStorage.getItem("police_cad_session");
       if (savedPoliceSession) {
         const parsed = JSON.parse(savedPoliceSession);
         openCADConsole(parsed.email, parsed.zone);
+        sessionRestored = true;
       }
     } catch(e) {
       localStorage.removeItem("police_cad_session");
     }
+
+    // If pre-render script in head activated console, ensure openCADConsole is invoked
+    if (!sessionRestored && document.documentElement.classList.contains("police-session-active")) {
+      openCADConsole("insp.vikram@delhipolice.gov.in", "PCR-DELHI-ZONE4");
+    }
+
+    // Always ensure counters and feed are populated immediately with baseline data
+    updateDashboardCounters();
+    renderEventFeed();
 
     const btnAutofill = document.getElementById("btn-autofill-police");
     if (btnAutofill) {
@@ -2100,10 +2260,126 @@
       consoleView.style.display = "none";
     });
 
-    // Emergency chime audio instance
-    const ALERT_CHIME_URL = "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3";
-    let alertChimeAudio = new Audio(ALERT_CHIME_URL);
+    // Emergency Siren Audio Synthesizer (Web Audio API Dual-Tone Police Siren + Fallback)
+    class EmergencySiren {
+      constructor() {
+        this.audioCtx = null;
+        this.osc = null;
+        this.gain = null;
+        this.isPlaying = false;
+        this.stopTimeout = null;
+        this.sirenAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+      }
+      ensureContext() {
+        try {
+          if (!this.audioCtx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) this.audioCtx = new AudioCtx();
+          }
+          if (this.audioCtx && this.audioCtx.state === "suspended") {
+            this.audioCtx.resume();
+          }
+        } catch(e){}
+      }
+      play(duration = 5) {
+        this.ensureContext();
+        this.stop();
+        this.isPlaying = true;
+        const sirenBtnText = document.getElementById("siren-status-text");
+        const sirenBtn = document.getElementById("btn-toggle-siren");
+        if (sirenBtnText) sirenBtnText.textContent = "🚨 Siren: SOUNDING";
+        if (sirenBtn) {
+          sirenBtn.style.background = "#D9251D";
+          sirenBtn.style.color = "#FFFFFF";
+        }
+
+        // 1. Web Audio API synthesized high-low emergency police siren
+        if (this.audioCtx) {
+          try {
+            const ctx = this.audioCtx;
+            const now = ctx.currentTime;
+            const masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0.001, now);
+            masterGain.gain.exponentialRampToValueAtTime(0.35, now + 0.15);
+            masterGain.gain.setValueAtTime(0.35, now + duration - 0.4);
+            masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            masterGain.connect(ctx.destination);
+
+            const osc = ctx.createOscillator();
+            osc.type = "sawtooth";
+            const cycle = 0.7;
+            let t = 0;
+            while (t < duration) {
+              osc.frequency.setValueAtTime(650, now + t);
+              osc.frequency.linearRampToValueAtTime(1150, now + t + 0.35);
+              osc.frequency.linearRampToValueAtTime(650, now + Math.min(duration, t + cycle));
+              t += cycle;
+            }
+            osc.connect(masterGain);
+            osc.start(now);
+            osc.stop(now + duration);
+
+            this.osc = osc;
+            this.gain = masterGain;
+
+            clearTimeout(this.stopTimeout);
+            this.stopTimeout = setTimeout(() => {
+              this.stop();
+            }, duration * 1000);
+            return;
+          } catch(e){
+            console.warn("Oscillator siren error:", e);
+          }
+        }
+
+        // 2. Fallback audio element
+        try {
+          this.sirenAudio.currentTime = 0;
+          this.sirenAudio.play().catch(e => console.log("Audio play note:", e));
+        } catch(e){}
+      }
+      stop() {
+        clearTimeout(this.stopTimeout);
+        if (this.osc) {
+          try { this.osc.stop(); this.osc.disconnect(); } catch(e){}
+          this.osc = null;
+        }
+        if (this.gain) {
+          try { this.gain.disconnect(); } catch(e){}
+          this.gain = null;
+        }
+        if (this.sirenAudio) {
+          try { this.sirenAudio.pause(); } catch(e){}
+        }
+        this.isPlaying = false;
+        const sirenBtnText = document.getElementById("siren-status-text");
+        const sirenBtn = document.getElementById("btn-toggle-siren");
+        if (sirenBtnText) sirenBtnText.textContent = "Siren: Active (Test)";
+        if (sirenBtn) {
+          sirenBtn.style.background = "#FFECEC";
+          sirenBtn.style.color = "#D9251D";
+        }
+      }
+    }
+
+    const emergencySiren = new EmergencySiren();
     let previousEmergencyCount = 0;
+
+    // Unlock audio context on ANY user touch or click
+    window.addEventListener("click", () => emergencySiren.ensureContext(), { once: true });
+    window.addEventListener("keydown", () => emergencySiren.ensureContext(), { once: true });
+
+    const btnToggleSiren = document.getElementById("btn-toggle-siren");
+    if (btnToggleSiren) {
+      btnToggleSiren.addEventListener("click", () => {
+        emergencySiren.ensureContext();
+        if (emergencySiren.isPlaying) {
+          emergencySiren.stop();
+        } else {
+          emergencySiren.play(5);
+        }
+      });
+    }
 
     // Patrol Van Animation on Map
     function startPatrolAnimation() {
@@ -2115,360 +2391,139 @@
       }, 800);
     }
 
-    // ========================================================
-    // FIREBASE REALTIME DATABASE SYNC
-    // ========================================================
-    const RTDB_ALERTS_URL = "https://akatsuki-98705-default-rtdb.firebaseio.com/alerts.json";
-    const RTDB_USERS_URL = "https://akatsuki-98705-default-rtdb.firebaseio.com/users.json";
-
-    // Fallback baseline data extracted directly from live RTDB
-    const fallbackAlerts = [
-      {
-        id: "-P2q4Mp0mhzatDcvdQMC",
-        userId: "IuXpUufQdEYrCCwB7nkfKhrVncz2",
-        userName: "harsh",
-        userPhone: "+91 7822983308",
-        userEmail: "shindeharsh.dev@gmail.com",
-        audioUrl: "",
-        emotion: "Vocal Distress [High Decibel SOS]",
-        reason: "Acoustic stress decibel threshold exceeded (84 dB) • Distress verified",
-        isEmergency: true,
-        latitude: 18.499042,
-        longitude: 73.7740777,
-        timestamp: 1790834998720,
-        etaMinutes: 2.1,
-        pcrUnit: "PCR Van #09",
-        status: "ACTIVE"
-      },
-      {
-        id: "-P1E2OBaw9YOScOAhGyP",
-        userId: "yzUq10bKO3Qbu56SvUH5oiLM6AT2",
-        userName: "harsh shinde",
-        userPhone: "+91 7822983308",
-        userEmail: "shindeharsh.dev@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106425/backg5lsfbanbcdoxiwf.mp4",
-        emotion: "Domestic Conflict Telemetry",
-        reason: "Interpersonal agitation & vocal distress signature identified",
-        isEmergency: true,
-        latitude: 18.4727079,
-        longitude: 73.9359587,
-        timestamp: 1789106426571,
-        etaMinutes: 3.4,
-        pcrUnit: "PCR Van #14",
-        status: "ACTIVE"
-      },
-      {
-        id: "-P2q0rn_xpwEyE2XTV2F",
-        userId: "7JPeuVqxKvbo4sbtKtMAgzzjedC2",
-        userName: "Ravindra Dhangar",
-        userPhone: "+91 9529811731",
-        userEmail: "sham@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834080/ly8zfwrwo8otcge8kkz1.mp4",
-        emotion: "Acoustic Vocal Distress",
-        reason: "Prolonged high-frequency vocal stress detected",
-        isEmergency: true,
-        latitude: 18.4991064,
-        longitude: 73.7748131,
-        timestamp: 1790834080761,
-        etaMinutes: 1.8,
-        pcrUnit: "PCR Van #04",
-        status: "EN ROUTE"
-      },
-      {
-        id: "-P2q39o6u_h3RFiOdh7r",
-        userId: "rqmuqPAqZrRhd1S2QB0bu3RCQIu1",
-        userName: "om Gaikwad",
-        userPhone: "+91 7218362543",
-        userEmail: "om@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834657/cw6mdyetdcctjvbvdv5b.mp4",
-        emotion: "Acoustic Cry & Vocal Spike",
-        reason: "High-decibel emergency vocal burst captured",
-        isEmergency: true,
-        latitude: 18.499042,
-        longitude: 73.7740777,
-        timestamp: 1790834682496,
-        etaMinutes: 2.7,
-        pcrUnit: "PCR Van #22",
-        status: "ACTIVE"
-      },
-      {
-        id: "-P1E2grLCk6c_uTyRBvF",
-        userId: "yzUq10bKO3Qbu56SvUH5oiLM6AT2",
-        userName: "harsh shinde",
-        userPhone: "+91 7822983308",
-        userEmail: "shindeharsh.dev@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106506/zoavkdid522ngimigocc.mp4",
-        emotion: "Physical Impact / Decibel Transient",
-        reason: "Sudden acceleration impact followed by vocal distress burst",
-        isEmergency: true,
-        latitude: 18.4727079,
-        longitude: 73.9359587,
-        timestamp: 1789106507131,
-        etaMinutes: 4.1,
-        pcrUnit: "PCR Rapid Interceptor #01",
-        status: "DISPATCHED"
-      },
-      {
-        id: "-P1E2wSZpxG_huQnyvzY",
-        userId: "yzUq10bKO3Qbu56SvUH5oiLM6AT2",
-        userName: "harsh shinde",
-        userPhone: "+91 7822983308",
-        userEmail: "shindeharsh.dev@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106570/qncay8obtskvr6nxf215.mp4",
-        emotion: "Vocal Distress Telemetry",
-        reason: "High vocal pitch distress patterns confirmed",
-        isEmergency: true,
-        latitude: 18.4727079,
-        longitude: 73.9359587,
-        timestamp: 1789106571028,
-        etaMinutes: 3.1,
-        pcrUnit: "PCR Van #14",
-        status: "RESOLVED"
-      },
-      {
-        id: "-P1E39d7Btdq9uCx6-Jr",
-        userId: "yzUq10bKO3Qbu56SvUH5oiLM6AT2",
-        userName: "harsh shinde",
-        userPhone: "+91 7822983308",
-        userEmail: "shindeharsh.dev@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106628/rkgr7ohydgz3qjdmayun.mp4",
-        emotion: "Vocal Distress Telemetry",
-        reason: "High vocal pitch distress patterns confirmed",
-        isEmergency: true,
-        latitude: 18.4727079,
-        longitude: 73.9359587,
-        timestamp: 1789106629111,
-        etaMinutes: 3.0,
-        pcrUnit: "PCR Van #14",
-        status: "RESOLVED"
-      },
-      {
-        id: "-P2qRHzSBTkm-o8cPQtL",
-        userId: "7JPeuVqxKvbo4sbtKtMAgzzjedC2",
-        userName: "Ravindra Dhangar",
-        userPhone: "+91 9529811731",
-        userEmail: "sham@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790841007/ou2wkkaz0almliumxw1x.mp4",
-        emotion: "Acoustic Vocal Distress",
-        reason: "High vocal stress decibel threshold exceeded (84 dB)",
-        isEmergency: true,
-        latitude: 18.4991064,
-        longitude: 73.7748131,
-        timestamp: 1790841007838,
-        etaMinutes: 2.2,
-        pcrUnit: "PCR Van #09",
-        status: "ACTIVE"
-      },
-      {
-        id: "-P2qR74p5uGye9jT-AyJ",
-        userId: "7JPeuVqxKvbo4sbtKtMAgzzjedC2",
-        userName: "Ravindra Dhangar",
-        userPhone: "+91 9529811731",
-        userEmail: "sham@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790840963/lhtomfluvanbmedttiyy.mp4",
-        emotion: "Acoustic Cry & Vocal Distress",
-        reason: "Distress acoustic modulation verified by CAD router",
-        isEmergency: true,
-        latitude: 18.4991064,
-        longitude: 73.7748131,
-        timestamp: 1790840963191,
-        etaMinutes: 2.5,
-        pcrUnit: "PCR Van #09",
-        status: "ACTIVE"
-      },
-      {
-        id: "-P2qR42dxdSIU1iUemOP",
-        userId: "7JPeuVqxKvbo4sbtKtMAgzzjedC2",
-        userName: "Ravindra Dhangar",
-        userPhone: "+91 9529811731",
-        userEmail: "sham@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790840950/s4kumm0jz0dpyeg0ixrm.mp4",
-        emotion: "Emergency Vocal Scream Burst",
-        reason: "Immediate high-priority emergency frequency captured",
-        isEmergency: true,
-        latitude: 18.4991064,
-        longitude: 73.7748131,
-        timestamp: 1790840950763,
-        etaMinutes: 2.8,
-        pcrUnit: "PCR Van #04",
-        status: "ACTIVE"
-      },
-      {
-        id: "-P2q1cRN3U9OG779rBsq",
-        userId: "7JPeuVqxKvbo4sbtKtMAgzzjedC2",
-        userName: "Ravindra Dhangar",
-        userPhone: "+91 9529811731",
-        userEmail: "sham@gmail.com",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834279/fzzjw3ixux0ngpkjw9xc.mp4",
-        emotion: "Acoustic Stress Peak (84 dB)",
-        reason: "Voice stress frequency peak confirmed",
-        isEmergency: true,
-        latitude: 18.4991064,
-        longitude: 73.7748131,
-        timestamp: 1790834279981,
-        etaMinutes: 3.2,
-        pcrUnit: "PCR Van #04",
-        status: "RESOLVED"
-      }
-    ];
-
     async function loadRealtimeEvents() {
-      syncIcon.classList.add("spinning");
-      syncStatusIndicator.textContent = "Syncing live RTDB...";
+      if (syncIcon) syncIcon.classList.add("spinning");
+      if (syncStatusIndicator) syncStatusIndicator.textContent = "Syncing live RTDB...";
+
+      let alertsData = {};
+      let usersData = {};
 
       try {
-        const [alertsRes, usersRes] = await Promise.all([
-          fetch(RTDB_ALERTS_URL).catch(() => null),
-          fetch(RTDB_USERS_URL).catch(() => null)
+        // Fetch live Firebase endpoints with safe timeouts
+        const fetchTimeout = (url, ms = 4000) => {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), ms);
+          return fetch(url, { signal: controller.signal })
+            .then(res => { clearTimeout(timer); return res; })
+            .catch(() => { clearTimeout(timer); return null; });
+        };
+
+        const [alertsRes, sosAlertsRes, usersRes] = await Promise.all([
+          fetchTimeout(RTDB_ALERTS_URL),
+          fetchTimeout(RTDB_SOS_ALERTS_URL),
+          fetchTimeout(RTDB_USERS_URL)
         ]);
 
         if (alertsRes && alertsRes.ok) {
-          const alertsData = await alertsRes.json();
-          let usersData = {};
-          if (usersRes && usersRes.ok) {
-            usersData = await usersRes.json();
-          }
+          const d = await alertsRes.json().catch(() => null);
+          if (d && typeof d === 'object') Object.assign(alertsData, d);
+        }
+        if (sosAlertsRes && sosAlertsRes.ok) {
+          const d = await sosAlertsRes.json().catch(() => null);
+          if (d && typeof d === 'object') Object.assign(alertsData, d);
+        }
+        if (usersRes && usersRes.ok) {
+          usersData = await usersRes.json().catch(() => ({})) || {};
+        }
 
-          const parsed = [];
-          if (alertsData) {
-            // Superior Multi-Tier Victim Resolution (From police-dashboard--main getVictimName)
-            const resolveVictim = (alertObj, fallbackUid) => {
-              const uInfo = (fallbackUid && usersData[fallbackUid]) ? usersData[fallbackUid] : {};
-              // Priority 1: Direct userName field on the alert
-              if (alertObj.userName) {
-                return {
-                  name: alertObj.userName,
-                  phone: alertObj.phone ? (String(alertObj.phone).startsWith("+") ? alertObj.phone : `+91 ${alertObj.phone}`) : (uInfo.phone ? `+91 ${uInfo.phone}` : "+91 9811022334"),
-                  email: alertObj.email || uInfo.email || "citizen@safevaani.in"
-                };
-              }
-              // Priority 2: Direct match by parent UID in users node
-              if (uInfo && uInfo.name) {
-                return {
-                  name: uInfo.name,
-                  phone: uInfo.phone ? `+91 ${uInfo.phone}` : "+91 9811022334",
-                  email: uInfo.email || "citizen@safevaani.in"
-                };
-              }
-              // Priority 3: Cross-reference alert.phone against all users in database
-              if (alertObj.phone) {
-                const cleanPhone = String(alertObj.phone).replace(/\D/g, "");
-                const matchedUser = Object.values(usersData).find(u => u && u.phone && String(u.phone).replace(/\D/g, "").includes(cleanPhone.slice(-10)));
-                if (matchedUser && matchedUser.name) {
-                  return {
-                    name: matchedUser.name,
-                    phone: matchedUser.phone ? `+91 ${matchedUser.phone}` : alertObj.phone,
-                    email: matchedUser.email || "citizen@safevaani.in"
-                  };
-                }
-              }
-              // Priority 4: Geolocation proximity match (< 0.01 deg ~= 1km) against user lastLatitude/lastLongitude
-              if (alertObj.latitude && alertObj.longitude) {
-                const matchedUser = Object.values(usersData).find(u => {
-                  if (!u || !u.lastLatitude || !u.lastLongitude) return false;
-                  return Math.hypot(u.lastLatitude - alertObj.latitude, u.lastLongitude - alertObj.longitude) < 0.01;
-                });
-                if (matchedUser && matchedUser.name) {
-                  return {
-                    name: matchedUser.name,
-                    phone: matchedUser.phone ? `+91 ${matchedUser.phone}` : "+91 9811022334",
-                    email: matchedUser.email || "citizen@safevaani.in"
-                  };
-                }
-              }
-              // Fallback default
-              return {
-                name: "Citizen in Distress",
-                phone: alertObj.phone || "+91 9811022334",
-                email: "citizen@safevaani.in"
-              };
-            };
-
-            // Superior Dual-Structure Alert Ingestion (Processes both flat /alerts/{id} and nested /alerts/{uid}/{id})
-            Object.entries(alertsData).forEach(([key, val]) => {
-              if (!val) return;
-              if (val.emotion || val.latitude || val.timestamp) {
-                // Flat top-level alert (/alerts/{alertId})
-                const victim = resolveVictim(val, "");
-                parsed.push({
-                  id: key,
-                  userId: val.userId || "direct-alert",
-                  userName: victim.name,
-                  userPhone: victim.phone,
-                  userEmail: victim.email,
-                  audioUrl: val.audioUrl || "",
-                  emotion: val.emotion || "Distress Detection",
-                  reason: val.reason || `AI Alert: ${val.emotion || "Emergency"}`,
-                  isEmergency: val.isEmergency !== false,
-                  latitude: Number(val.latitude) || 18.499042,
-                  longitude: Number(val.longitude) || 73.774078,
-                  timestamp: Number(val.timestamp) || Date.now(),
-                  etaMinutes: Number((1.5 + Math.random() * 2.5).toFixed(1)),
-                  pcrUnit: `PCR Van #${Math.floor(10 + Math.random() * 15)}`,
-                  status: val.status || "ACTIVE"
-                });
-              } else if (typeof val === "object") {
-                // Nested user alerts (/alerts/{userId}/{alertId})
-                const userId = key;
-                Object.entries(val).forEach(([subKey, nestedVal]) => {
-                  if (!nestedVal || (!nestedVal.emotion && !nestedVal.latitude && !nestedVal.timestamp)) return;
-                  const victim = resolveVictim(nestedVal, userId);
-                  parsed.push({
-                    id: subKey,
-                    userId: userId,
-                    userName: victim.name,
-                    userPhone: victim.phone,
-                    userEmail: victim.email,
-                    audioUrl: nestedVal.audioUrl || "",
-                    emotion: nestedVal.emotion || "Distress Detection",
-                    reason: nestedVal.reason || `AI Voice Trigger: ${nestedVal.emotion || "Distress"}`,
-                    isEmergency: nestedVal.isEmergency !== false,
-                    latitude: Number(nestedVal.latitude) || (usersData[userId]?.lastLatitude || 18.499042),
-                    longitude: Number(nestedVal.longitude) || (usersData[userId]?.lastLongitude || 73.774078),
-                    timestamp: Number(nestedVal.timestamp) || Date.now(),
-                    etaMinutes: Number((1.5 + Math.random() * 2.5).toFixed(1)),
-                    pcrUnit: `PCR Van #${Math.floor(10 + Math.random() * 15)}`,
-                    status: nestedVal.status || "ACTIVE"
-                  });
-                });
-              }
-            });
-          }
-
-          if (parsed.length > 0) {
-            parsed.sort((a, b) => b.timestamp - a.timestamp);
-            // Play alert sound if count increased
-            if (previousEmergencyCount > 0 && parsed.length > previousEmergencyCount) {
-              try {
-                alertChimeAudio.play().catch(e => console.log("Chime autoplay prevented:", e));
-              } catch(e){}
+        // Resilient fallback to local export JSON if remote RTDB was offline or empty
+        if (Object.keys(alertsData).length === 0) {
+          try {
+            const localRes = await fetch("/woshild-f4df5-default-rtdb-export.json");
+            if (localRes.ok) {
+              const localJson = await localRes.json();
+              if (localJson.sos_alerts) Object.assign(alertsData, localJson.sos_alerts);
+              if (localJson.alerts) Object.assign(alertsData, localJson.alerts);
+              if (localJson.users) usersData = localJson.users;
             }
-            previousEmergencyCount = parsed.length;
-            currentEvents = parsed;
-          } else {
-            currentEvents = fallbackAlerts;
+          } catch(e) {}
+        }
+
+        const parsed = [];
+        if (alertsData && Object.keys(alertsData).length > 0) {
+          const extractAlertFields = (val, key) => {
+            if (!val || typeof val !== 'object') return null;
+            return {
+              alertId: val.alertId || val.id || key,
+              audioUrl: val.audioUrl || "",
+              confidence: typeof val.confidence === "number" ? val.confidence : (Number(val.confidence) || 0),
+              contactsAlerted: Array.isArray(val.contactsAlerted) ? val.contactsAlerted.map(c => ({
+                name: c.name || "",
+                phone: c.phone || "",
+                relationship: c.relationship || ""
+              })) : [],
+              emotion: val.emotion || "",
+              etaMinutes: typeof val.etaMinutes === "number" ? val.etaMinutes : (Number(val.etaMinutes) || 0),
+              formattedTime: val.formattedTime || "",
+              id: val.id || val.alertId || key,
+              isEmergency: Boolean(val.isEmergency),
+              latitude: Number(val.latitude) || 0,
+              locationName: val.locationName || "",
+              longitude: Number(val.longitude) || 0,
+              mapUrl: val.mapUrl || (val.latitude && val.longitude ? `https://maps.google.com/?q=${val.latitude},${val.longitude}` : ""),
+              pcrUnit: val.pcrUnit || "",
+              reason: val.reason || "",
+              smsMessage: val.smsMessage || "",
+              status: val.status || "ACTIVE",
+              threatLevel: val.threatLevel || "High",
+              timestamp: Number(val.timestamp) || 0,
+              triggerSource: val.triggerSource || "",
+              userEmail: val.userEmail || "",
+              userId: val.userId || "",
+              userName: val.userName || "",
+              userPhone: val.userPhone || ""
+            };
+          };
+
+          Object.entries(alertsData).forEach(([key, val]) => {
+            if (!val || typeof val !== 'object') return;
+            const item = extractAlertFields(val, key);
+            if (item && (item.emotion || item.latitude || item.timestamp || item.locationName || item.alertId)) {
+              parsed.push(item);
+            }
+          });
+        }
+
+        if (parsed.length > 0) {
+          parsed.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+          if (previousEmergencyCount > 0 && parsed.length > previousEmergencyCount) {
+            try {
+              emergencySiren.play(5);
+            } catch(e){}
           }
-        } else {
-          currentEvents = fallbackAlerts;
+          previousEmergencyCount = parsed.length;
+          currentEvents = parsed;
+          try {
+            localStorage.setItem("cached_police_events", JSON.stringify(parsed));
+          } catch(e){}
+        } else if (!currentEvents || currentEvents.length === 0) {
+          currentEvents = [...fallbackAlerts];
         }
       } catch (err) {
-        console.warn("RTDB sync error, using cached live events:", err);
-        currentEvents = fallbackAlerts;
+        console.warn("RTDB sync note:", err);
+        if (!currentEvents || currentEvents.length === 0) {
+          currentEvents = [...fallbackAlerts];
+        }
       } finally {
-        syncIcon.classList.remove("spinning");
-        syncStatusIndicator.textContent = `● Synchronized (${currentEvents.length} live records)`;
+        if (syncIcon) syncIcon.classList.remove("spinning");
+        if (syncStatusIndicator) {
+          syncStatusIndicator.textContent = `● Synchronized (${currentEvents.length} live records)`;
+        }
         updateDashboardCounters();
         renderEventFeed();
+        if (typeof renderPoliceTacticalMarkers === 'function') {
+          renderPoliceTacticalMarkers("all");
+        }
       }
     }
 
     function updateDashboardCounters() {
-      const activeCount = currentEvents.filter(e => e.status !== "RESOLVED").length;
-      const audioCount = currentEvents.filter(e => Boolean(e.audioUrl)).length;
+      const activeCount = currentEvents.filter(e => e && e.status !== "RESOLVED").length;
+      const audioCount = currentEvents.filter(e => e && Boolean(e.audioUrl)).length;
       
-      counterActive.textContent = String(activeCount);
-      counterAudio.textContent = `${audioCount} / ${currentEvents.length}`;
-      badgeTabCount.textContent = `${currentEvents.length} Real Alerts`;
+      if (counterActive) counterActive.textContent = String(activeCount);
+      if (counterAudio) counterAudio.textContent = `${audioCount} / ${currentEvents.length}`;
+      if (badgeTabCount) badgeTabCount.textContent = `${currentEvents.length} Real Alerts`;
 
       const countAll = document.getElementById("count-all");
       const countAudio = document.getElementById("count-audio");
@@ -2476,51 +2531,38 @@
       if (countAudio) countAudio.textContent = String(audioCount);
     }
 
-    // Render Event Feed Cards
+    // Render Event Feed Cards strictly using schema fields
     function renderEventFeed() {
       if (!eventsFeedContainer) return;
-      const query = (feedSearch.value || "").toLowerCase().trim();
+      const query = (feedSearch && feedSearch.value ? feedSearch.value : "").toLowerCase().trim();
 
       const filtered = currentEvents.filter((ev) => {
+        if (!ev) return false;
+        const emotion = (ev.emotion || "").toLowerCase();
+        const userName = (ev.userName || "").toLowerCase();
+        const userPhone = String(ev.userPhone || "");
+        const reason = (ev.reason || "").toLowerCase();
+        const locationName = (ev.locationName || "").toLowerCase();
+        const evId = String(ev.id || ev.alertId || "").toLowerCase();
+
         // Chip filter
         if (currentFilter === "audio" && !ev.audioUrl) return false;
-        if (currentFilter === "distress" && !ev.emotion.toLowerCase().includes("distress") && !ev.emotion.toLowerCase().includes("domestic") && !ev.emotion.toLowerCase().includes("pain")) return false;
+        if (currentFilter === "distress" && !emotion.includes("distress") && !emotion.includes("domestic") && !emotion.includes("sos") && !emotion.includes("pain")) return false;
         if (currentFilter === "coords" && (!ev.latitude || ev.latitude === 0)) return false;
 
         // Search query
         if (query) {
-          const matchUser = ev.userName.toLowerCase().includes(query);
-          const matchPhone = ev.userPhone.toLowerCase().includes(query);
-          const matchEmotion = ev.emotion.toLowerCase().includes(query);
-          const matchReason = ev.reason.toLowerCase().includes(query);
-          const matchId = ev.id.toLowerCase().includes(query);
-          if (!matchUser && !matchPhone && !matchEmotion && !matchReason && !matchId) return false;
+          const matchUser = userName.includes(query);
+          const matchPhone = userPhone.includes(query);
+          const matchEmotion = emotion.includes(query);
+          const matchReason = reason.includes(query);
+          const matchLocation = locationName.includes(query);
+          const matchId = evId.includes(query);
+          if (!matchUser && !matchPhone && !matchEmotion && !matchReason && !matchLocation && !matchId) return false;
         }
 
         return true;
       });
-
-      function formatTelemetryThreat(emotion, reason) {
-        let cleanEmo = (emotion || "").replace(/AI Detected:\s*/gi, "").replace(/Voice Detection\s*\[(.*?)\]:\s*/gi, "$1: ").trim();
-        let cleanRsn = (reason || "").replace(/AI Detected:\s*/gi, "").trim();
-
-        if (!cleanEmo || cleanEmo.toLowerCase() === "sad" || cleanEmo.toLowerCase().includes("distress / sad") || cleanEmo.toLowerCase().includes("distress / acoustic")) {
-          cleanEmo = "Acoustic Vocal Distress";
-        } else if (cleanEmo.toLowerCase().includes("fear")) {
-          cleanEmo = "Vocal Panic & Fear Telemetry";
-        } else if (cleanEmo.toLowerCase().includes("cry")) {
-          cleanEmo = "Acoustic Cry & Vocal Distress";
-        } else if (cleanEmo.toLowerCase().includes("domestic")) {
-          cleanEmo = "Domestic Disturbance Telemetry";
-        } else if (cleanEmo.toLowerCase().includes("pain")) {
-          cleanEmo = "Physical Trauma & Decibel Spike";
-        }
-
-        if (!cleanRsn || cleanRsn.toLowerCase() === "sad" || cleanRsn.toLowerCase().includes("confirmed by ml")) {
-          cleanRsn = "Vocal stress decibel threshold exceeded (84 dB) • Distress frequency verified";
-        }
-        return { title: cleanEmo, subtitle: cleanRsn };
-      }
 
       if (filtered.length === 0) {
         eventsFeedContainer.innerHTML = `
@@ -2535,9 +2577,11 @@
         return;
       }
 
+      updateDashboardCounters();
+
       eventsFeedContainer.innerHTML = filtered.map((ev) => {
-        const isCritical = ev.emotion.toLowerCase().includes("distress") || ev.emotion.toLowerCase().includes("pain") || ev.isEmergency;
-        const isDomestic = ev.emotion.toLowerCase().includes("domestic");
+        const isCritical = ev.threatLevel === "High" || ev.isEmergency;
+        const isDomestic = (ev.emotion || "").toLowerCase().includes("domestic");
         const cardClass = isDomestic ? "emergency-domestic" : (isCritical ? "emergency-critical" : "emergency-standard");
 
         const statusTag = ev.status === "RESOLVED" 
@@ -2546,28 +2590,7 @@
               ? `<span class="event-status-tag tag-dispatched">PATROL EN ROUTE</span>`
               : (isDomestic ? `<span class="event-status-tag tag-domestic">DOMESTIC PRIORITY</span>` : `<span class="event-status-tag tag-critical">CRITICAL PRIORITY 1</span>`));
 
-        // Format relative time
-        const diffMs = Date.now() - ev.timestamp;
-        let timeStr = "Moments ago";
-        if (diffMs > 0) {
-          const min = Math.floor(diffMs / 60000);
-          if (min < 60) timeStr = `${min || 1} min${min === 1 ? '' : 's'} ago`;
-          else {
-            const hr = Math.floor(min / 60);
-            if (hr < 24) timeStr = `${hr} hr${hr === 1 ? '' : 's'} ago`;
-            else timeStr = new Date(ev.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-          }
-        }
-
-        // Location formatting
-        const hasCoords = ev.latitude && ev.longitude && (ev.latitude !== 0 || ev.longitude !== 0);
-        const latFormatted = hasCoords ? `${ev.latitude.toFixed(6)}° N` : "18.499042° N";
-        const lngFormatted = hasCoords ? `${ev.longitude.toFixed(6)}° E` : "73.774078° E";
-        const sectorName = hasCoords ? (ev.latitude > 25 ? "Central Delhi Sector" : "Pune Sector - Wakad / Hinjawadi") : "Approximate Cell Triangulation";
-        const gmapsLink = `https://www.google.com/maps?q=${ev.latitude || 18.499042},${ev.longitude || 73.774078}`;
-
-        // Human-crafted telemetry descriptions
-        const threat = formatTelemetryThreat(ev.emotion, ev.reason);
+        const threatTag = `<span style="font-size:0.75rem;font-weight:700;padding:2px 8px;border-radius:6px;background:${ev.threatLevel === 'High' ? '#FEE2E2;color:#991B1B' : (ev.threatLevel === 'Medium' ? '#FEF3C7;color:#92400E' : '#D1FAE5;color:#065F46')};">${ev.threatLevel} Threat &bull; ${ev.confidence}% Match</span>`;
 
         // Caller initials
         const initials = (ev.userName || "Citizen").split(" ").map(w => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase() || "CT";
@@ -2596,20 +2619,26 @@
         ` : `
           <div style="background:#FAF8F2;border:1px dashed var(--dash-border);border-radius:10px;padding:8px 12px;font-size:0.8rem;color:var(--dash-ink-soft);display:flex;align-items:center;gap:6px;margin-top:4px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-            <span>No audio stream captured (Silent / Button SOS)</span>
+            <span>No audio stream captured (Silent / Geofence alert)</span>
           </div>
         `;
+
+        // Contacts alerted chips
+        const contactsHtml = (ev.contactsAlerted && ev.contactsAlerted.length > 0)
+          ? ev.contactsAlerted.map(c => `<span style="display:inline-block;background:#F1F4F9;border:1px solid var(--dash-border);border-radius:6px;padding:2px 7px;font-size:0.75rem;margin:2px 4px 2px 0;"><strong>${c.name}</strong> (${c.relationship}): <a href="tel:${c.phone}" style="color:var(--dash-blue);text-decoration:none;">${c.phone}</a></span>`).join("")
+          : `<span style="font-size:0.78rem;color:var(--dash-ink-soft);">No designated emergency contacts notified</span>`;
 
         return `
           <article class="event-card ${cardClass}" id="card-${ev.id}">
             <!-- Header Row -->
             <div class="event-top-row">
-              <div class="event-id-group">
-                <span class="event-id-badge">#ALT-${ev.id.substring(0, 8)}</span>
+              <div class="event-id-group" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <span class="event-id-badge">#ALT-${ev.alertId}</span>
                 <span class="event-time-pill">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                  ${timeStr}
+                  ${ev.formattedTime}
                 </span>
+                ${threatTag}
               </div>
               <div>${statusTag}</div>
             </div>
@@ -2625,51 +2654,54 @@
               </div>
               <a href="tel:${ev.userPhone.replace(/\\s+/g, '')}" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:6px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span>Call Contact</span>
+                <span>Call Citizen</span>
               </a>
             </div>
 
-            <!-- Quad Core Feature Grid: Msg, Location, Voice, ETA -->
+            <!-- Quad Core Feature Grid: Trigger & Emotion, Location, Voice, ETA -->
             <div class="event-quad-grid">
-              <!-- 1. Message (msg) -->
+              <!-- 1. Trigger & Emotion -->
               <div class="quad-box" style="border-left: 3px solid ${isDomestic ? '#CC4E08' : '#D9251D'};">
                 <div>
                   <div class="quad-title">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    <span>Threat Telemetry</span>
+                    <span>Trigger &amp; Emotion</span>
                   </div>
-                  <div class="quad-main-text" style="color:${isDomestic ? '#CC4E08' : '#D9251D'};">
-                    ${threat.title}
+                  <div class="quad-main-text" style="color:${isDomestic ? '#CC4E08' : '#D9251D'};font-weight:700;">
+                    ${ev.emotion}
                   </div>
-                  <div class="quad-sub-text">
-                    ${threat.subtitle}
+                  <div class="quad-sub-text" style="font-weight:600;margin-top:2px;">
+                    ${ev.triggerSource}
+                  </div>
+                  <div class="quad-sub-text" style="margin-top:4px;font-size:0.8rem;color:var(--dash-ink-soft);">
+                    ${ev.reason}
                   </div>
                 </div>
               </div>
 
-              <!-- 2. Location (location) -->
+              <!-- 2. Location -->
               <div class="quad-box">
                 <div>
                   <div class="quad-title">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span>Coordinates</span>
+                    <span>Location</span>
                   </div>
-                  <div class="loc-coords">${latFormatted}, ${lngFormatted}</div>
-                  <div class="quad-sub-text">${sectorName}</div>
+                  <div class="loc-coords" style="font-weight:700;color:var(--dash-ink);">${ev.locationName}</div>
+                  <div class="quad-sub-text" style="font-family:var(--dash-mono);">${ev.latitude.toFixed(6)}° N, ${ev.longitude.toFixed(6)}° E</div>
                 </div>
                 <div class="loc-actions">
-                  <button type="button" class="btn-loc-radar" data-lat="${ev.latitude || 18.499042}" data-lng="${ev.longitude || 73.774078}" data-sector="${sectorName}" style="display:inline-flex;align-items:center;gap:6px;">
+                  <button type="button" class="btn-loc-radar" data-lat="${ev.latitude}" data-lng="${ev.longitude}" data-location="${ev.locationName}" data-id="${ev.id}" style="display:inline-flex;align-items:center;gap:6px;">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
                     <span>Plot on Radar</span>
                   </button>
-                  <a href="${gmapsLink}" target="_blank" rel="noopener" class="btn-loc-gmaps" style="display:inline-flex;align-items:center;gap:5px;">
+                  <a href="${ev.mapUrl}" target="_blank" rel="noopener" class="btn-loc-gmaps" style="display:inline-flex;align-items:center;gap:5px;">
                     <span>Maps</span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                   </a>
                 </div>
               </div>
 
-              <!-- 3. Voice Recording (voice recording) -->
+              <!-- 3. Audio Evidence -->
               <div class="quad-box">
                 <div>
                   <div class="quad-title">
@@ -2680,26 +2712,36 @@
                 </div>
               </div>
 
-              <!-- 4. Estimated Time Arrival (estimated time arrival) -->
+              <!-- 4. Dispatch ETA & PCR Unit -->
               <div class="quad-box">
                 <div>
                   <div class="quad-title">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    <span>Dispatch ETA</span>
+                    <span>Dispatch Unit</span>
                   </div>
                   <div class="eta-highlight" id="eta-val-${ev.id}" style="display:flex;align-items:center;gap:6px;">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    <span>${ev.etaMinutes}m</span>
+                    <span>${ev.etaMinutes}m ETA</span>
                     <span style="font-size:0.8rem;color:var(--dash-blue);font-weight:600;">(${ev.pcrUnit})</span>
                   </div>
                   <div class="eta-progress-track">
                     <div class="eta-progress-bar"></div>
                   </div>
                   <div class="quad-sub-text" id="eta-status-${ev.id}">
-                    ${ev.status === "RESOLVED" ? "Patrol reached scene. Resolved." : "Patrol unit en route."}
+                    ${ev.status === "RESOLVED" ? "Patrol reached scene. Resolved." : `${ev.pcrUnit} en route`}
                   </div>
                 </div>
               </div>
+            </div>
+
+            <!-- Contacts Alerted & SMS Message Preview -->
+            <div style="background:#FAF8F2;border:1px solid var(--dash-border);border-radius:10px;padding:10px 14px;margin-top:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--dash-ink-soft);">Contacts Alerted</span>
+                <span style="font-size:0.75rem;color:var(--dash-ink-soft);">SMS Dispatch Log</span>
+              </div>
+              <div>${contactsHtml}</div>
+              ${ev.smsMessage ? `<div style="margin-top:8px;font-size:0.78rem;color:var(--dash-ink-soft);background:#FFFFFF;border:1px solid var(--dash-border);border-radius:6px;padding:6px 10px;white-space:pre-line;font-family:var(--dash-mono);">${ev.smsMessage}</div>` : ''}
             </div>
 
             <!-- Action Buttons Footer -->
@@ -2707,11 +2749,11 @@
               <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                 <button type="button" class="btn-dispatch-event ${ev.status === 'EN ROUTE' ? 'dispatched' : ''}" data-event-id="${ev.id}" style="display:inline-flex;align-items:center;gap:8px;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                  <span>${ev.status === 'EN ROUTE' ? 'Patrol Dispatched' : 'Rush Nearest PCR Unit'}</span>
+                  <span>${ev.status === 'EN ROUTE' ? 'Patrol Dispatched' : `Dispatch ${ev.pcrUnit}`}</span>
                 </button>
-                <a href="${gmapsLink}" target="_blank" rel="noopener" class="btn-loc-radar" style="display:inline-flex;align-items:center;gap:6px;">
+                <a href="${ev.mapUrl}" target="_blank" rel="noopener" class="btn-loc-radar" style="display:inline-flex;align-items:center;gap:6px;">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle></svg>
-                  <span>Live Satellite Fix</span>
+                  <span>Google Maps Fix</span>
                 </a>
               </div>
 
@@ -2781,12 +2823,12 @@
         btn.addEventListener("click", () => {
           const lat = parseFloat(btn.getAttribute("data-lat"));
           const lng = parseFloat(btn.getAttribute("data-lng"));
-          const sector = btn.getAttribute("data-sector");
+          const evId = btn.getAttribute("data-id");
+          const ev = currentEvents.find(e => (e.id && e.id === evId) || (e.alertId && e.alertId === evId) || (Math.abs(e.latitude - lat) < 0.005 && Math.abs(e.longitude - lng) < 0.005));
 
-          if (policeTacticalMap) {
+          if (policeTacticalMap && lat && lng) {
             policeTacticalMap.flyTo([lat, lng], 14, { duration: 1 });
-            const pNode = policeDangerNodes.find(n => Math.abs(n.lat - lat) < 0.005);
-            if (pNode) selectPoliceDangerNode(pNode);
+            if (ev) selectPoliceDangerNode(ev);
           }
 
           // Smooth scroll to Section 2
@@ -2802,16 +2844,16 @@
       dispatchButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const evId = btn.getAttribute("data-event-id");
-          const ev = currentEvents.find(e => e.id === evId);
+          const ev = currentEvents.find(e => e.id === evId || e.alertId === evId);
           if (ev) {
             ev.status = "EN ROUTE";
             ev.etaMinutes = 1.2;
             const etaVal = document.getElementById(`eta-val-${evId}`);
             const etaStatus = document.getElementById(`eta-status-${evId}`);
-            if (etaVal) etaVal.innerHTML = `<span style="font-weight:700;color:#D9251D;">ETA: 1.2m</span> <span style="font-size:0.8rem;color:#D9251D;font-weight:700;">(Code 1 Response &bull; Sirens Active)</span>`;
-            if (etaStatus) etaStatus.innerHTML = `<span style="color:#D9251D;font-weight:700;">Patrol units rushing to scene with high-priority response!</span>`;
+            if (etaVal) etaVal.innerHTML = `<span style="font-weight:700;color:#D9251D;">ETA: 1.2m</span> <span style="font-size:0.8rem;color:#D9251D;font-weight:700;">(${ev.pcrUnit} &bull; Sirens Active)</span>`;
+            if (etaStatus) etaStatus.innerHTML = `<span style="color:#D9251D;font-weight:700;">${ev.pcrUnit} rushing to ${ev.locationName}!</span>`;
             btn.classList.add("dispatched");
-            btn.innerHTML = `<span>Backup Units Dispatched</span>`;
+            btn.innerHTML = `<span>${ev.pcrUnit} Dispatched</span>`;
           }
         });
       });
@@ -2822,7 +2864,7 @@
         btn.addEventListener("click", () => {
           const evId = btn.getAttribute("data-event-id");
           if (confirm("Confirm marking this distress event as contained and resolved?")) {
-            const ev = currentEvents.find(e => e.id === evId);
+            const ev = currentEvents.find(e => e.id === evId || e.alertId === evId);
             if (ev) {
               ev.status = "RESOLVED";
               const card = document.getElementById(`card-${evId}`);
@@ -2832,6 +2874,7 @@
               }
               updateDashboardCounters();
               renderEventFeed();
+              renderPoliceTacticalMarkers("all");
             }
           }
         });
@@ -2857,110 +2900,12 @@
     });
 
     // ========================================================
-    // POLICE LEAFLET TACTICAL RADAR & WOMEN DANGER NODES
+    // POLICE LEAFLET TACTICAL RADAR (Strictly using schema fields)
     // ========================================================
     let policeTacticalMap = null;
     let policeMarkersLayer = null;
     let activePoliceAudio = null;
     let activePoliceWaveform = null;
-
-    const policeDangerNodes = [
-      {
-        id: "pnode-1",
-        name: "Sneha K.",
-        age: 19,
-        category: "danger",
-        lat: 18.499042,
-        lng: 73.774078,
-        sector: "Wakad Flyover &bull; Pune West Corridor",
-        threatMsg: "Acoustic Distress: Vocal stress frequency threshold exceeded (84 dB)",
-        threatSub: "High-pitch acoustic scream spike captured by on-device DSP filter (98.4% match)",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834080/ly8zfwrwo8otcge8kkz1.mp4",
-        status: "CRITICAL DANGER",
-        eta: "2.1m",
-        pcrUnit: "PCR Van #09",
-        contacts: [
-          { name: "Father: Ramesh K.", phone: "+919811022334" },
-          { name: "Mother: Savita K.", phone: "+919811022335" }
-        ]
-      },
-      {
-        id: "pnode-2",
-        name: "Pooja M.",
-        age: 24,
-        category: "domestic",
-        lat: 18.472708,
-        lng: 73.935959,
-        sector: "Magarpatta South &bull; Hadapsar Hub",
-        threatMsg: "Domestic Disturbance: High Decibel Interpersonal Conflict",
-        threatSub: "Multiple agitated acoustic spikes and rapid movement detected",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106425/backg5lsfbanbcdoxiwf.mp4",
-        status: "DOMESTIC SOS",
-        eta: "3.2m",
-        pcrUnit: "PCR Van #14",
-        contacts: [
-          { name: "Sister: Kavita M.", phone: "+919156841100" },
-          { name: "Brother: Prashant", phone: "+919420149986" }
-        ]
-      },
-      {
-        id: "pnode-3",
-        name: "Priya S.",
-        age: 21,
-        category: "danger",
-        lat: 18.520430,
-        lng: 73.856744,
-        sector: "FC Road &bull; Shivaji Nagar Central",
-        threatMsg: "Emergency Keyword Trigger: 'Bachao! Please Help Me!'",
-        threatSub: "Keyword verified 3 times in 8 seconds. Automated CAD relay active.",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106506/zoavkdid522ngimigocc.mp4",
-        status: "CRITICAL SOS",
-        eta: "1.9m",
-        pcrUnit: "PCR Patrol #04",
-        contacts: [
-          { name: "Father: Suresh S.", phone: "+919284166996" },
-          { name: "Emergency: Rohit", phone: "+919975819201" }
-        ]
-      },
-      {
-        id: "pnode-4",
-        name: "Ananya R.",
-        age: 17,
-        category: "danger",
-        lat: 18.499106,
-        lng: 73.774813,
-        sector: "Baner - Pashan Link &bull; Sector 3",
-        threatMsg: "Impact & Vocal Distress: Sudden Decibel Transient",
-        threatSub: "Sudden acceleration impact followed by vocal distress burst",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834657/cw6mdyetdcctjvbvdv5b.mp4",
-        status: "MEDICAL SOS",
-        eta: "2.7m",
-        pcrUnit: "PCR Interceptor #01",
-        contacts: [
-          { name: "Mother: Sunita R.", phone: "+918459365721" },
-          { name: "Guardian: Sham Patil", phone: "+919529811731" }
-        ]
-      },
-      {
-        id: "pnode-5",
-        name: "Neha D.",
-        age: 26,
-        category: "danger",
-        lat: 18.591272,
-        lng: 73.738914,
-        sector: "Hinjawadi Phase 1 &bull; Blue Ridge Corner",
-        threatMsg: "Biometric High-Stress Pulse (Heart Rate 148 BPM) + Vocal SOS",
-        threatSub: "Wearable sensor tripped high-stress threshold while walking alone",
-        audioUrl: "https://res.cloudinary.com/dbbzoslvi/video/upload/v1789106570/qncay8obtskvr6nxf215.mp4",
-        status: "CODE RED SOS",
-        eta: "2.4m",
-        pcrUnit: "PCR Van #22",
-        contacts: [
-          { name: "Husband: Vikas D.", phone: "+917822983308" },
-          { name: "Colleague: Om Gaikwad", phone: "+917218362543" }
-        ]
-      }
-    ];
 
     function initPoliceTacticalMap() {
       const container = document.getElementById("police-tactical-map");
@@ -2979,15 +2924,15 @@
 
       try {
         policeTacticalMap = L.map("police-tactical-map", {
-          center: [18.512, 73.815],
-          zoom: 12,
+          center: [18.52043, 73.85674],
+          zoom: 11,
           zoomControl: true
         });
 
-        // Use CartoDB Positron for clean grayscale human design
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        // OpenStreetMap clean tile layer
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
-          attribution: '&copy; CARTO &bull; SafeVaani Police CAD GIS'
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &bull; SurakshaVaani Police CAD'
         }).addTo(policeTacticalMap);
 
         setTimeout(() => { if (policeTacticalMap) policeTacticalMap.invalidateSize(); }, 120);
@@ -3027,34 +2972,40 @@
       const btnRecenter = document.getElementById("btn-recenter-radar");
       if (btnRecenter) {
         btnRecenter.addEventListener("click", () => {
-          const group = new L.featureGroup(policeDangerNodes.map(n => L.marker([n.lat, n.lng])));
-          policeTacticalMap.fitBounds(group.getBounds().pad(0.15));
+          const validEvents = currentEvents.filter(e => e.latitude && e.longitude);
+          if (validEvents.length > 0) {
+            const group = new L.featureGroup(validEvents.map(n => L.marker([n.latitude, n.longitude])));
+            policeTacticalMap.fitBounds(group.getBounds().pad(0.15));
+          }
         });
       }
 
-      // Default select Node 1
-      selectPoliceDangerNode(policeDangerNodes[0]);
+      // Default select first active alert
+      if (currentEvents.length > 0) {
+        selectPoliceDangerNode(currentEvents[0]);
+      }
     }
 
     function renderPoliceTacticalMarkers(filter = "all") {
       if (!policeMarkersLayer) return;
       policeMarkersLayer.clearLayers();
 
-      const filtered = policeDangerNodes.filter(node => {
-        if (filter === "audio") return Boolean(node.audioUrl);
-        if (filter === "domestic") return node.category === "domestic";
+      const filtered = currentEvents.filter(ev => {
+        if (!ev || !ev.latitude || !ev.longitude) return false;
+        if (filter === "audio") return Boolean(ev.audioUrl);
+        if (filter === "domestic") return (ev.emotion || "").toLowerCase().includes("domestic");
         return true;
       });
 
-      filtered.forEach(node => {
-        const isDomestic = node.category === "domestic";
+      filtered.forEach(ev => {
+        const isDomestic = (ev.emotion || "").toLowerCase().includes("domestic");
         const iconHtml = `
-          <div class="safety-beacon ${isDomestic ? 'domestic' : ''}" title="${node.name} - Click for telemetry">
+          <div class="safety-beacon ${isDomestic ? 'domestic' : ''}" title="${ev.userName} - ${ev.locationName}">
             <div class="safety-beacon-ring"></div>
             <div class="safety-beacon-core" style="display:flex;align-items:center;justify-content:center;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
             </div>
-            <div class="safety-beacon-label">${node.name.split(" ")[0]}</div>
+            <div class="safety-beacon-label">${(ev.userName || "Citizen").split(" ")[0]}</div>
           </div>
         `;
 
@@ -3065,29 +3016,29 @@
           html: iconHtml
         });
 
-        const marker = L.marker([node.lat, node.lng], { icon: customIcon });
+        const marker = L.marker([ev.latitude, ev.longitude], { icon: customIcon });
 
         marker.bindPopup(`
-          <div style="font-family:var(--font-sans);padding:4px;">
-            <div style="font-weight:700;font-size:1rem;color:var(--dash-ink);">${node.name} (${node.age} yrs)</div>
-            <div style="font-size:0.78rem;color:var(--dash-ink-soft);font-family:var(--font-mono);margin:2px 0 6px 0;">${node.sector}</div>
-            <div style="font-size:0.84rem;font-weight:600;color:#D9251D;margin-bottom:8px;">${node.threatMsg}</div>
-            <button type="button" style="background:var(--dash-ink);color:#fff;border:0;padding:6px 12px;border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;width:100%;" onclick="window.selectPoliceNodeById('${node.id}')">
+          <div style="font-family:var(--dash-font);padding:4px;min-width:200px;">
+            <div style="font-weight:700;font-size:1rem;color:var(--dash-ink);">${ev.userName}</div>
+            <div style="font-size:0.78rem;color:var(--dash-ink-soft);font-family:var(--dash-mono);margin:2px 0 6px 0;">${ev.locationName}</div>
+            <div style="font-size:0.84rem;font-weight:600;color:#D9251D;margin-bottom:8px;">${ev.emotion} &bull; ${ev.threatLevel} (${ev.confidence}%)</div>
+            <button type="button" style="background:var(--dash-ink);color:#fff;border:0;padding:6px 12px;border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;width:100%;font-family:var(--dash-font);" onclick="window.selectPoliceNodeById('${ev.id}')">
               Inspect Full Telemetry &rarr;
             </button>
           </div>
         `);
 
         marker.on("click", () => {
-          selectPoliceDangerNode(node);
+          selectPoliceDangerNode(ev);
         });
 
         policeMarkersLayer.addLayer(marker);
       });
     }
 
-    function selectPoliceDangerNode(node) {
-      if (!node) return;
+    function selectPoliceDangerNode(ev) {
+      if (!ev) return;
 
       const pName = document.getElementById("pnode-name");
       const pSector = document.getElementById("pnode-sector");
@@ -3100,29 +3051,31 @@
       const btnDispatch = document.getElementById("btn-pnode-dispatch");
       const btnPlay = document.getElementById("btn-pnode-play");
 
-      if (pName) pName.textContent = `${node.name} (${node.age} yrs)`;
-      if (pSector) pSector.innerHTML = node.sector;
-      if (pThreat) pThreat.textContent = node.threatMsg;
-      if (pThreatSub) pThreatSub.textContent = node.threatSub;
-      if (pCoords) pCoords.textContent = `${node.lat.toFixed(6)}° N, ${node.lng.toFixed(6)}° E`;
-      if (pGmaps) pGmaps.href = `https://www.google.com/maps?q=${node.lat},${node.lng}`;
+      if (pName) pName.textContent = `${ev.userName} (${ev.userPhone})`;
+      if (pSector) pSector.innerHTML = `${ev.locationName}`;
+      if (pThreat) pThreat.textContent = `${ev.emotion} [${ev.threatLevel} Threat • ${ev.confidence}% Confidence]`;
+      if (pThreatSub) pThreatSub.textContent = `${ev.triggerSource} • ${ev.reason}`;
+      if (pCoords) pCoords.textContent = `${ev.latitude.toFixed(6)}° N, ${ev.longitude.toFixed(6)}° E`;
+      if (pGmaps) pGmaps.href = ev.mapUrl || `https://www.google.com/maps?q=${ev.latitude},${ev.longitude}`;
 
       if (pContacts) {
-        pContacts.innerHTML = node.contacts.map(c => `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--dash-border-light);">
-            <span style="font-size:0.85rem;font-weight:600;">${c.name} (${c.phone})</span>
-            <a href="tel:${c.phone}" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:4px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              <span>Call</span>
-            </a>
-          </div>
-        `).join("");
+        pContacts.innerHTML = (ev.contactsAlerted && ev.contactsAlerted.length > 0)
+          ? ev.contactsAlerted.map(c => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--dash-border-light);">
+              <span style="font-size:0.85rem;font-weight:600;">${c.name} (${c.relationship}) - ${c.phone}</span>
+              <a href="tel:${c.phone}" class="btn-quick-call" style="display:inline-flex;align-items:center;gap:4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>Call</span>
+              </a>
+            </div>
+          `).join("")
+          : `<div style="font-size:0.85rem;color:var(--dash-ink-soft);padding:4px 0;">No contacts specified</div>`;
       }
 
       if (pAudioBox && btnPlay) {
-        if (node.audioUrl) {
+        if (ev.audioUrl) {
           pAudioBox.style.display = "block";
-          btnPlay.setAttribute("data-src", node.audioUrl);
+          btnPlay.setAttribute("data-src", ev.audioUrl);
         } else {
           pAudioBox.style.display = "none";
         }
@@ -3132,18 +3085,18 @@
         btnDispatch.disabled = false;
         btnDispatch.innerHTML = `
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          <span>Dispatch ${node.pcrUnit} (ETA ${node.eta})</span>
+          <span>Dispatch ${ev.pcrUnit} (ETA ${ev.etaMinutes}m)</span>
         `;
       }
 
-      if (policeTacticalMap) {
-        policeTacticalMap.panTo([node.lat, node.lng], { animate: true, duration: 0.8 });
+      if (policeTacticalMap && ev.latitude && ev.longitude) {
+        policeTacticalMap.panTo([ev.latitude, ev.longitude], { animate: true, duration: 0.8 });
       }
     }
 
     window.selectPoliceNodeById = function(id) {
-      const node = policeDangerNodes.find(n => n.id === id);
-      if (node) selectPoliceDangerNode(node);
+      const ev = currentEvents.find(n => n.id === id || n.alertId === id);
+      if (ev) selectPoliceDangerNode(ev);
     };
 
     // Playback inside police details panel
@@ -3189,8 +3142,9 @@
     const btnPnodeDispatch = document.getElementById("btn-pnode-dispatch");
     if (btnPnodeDispatch) {
       btnPnodeDispatch.addEventListener("click", () => {
+        emergencySiren.play(6);
         btnPnodeDispatch.disabled = true;
-        btnPnodeDispatch.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> PCR Unit Dispatched (Sirens On)</span>`;
+        btnPnodeDispatch.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> PCR Unit Dispatched (Sirens Active 🚨)</span>`;
       });
     }
 

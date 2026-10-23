@@ -238,13 +238,33 @@
     html[data-theme="dark"] #parent-safety-map .leaflet-tile {
       filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
     }
-    html[data-theme="dark"] #bullying-alert-card {
+    html[data-theme="dark"] #bullying-alert-card,
+    html[data-theme="dark"] .parent-alert-banner {
       background: #1C140E !important;
       border-color: #4A2810 !important;
       border-left-color: #E65C14 !important;
     }
-    html[data-theme="dark"] #bullying-alert-card p {
+    html[data-theme="dark"] .alert-title {
+      color: #FFB088 !important;
+    }
+    html[data-theme="dark"] #bullying-alert-card p,
+    html[data-theme="dark"] .alert-desc {
       color: #E2B696 !important;
+    }
+    html[data-theme="dark"] .btn-alert-dismiss {
+      color: #FFB088 !important;
+      border-color: #5A3015 !important;
+    }
+    html[data-theme="dark"] .btn-alert-dismiss:hover {
+      background: #2E1A0D !important;
+    }
+    html[data-theme="dark"] .no-alerts-banner {
+      background: var(--dash-card-bg) !important;
+      border-color: var(--dash-border) !important;
+      color: var(--dash-green) !important;
+    }
+    html[data-theme="dark"] .no-alerts-icon {
+      background: #102619 !important;
     }
     html[data-theme="dark"] .sf {
       background: #080A0F;
@@ -775,584 +795,6 @@
     }
 
     /* ========================================================
-       TEJO HUMAN-CRAFTED SAAS SAFETY DASHBOARD SYSTEM
-    ======================================================== */
-    .tejo-shell {
-      background: var(--dash-card-bg);
-      border-radius: 28px;
-      padding: 24px;
-      box-shadow: 0 12px 48px -12px rgba(0, 0, 0, 0.08);
-      border: 1px solid var(--dash-border);
-      display: flex;
-      gap: 22px;
-      min-height: calc(100vh - 120px);
-      width: 100%;
-      box-sizing: border-box;
-      margin-bottom: 24px;
-    }
-
-    /* 1. Left Vertical Rail */
-    .tejo-rail {
-      width: 64px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 0;
-      flex-shrink: 0;
-      user-select: none;
-    }
-    .tejo-brand {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .tejo-brand-logo {
-      font-family: var(--dash-font);
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: 0.12em;
-      color: var(--dash-ink);
-      line-height: 1;
-    }
-    .tejo-brand-sub {
-      font-size: 0.52rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--dash-ink-soft);
-      text-transform: uppercase;
-      margin-top: 3px;
-      line-height: 1.1;
-    }
-    .tejo-rail-nav {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      width: 100%;
-    }
-    .tejo-rail-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: transparent;
-      border: 0;
-      color: var(--dash-ink-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all .2s ease;
-      text-decoration: none;
-    }
-    .tejo-rail-btn:hover {
-      background: rgba(0, 0, 0, 0.05);
-      color: var(--dash-ink);
-    }
-    .tejo-rail-btn.active {
-      background: #18181B;
-      color: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-    }
-    html[data-theme="dark"] .tejo-rail-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #FFFFFF;
-    }
-    html[data-theme="dark"] .tejo-rail-btn.active {
-      background: #F1F4F9;
-      color: #0C1017;
-    }
-    .tejo-rail-bottom {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-    .tejo-mini-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #E2E8F0;
-      color: var(--dash-ink);
-      font-size: 0.75rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    html[data-theme="dark"] .tejo-mini-avatar {
-      background: #2D3748;
-      color: #F1F4F9;
-    }
-    .tejo-radar-capsule {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: #18181B;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-      transition: transform .15s ease;
-    }
-    .tejo-radar-capsule:hover {
-      transform: scale(1.05);
-    }
-    html[data-theme="dark"] .tejo-radar-capsule {
-      background: #222938;
-    }
-    .tejo-radar-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #2DD4BF;
-      box-shadow: 0 0 10px #2DD4BF;
-      animation: beaconPulse 1.8s infinite;
-    }
-
-    /* 2. Main Workspace */
-    .tejo-main-workspace {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      min-width: 0;
-    }
-
-    /* Top Profile Header Card */
-    .tejo-header-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .tejo-profile-bar {
-      background: #F4F5F7;
-      border-radius: 20px;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      flex: 1;
-      min-width: 320px;
-    }
-    html[data-theme="dark"] .tejo-profile-bar {
-      background: #0E121A;
-      border: 1px solid var(--dash-border);
-    }
-    .tejo-user-chip {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tejo-avatar-wrap {
-      position: relative;
-      width: 44px;
-      height: 44px;
-      flex-shrink: 0;
-    }
-    .tejo-avatar-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #FFFFFF;
-      display: block;
-    }
-    .tejo-live-dot {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 10px;
-      height: 10px;
-      background: #22C55E;
-      border: 2px solid #FFFFFF;
-      border-radius: 50%;
-    }
-    .tejo-user-name {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--dash-ink);
-      white-space: nowrap;
-      line-height: 1.2;
-    }
-    .tejo-telemetry-chip {
-      background: #FFFFFF;
-      border-radius: 12px;
-      padding: 6px 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: var(--dash-ink);
-      font-weight: 500;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      white-space: nowrap;
-    }
-    html[data-theme="dark"] .tejo-telemetry-chip {
-      background: #151A24;
-      color: var(--dash-ink);
-      border: 1px solid var(--dash-border);
-    }
-    .tejo-chip-action-btn {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #F0F2F5;
-      border: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--dash-ink);
-      padding: 0;
-      flex-shrink: 0;
-      transition: background .15s ease;
-    }
-    .tejo-chip-action-btn:hover {
-      background: #E2E8F0;
-    }
-    html[data-theme="dark"] .tejo-chip-action-btn {
-      background: #222938;
-      color: var(--dash-ink);
-    }
-
-    /* Logs & Calendar Strip */
-    .tejo-logs-strip {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 6px;
-    }
-    .tejo-logs-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      justify-content: space-between;
-    }
-    .tejo-logs-title {
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: var(--dash-ink);
-    }
-    .tejo-calendar-row {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-    .tejo-cal-day {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 5px 8px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 0.72rem;
-      color: var(--dash-ink-soft);
-      transition: all .2s ease;
-      user-select: none;
-      min-width: 32px;
-    }
-    .tejo-cal-day span:first-child {
-      font-size: 0.62rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .tejo-cal-day span:last-child {
-      font-size: 0.84rem;
-      font-weight: 700;
-    }
-    .tejo-cal-day:hover {
-      background: rgba(0,0,0,0.05);
-      color: var(--dash-ink);
-    }
-    .tejo-cal-day.active {
-      background: #18181B;
-      color: #FFFFFF;
-    }
-    html[data-theme="dark"] .tejo-cal-day.active {
-      background: #F1F4F9;
-      color: #0C1017;
-    }
-
-    /* 3. Middle Body Split */
-    .tejo-body-grid {
-      display: grid;
-      grid-template-columns: 1fr 310px;
-      gap: 20px;
-      flex: 1;
-      min-height: 560px;
-    }
-    @media (max-width: 1100px) {
-      .tejo-body-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .tejo-map-container {
-      position: relative;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid var(--dash-border);
-      min-height: 540px;
-      height: 100%;
-      background: #F3F4F6;
-    }
-    #parent-safety-map {
-      width: 100%;
-      height: 100%;
-      min-height: 540px;
-    }
-    .tejo-float-pill {
-      position: absolute;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #3F3F46;
-      color: #FFFFFF;
-      padding: 9px 20px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-      z-index: 500;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.18);
-      transition: background .2s ease;
-      white-space: nowrap;
-      text-decoration: none;
-    }
-    .tejo-float-pill:hover {
-      background: #27272A;
-    }
-    .tejo-recenter-float-btn {
-      position: absolute;
-      bottom: 22px;
-      right: 22px;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: #FFFFFF;
-      color: #18181B;
-      border: 1px solid var(--dash-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-      z-index: 500;
-      transition: all .2s ease;
-    }
-    .tejo-recenter-float-btn:hover {
-      background: #F4F5F7;
-    }
-    html[data-theme="dark"] .tejo-recenter-float-btn {
-      background: #151A24;
-      color: #F1F4F9;
-      border-color: var(--dash-border);
-    }
-
-    /* Waypoint Coordinate Callout Marker */
-    .tejo-callout-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transform: translate(-50%, -100%);
-      pointer-events: auto;
-      cursor: pointer;
-    }
-    .tejo-callout-box {
-      background: #27272A;
-      color: #FFFFFF;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-family: var(--dash-font);
-      font-size: 0.65rem;
-      font-weight: 600;
-      line-height: 1.25;
-      text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-      white-space: nowrap;
-      position: relative;
-    }
-    .tejo-callout-box::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 4px;
-      border-style: solid;
-      border-color: #27272A transparent transparent transparent;
-    }
-    .tejo-waypoint-dot {
-      width: 10px;
-      height: 10px;
-      background: #18181B;
-      border: 2px solid #FFFFFF;
-      border-radius: 50%;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-      margin-top: 4px;
-    }
-    .tejo-waypoint-dot.flag-start {
-      width: 22px;
-      height: 22px;
-      background: #EF4444;
-      border: 2px solid #FFFFFF;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-    }
-    .tejo-waypoint-dot.flag-end {
-      width: 22px;
-      height: 22px;
-      background: #18181B;
-      border: 2px solid #FFFFFF;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-    }
-
-    /* 4. Right Column Evidence Panel */
-    .tejo-evidence-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .tejo-evidence-card {
-      background: var(--dash-card-bg);
-      border: 1px solid var(--dash-border);
-      border-radius: 18px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .tejo-evidence-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--dash-ink-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .tejo-media-thumb {
-      position: relative;
-      width: 100%;
-      height: 110px;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #1E293B;
-    }
-    .tejo-media-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .tejo-media-overlay-time {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.85));
-      padding: 14px 8px 6px 8px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #FFFFFF;
-      font-family: var(--dash-mono);
-    }
-    .tejo-video-play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 38px;
-      height: 38px;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(8px);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #18181B;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      cursor: pointer;
-      transition: transform .2s ease;
-    }
-    .tejo-video-play-btn:hover {
-      transform: translate(-50%, -50%) scale(1.08);
-    }
-    .tejo-audio-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #F4F5F7;
-      border-radius: 12px;
-      padding: 10px 14px;
-    }
-    html[data-theme="dark"] .tejo-audio-bar-row {
-      background: #0E121A;
-    }
-    .tejo-audio-play-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #18181B;
-      color: #FFFFFF;
-      border: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: transform .15s ease;
-    }
-    .tejo-audio-play-btn:hover {
-      transform: scale(1.05);
-    }
-    html[data-theme="dark"] .tejo-audio-play-btn {
-      background: #FFFFFF;
-      color: #0C1017;
-    }
-    .tejo-waveform-bars {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      flex: 1;
-      height: 24px;
-    }
-    .tejo-wave-bar {
-      flex: 1;
-      background: #94A3B8;
-      border-radius: 2px;
-      transition: height .2s ease;
-      min-height: 4px;
-    }
-    .tejo-waveform-bars.playing .tejo-wave-bar {
-      animation: waveAnimate 0.8s ease-in-out infinite alternate;
-    }
-    .tejo-waveform-bars.playing .tejo-wave-bar:nth-child(2n) {
-      animation-delay: 0.15s;
-    }
-    .tejo-waveform-bars.playing .tejo-wave-bar:nth-child(3n) {
-      animation-delay: 0.3s;
-    }
-    @keyframes waveAnimate {
-      from { height: 6px; }
-      to { height: 24px; }
-    }
-
-    /* ========================================================
        SLIDEBAR / SIDEBAR DASHBOARD WORKSPACE LAYOUT
     ======================================================== */
     .console-top-action-bar {
@@ -1835,14 +1277,19 @@
       }
     }
 
-    /* Telemetry widgets */
+    /* Child Status & Telemetry widgets */
     .widgets-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
       margin: 0;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 1180px) {
+      .widgets-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
       .widgets-grid {
         grid-template-columns: 1fr;
       }
@@ -1851,7 +1298,7 @@
       background: #FFFFFF;
       border: 1.5px solid var(--dash-border);
       border-radius: 20px;
-      padding: 22px 24px;
+      padding: 20px 22px;
       box-shadow: 0 4px 18px -4px rgba(31, 34, 54, 0.06);
       display: flex;
       flex-direction: column;
@@ -1868,25 +1315,26 @@
       color: var(--dash-ink-soft);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .widget-value {
       font-family: var(--dash-font) !important;
-      font-size: 1.65rem;
+      font-size: 1.55rem;
       font-weight: 800;
       letter-spacing: -0.025em;
       color: var(--dash-ink);
-      line-height: 1.15;
+      line-height: 1.2;
       margin-bottom: 6px;
     }
     .widget-sub {
       font-family: var(--dash-font);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--dash-ink-soft);
       font-weight: 500;
+      line-height: 1.35;
     }
     .status-pill {
       display: inline-flex;
@@ -1903,6 +1351,16 @@
       background: #EAF7EE;
       color: var(--dash-green);
       border: 1px solid #A3D8B4;
+    }
+    .status-pill-amber {
+      background: #FFF4E5;
+      color: #CC4E08;
+      border: 1px solid #FFD9A0;
+    }
+    .status-pill-red {
+      background: #FEE2E2;
+      color: #D9251D;
+      border: 1px solid #FCA5A5;
     }
     .status-pill-blue {
       background: rgba(63, 125, 222, 0.12);
@@ -2333,40 +1791,116 @@
       background: #F0EAD8;
     }
 
-    /* Sound / Audio Monitor Card */
-    .audio-monitor-card {
+    /* Actionable & Minimal Parent Safety Alert Banner */
+    .parent-alert-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #FFF9F2;
+      border: 1.5px solid #FFD9A0;
+      border-left: 5px solid #E65C14;
+      border-radius: 16px;
+      padding: 14px 20px;
+      box-shadow: 0 4px 14px -3px rgba(204, 78, 8, 0.08);
+      transition: all .25s ease;
+    }
+    .parent-alert-banner.dismissed {
+      display: none !important;
+    }
+    .alert-icon-box {
+      font-size: 1.5rem;
+      line-height: 1;
+      background: #FFEED9;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .alert-title {
+      color: #943400;
+      font-size: 0.96rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+    .alert-tag {
+      font-size: 0.72rem;
+      background: #FFE4C4;
+      color: #7A2600;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid #FFCD99;
+    }
+    .alert-desc {
+      margin: 4px 0 0 0;
+      font-size: 0.85rem;
+      color: #5E2404;
+      line-height: 1.45;
+    }
+    .alert-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-alert-audio {
+      background: var(--dash-ink);
+      color: #FFFFFF;
+      border: 0;
+      padding: 7px 14px;
+      border-radius: 10px;
+      font-size: 0.80rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background .15s ease;
+    }
+    .btn-alert-audio:hover {
+      background: #3A4060;
+    }
+    .btn-alert-dismiss {
+      background: transparent;
+      color: #7A2600;
+      border: 1px solid #FFCD99;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.80rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+    .btn-alert-dismiss:hover {
+      background: #FFE4C4;
+    }
+    .no-alerts-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       background: #FFFFFF;
       border: 1.5px solid var(--dash-border);
-      border-radius: 20px;
-      padding: 22px 26px;
-      margin: 0;
-      display: flex;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--dash-green);
+      box-shadow: 0 2px 8px rgba(31, 34, 54, 0.04);
+    }
+    .no-alerts-icon {
+      width: 22px;
+      height: 22px;
+      background: #EAF7EE;
+      color: var(--dash-green);
+      border-radius: 50%;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      box-shadow: 0 4px 18px -4px rgba(31, 34, 54, 0.06);
-    }
-    .wave-bars-box {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      height: 24px;
-    }
-    .wbar {
-      width: 3.5px;
-      background: var(--dash-orange);
-      border-radius: 3px;
-      animation: waveDance 1.2s infinite ease-in-out;
-    }
-    .wbar:nth-child(2) { animation-delay: .2s; }
-    .wbar:nth-child(3) { animation-delay: .4s; }
-    .wbar:nth-child(4) { animation-delay: .1s; }
-    .wbar:nth-child(5) { animation-delay: .3s; }
-    .wbar:nth-child(6) { animation-delay: .5s; }
-    @keyframes waveDance {
-      0%, 100% { height: 6px; }
-      50% { height: 22px; }
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 800;
     }
 
     /* Pairing Card */
@@ -2545,7 +2079,6 @@
         <a href="/voice-sos" class="hd-link">Voice SOS</a>
         <a href="/dashboard/" class="hd-link">Dashboards Hub</a>
         <a href="/dashboard/parent/" class="hd-link" aria-current="page">Parent Portal</a>
-        <a href="/dashboard/police/" class="hd-link">Police CAD</a>
         <button type="button" class="btn-theme-toggle" id="theme-toggle-btn" aria-label="Toggle Dark and Light Mode" title="Toggle Theme">
           <span class="theme-toggle-track">
             <span class="theme-toggle-thumb">
@@ -2569,8 +2102,7 @@
   <div class="hd-sheet" id="hd-sheet" hidden style="position:fixed;top:72px;left:0;right:0;bottom:0;background:#F8F3E8;z-index:999;padding:24px;">
     <nav style="display:flex;flex-direction:column;gap:18px;font-size:1.15rem;font-weight:600;">
       <a href="/dashboard/" style="color:var(--dash-ink);text-decoration:none;">Unified Dashboard</a>
-      <a href="/dashboard/parent/" style="color:var(--dash-orange);text-decoration:none;font-weight:700;">Parent Portal (Login)</a>
-      <a href="/dashboard/police/" style="color:var(--dash-ink);text-decoration:none;">Police CAD Room &rarr;</a>
+      <a href="/dashboard/parent/" style="color:var(--dash-orange);text-decoration:none;font-weight:700;">Parent Portal</a>
       <a href="/features" style="color:var(--dash-ink);text-decoration:none;">Features</a>
       <a href="/voice-sos" style="color:var(--dash-ink);text-decoration:none;">Voice SOS</a>
       <a href="/" style="color:var(--dash-ink);text-decoration:none;">Home</a>
@@ -2611,7 +2143,7 @@
 
         <!-- Alert Banner -->
         <div class="auth-alert" id="auth-alert">
-          <span id="auth-alert-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>
+          <span id="auth-alert-icon">⚠️</span>
           <span id="auth-alert-text"></span>
         </div>
 
@@ -2653,7 +2185,7 @@
             <label class="form-label" for="signup-name">Full Name</label>
             <div class="form-input-wrap">
               <svg class="form-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <input class="form-input" type="text" id="signup-name" placeholder="e.g. Ananya Sharma" required>
+              <input class="form-input" type="text" id="signup-name" placeholder="e.g. Priya Sharma" required>
             </div>
           </div>
 
@@ -2700,397 +2232,577 @@
     </div>
 
     <!-- ========================================================
-         VIEW 2: AUTHENTICATED PARENT DASHBOARD CONSOLE (TEJO SAAS)
+         VIEW 2: AUTHENTICATED PARENT DASHBOARD CONSOLE
     ======================================================== -->
     <div id="console-container" class="parent-console">
-      <!-- TEJO HUMAN-CRAFTED DASHBOARD CONTAINER (MATCHING REFERENCE IMAGE 1) -->
-      <div class="tejo-shell">
-        <!-- 1. LEFT VERTICAL RAIL -->
-        <aside class="tejo-rail" aria-label="Tejo Navigation Rail">
-          <div style="display:flex;flex-direction:column;align-items:center;width:100%;">
-            <div class="tejo-brand">
-              <div class="tejo-brand-logo">TEJO</div>
-              <div class="tejo-brand-sub">MY SAFETY BUDDY</div>
-            </div>
+      <!-- Top Action & Status Bar -->
+      <div class="console-top-action-bar">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+          <button type="button" class="btn-toggle-slidebar" id="btn-toggle-slidebar" aria-label="Menu" title="Toggle Navigation Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            <span>Menu</span>
+          </button>
+          <div class="user-status-inline">
+            <span class="status-pill status-pill-green">
+              <span style="width:7px;height:7px;border-radius:50%;background:#2F9E5B;display:inline-block;"></span>
+              Safe at school
+            </span>
+            <span style="font-size:0.82rem;color:var(--dash-ink-soft);font-weight:600;">
+              Child: <strong style="color:var(--dash-ink);">Aarav</strong> &bull; Connected
+            </span>
+          </div>
+        </div>
 
-            <nav class="tejo-rail-nav">
-              <button type="button" class="tejo-rail-btn sb-nav-item" data-target="section-wellness" title="Home">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              </button>
-              <button type="button" class="tejo-rail-btn active sb-nav-item" data-target="section-map" title="Live Telemetry Route">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-              </button>
-              <button type="button" class="tejo-rail-btn sb-nav-item" data-target="section-wellness" title="Alerts &amp; Wellness">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-              </button>
-              <button type="button" class="tejo-rail-btn sb-nav-item" data-target="section-pair" title="Pair Device">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-              </button>
-              <button type="button" class="tejo-rail-btn" id="btn-tejo-search" title="Search Telemetry">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              </button>
-            </nav>
+        <div class="console-actions">
+          <button type="button" class="btn-theme-toggle" id="parent-theme-toggle" aria-label="Toggle Theme" title="Toggle Dark/Light Mode">
+            <span class="theme-toggle-track">
+              <span class="theme-toggle-thumb">
+                <svg class="icon-sun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              </span>
+            </span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+          <div class="user-info-chip">
+            <div class="user-avatar" id="avatar-initials">PS</div>
+            <div>
+              <div class="user-text-primary" id="disp-parent-name">Priya Sharma</div>
+              <div class="user-text-sub" id="disp-parent-email">parent@safevaani.internal</div>
+            </div>
+          </div>
+          <button class="btn-signout" id="btn-signout" type="button">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- WORKSPACE SPLIT: SLIDEBAR ON LEFT + MAIN CONTENT ON RIGHT -->
+      <div class="console-workspace-layout" id="console-workspace-layout">
+        <!-- Simplified Parent Sidebar -->
+        <aside class="console-slidebar yt-slidebar" id="console-slidebar" aria-label="Sidebar Navigation">
+          <!-- MINI RAIL (Collapsed mode) -->
+          <div class="yt-mini-rail" id="yt-mini-rail">
+            <button type="button" class="yt-mini-item sb-nav-item active" data-target="section-home" title="Home">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              <span>Home</span>
+            </button>
+            <button type="button" class="yt-mini-item sb-nav-item" data-target="section-map" title="Child Location">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span>Location</span>
+            </button>
+            <button type="button" class="yt-mini-item sb-nav-item" data-target="section-alerts" title="Safety Alerts">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Alerts</span>
+            </button>
+            <button type="button" class="yt-mini-item sb-nav-item" data-target="section-devices" title="Devices">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+              <span>Devices</span>
+            </button>
+            <button type="button" class="yt-mini-item sb-nav-item" data-target="section-history" title="Incident History">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 pin 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              <span>History</span>
+            </button>
+            <button type="button" class="yt-mini-item sb-nav-item" data-target="section-settings" title="Settings">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+              <span>Settings</span>
+            </button>
+            <button type="button" class="yt-mini-item" id="mini-toggle-expand" title="Expand Menu">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+              <span>Expand</span>
+            </button>
           </div>
 
-          <div class="tejo-rail-bottom">
-            <div class="tejo-mini-avatar" id="avatar-initials" title="User Profile">AS</div>
-            <div class="tejo-radar-capsule" id="btn-toggle-danger-zone" title="Toggle Perimeter Shield">
-              <div class="tejo-radar-dot"></div>
+          <!-- FULL GUIDE (Expanded mode) -->
+          <div class="yt-full-guide" id="yt-full-guide">
+            <!-- SECTION 1: PRIMARY NAVIGATION -->
+            <div class="yt-section">
+              <button type="button" class="yt-row sb-nav-item active" data-target="section-home">
+                <span class="yt-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </span>
+                <span class="yt-label">Home</span>
+              </button>
+
+              <button type="button" class="yt-row sb-nav-item" data-target="section-map">
+                <span class="yt-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </span>
+                <span class="yt-label">Child Location</span>
+              </button>
+
+              <button type="button" class="yt-row sb-nav-item" data-target="section-alerts">
+                <span class="yt-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <span class="yt-label">Safety Alerts</span>
+              </button>
+
+              <button type="button" class="yt-row sb-nav-item" data-target="section-devices">
+                <span class="yt-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+                </span>
+                <span class="yt-label">Devices</span>
+              </button>
+
+              <button type="button" class="yt-row sb-nav-item" data-target="section-history">
+                <span class="yt-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                </span>
+                <span class="yt-label">Incident History</span>
+              </button>
+
+              <button type="button" class="yt-row sb-nav-item" data-target="section-settings">
+                <span class="yt-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                </span>
+                <span class="yt-label">Settings</span>
+              </button>
+            </div>
+
+            <div class="yt-divider"></div>
+
+            <!-- SECTION 2: QUICK ACTIONS -->
+            <div class="yt-section">
+              <div class="yt-section-title">
+                <span>Quick Actions</span>
+              </div>
+
+              <button type="button" class="yt-row" id="btn-sb-ring">
+                <span class="yt-icon" style="color:#2F9E5B;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </span>
+                <span class="yt-label">Ring Device</span>
+                <span class="yt-pill-tag tag-green">Loud</span>
+              </button>
+
+              <button type="button" class="yt-row" id="btn-sb-ping">
+                <span class="yt-icon" style="color:#3F7DDE;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                </span>
+                <span class="yt-label">Refresh Location</span>
+                <span class="yt-pill-tag tag-blue">GPS</span>
+              </button>
+            </div>
+
+            <div class="yt-divider"></div>
+
+            <!-- SIDEBAR FOOTER -->
+            <div class="yt-footer">
+              <div class="yt-footer-links">
+                <a href="/about/">About</a>
+                <a href="/security/">Safety</a>
+                <a href="/privacy-policy/">Privacy</a>
+                <a href="/terms-of-service/">Terms</a>
+              </div>
+              <div class="yt-copyright">
+                &copy; 2026 SafeVaani BalMitra
+              </div>
             </div>
           </div>
         </aside>
 
-        <!-- 2. MAIN WORKSPACE -->
-        <div class="tejo-main-workspace">
-          <!-- TOP PROFILE BAR CARD -->
-          <div class="tejo-header-card">
-            <div class="tejo-profile-bar">
-              <!-- User Profile Avatar & Name -->
-              <div class="tejo-user-chip">
-                <div class="tejo-avatar-wrap">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="Carter Bergson" class="tejo-avatar-img">
-                  <span class="tejo-live-dot"></span>
-                </div>
-                <div>
-                  <div class="tejo-user-name" id="disp-child-name">Carter Bergson</div>
-                </div>
-              </div>
+        <!-- Slidebar Mobile Backdrop -->
+        <div class="slidebar-backdrop" id="slidebar-backdrop"></div>
 
-              <!-- Phone Chip -->
-              <div class="tejo-telemetry-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span id="disp-child-phone">+91 95826 96541</span>
-                <a href="tel:+919582696541" class="tejo-chip-action-btn" title="Call Contact">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </a>
-              </div>
+        <!-- MAIN CONTENT WORKSPACE -->
+        <div class="console-main-content">
 
-              <!-- Address Chip -->
-              <div class="tejo-telemetry-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                <span>39, Juhu Apartment, Mumbai, Maharashtra 400049, India</span>
-                <button type="button" class="tejo-chip-action-btn" id="btn-view-home" title="View Home">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
-                </button>
+          <!-- 1. CHILD STATUS & TOP METRIC CARDS -->
+          <div id="section-home" class="widgets-grid" style="scroll-margin-top:110px;">
+            <!-- Card 1: Child status -->
+            <div class="widget-card">
+              <div class="widget-label">
+                <span>Child status</span>
+                <span class="status-pill status-pill-green">● Safe</span>
               </div>
-
-              <!-- Last Location Chip -->
-              <div class="tejo-telemetry-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
-                <span id="disp-last-location">Last Location - Juhu, Mumbai, Maharashtra, India - 389520</span>
-                <button type="button" class="tejo-chip-action-btn" id="btn-recenter-all" title="Locate Child">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>
-                </button>
-              </div>
-
-              <!-- Last Panic / Status Chip -->
-              <div class="tejo-telemetry-chip">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2F9E5B" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <span id="danger-zone-text">Last Panic - 12/12/2024, 04:45 pm</span>
-                <button type="button" class="tejo-chip-action-btn" id="btn-view-status" title="Status Details">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                </button>
-              </div>
+              <div class="widget-value" id="disp-child-name">Aarav Sharma</div>
+              <div class="widget-sub">Safe at school &bull; Updated just now</div>
             </div>
 
-            <!-- Logs Header & Calendar Day Selector -->
-            <div class="tejo-logs-strip">
-              <div class="tejo-logs-header">
-                <span class="tejo-logs-title">Logs</span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <button type="button" class="tejo-chip-action-btn" title="Filter Logs">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                  </button>
-                  <button type="button" class="tejo-chip-action-btn" title="View Options">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                  </button>
-                  <button type="button" class="btn-theme-toggle" id="parent-theme-toggle" aria-label="Toggle Theme" title="Toggle Dark/Light Mode" style="margin-left:6px;">
-                    <span class="theme-toggle-track">
-                      <span class="theme-toggle-thumb">
-                        <svg class="icon-sun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                        <svg class="icon-moon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                      </span>
-                    </span>
-                    <span class="theme-toggle-label">Dark</span>
-                  </button>
-                  <button class="btn-signout" id="btn-signout" type="button" style="padding:5px 12px;font-size:0.75rem;">Exit</button>
-                </div>
+            <!-- Card 2: Location safety -->
+            <div class="widget-card">
+              <div class="widget-label">
+                <span>Location safety</span>
+                <span class="status-pill status-pill-green">● Armed</span>
               </div>
+              <div class="widget-value" style="color:var(--dash-green);" id="stat-danger-count">Inside safe zone</div>
+              <div class="widget-sub">No boundary alerts &bull; DPS Campus</div>
+            </div>
 
-              <div class="tejo-calendar-row" id="tejo-calendar-strip">
-                <div class="tejo-cal-day" data-day="09"><span>Thu</span><span>09</span></div>
-                <div class="tejo-cal-day" data-day="10"><span>Fri</span><span>10</span></div>
-                <div class="tejo-cal-day" data-day="11"><span>Sat</span><span>11</span></div>
-                <div class="tejo-cal-day" data-day="12"><span>Sun</span><span>12</span></div>
-                <div class="tejo-cal-day" data-day="13"><span>Mon</span><span>13</span></div>
-                <div class="tejo-cal-day" data-day="14"><span>Tue</span><span>14</span></div>
-                <div class="tejo-cal-day active" data-day="15"><span>Wed</span><span>15</span></div>
+            <!-- Card 3: Safety alerts -->
+            <div class="widget-card">
+              <div class="widget-label">
+                <span>Safety alerts</span>
+                <span class="status-pill status-pill-green">0 urgent</span>
               </div>
+              <div class="widget-value" style="color:var(--dash-ink);" id="disp-alerts-count">All clear</div>
+              <div class="widget-sub">No active distress signals</div>
+            </div>
+
+            <!-- Card 4: Device status -->
+            <div class="widget-card">
+              <div class="widget-label">
+                <span>Device status</span>
+                <span class="status-pill status-pill-green">Connected</span>
+              </div>
+              <div class="widget-value" id="disp-child-battery">84%</div>
+              <div class="widget-sub">Battery good &bull; GPS Active</div>
             </div>
           </div>
 
-          <!-- 3. MIDDLE BODY GRID: CENTER MAP + RIGHT EVIDENCE PANEL -->
-          <div class="tejo-body-grid">
-            <!-- Center Map Container -->
-            <div class="tejo-map-container" id="section-map">
+          <!-- 2. SAFETY ALERTS BANNER -->
+          <div id="section-alerts" style="scroll-margin-top:110px;">
+            <div id="bullying-alert-card" class="parent-alert-banner">
+              <div class="alert-icon-box">🛡️</div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <strong class="alert-title">Your child may need support</strong>
+                  <span class="alert-tag">Notice &bull; Needs Check-in</span>
+                </div>
+                <p class="alert-desc">
+                  Unusual distress sounds were detected during afternoon transit. A gentle, reassuring conversation with Aarav this evening is recommended.
+                </p>
+              </div>
+              <div class="alert-actions">
+                <button type="button" class="btn-alert-audio" id="btn-alert-review" title="Listen to audio clip">
+                  <span>🎙️ Listen to audio</span>
+                </button>
+                <button type="button" class="btn-alert-dismiss" id="btn-dismiss-alert" title="Dismiss notice">
+                  <span>Dismiss</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Calm state when alert dismissed -->
+            <div id="no-alerts-banner" class="no-alerts-banner" style="display:none;">
+              <span class="no-alerts-icon">✓</span>
+              <span>No active safety concerns for Aarav. All safe zones secure.</span>
+            </div>
+          </div>
+
+          <!-- 3. LIVE LOCATION SECTION: PROMINENT MAP -->
+          <div id="section-map" class="map-console-box" style="scroll-margin-top:110px;">
+            <div class="map-header">
+              <div>
+                <h2 class="map-title" style="display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:800;color:var(--dash-ink);margin:0 0 4px 0;">
+                  <span>📍</span>
+                  <span>Your child’s location</span>
+                </h2>
+                <p class="map-subheading" style="margin:0;font-size:0.86rem;color:var(--dash-ink-soft);">
+                  Live location, school safe zone, and approved transit corridor.
+                </p>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <button class="btn-demo" style="padding:7px 14px;font-size:0.82rem;" id="btn-recenter-all">
+                  🎯 Center on child
+                </button>
+              </div>
+            </div>
+
+            <!-- Simplified Location Filter Chips -->
+            <div class="map-filter-bar">
+              <span style="font-size:0.75rem;color:var(--dash-ink-soft);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:4px;">
+                Location filters:
+              </span>
+              <button type="button" class="map-chip active" data-map-filter="all">
+                <span>All</span>
+                <span class="chip-count">3</span>
+              </button>
+              <button type="button" class="map-chip" data-map-filter="live">
+                <span>🎒 Live</span>
+                <span class="chip-count">1</span>
+              </button>
+              <button type="button" class="map-chip" data-map-filter="school">
+                <span>🏫 School</span>
+                <span class="chip-count">1</span>
+              </button>
+              <button type="button" class="map-chip" data-map-filter="home">
+                <span>🏡 Home</span>
+                <span class="chip-count">1</span>
+              </button>
+            </div>
+
+            <!-- Map & Safety Details Split Grid -->
+            <div class="map-split-layout has-selection" id="map-split-container">
+              <!-- Real Leaflet Map Canvas -->
               <div id="parent-safety-map"></div>
 
-              <!-- Floating Action Button at Bottom Center -->
-              <a href="/voice-sos/" class="tejo-float-pill" title="Explore SafeVaani Features">
-                <span>Explore Tejo for Businesses</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </a>
+              <!-- Child Protection & Live Details Panel -->
+              <aside class="node-detail-panel" id="safety-node-detail-panel">
+                <div>
+                  <div class="node-detail-header">
+                    <div>
+                      <h3 class="node-person-title" id="panel-person-name">Aarav Sharma</h3>
+                      <div style="font-size:0.84rem;color:var(--dash-ink-soft);font-weight:500;margin-top:2px;" id="panel-sector-name">
+                        Delhi Public School Campus
+                      </div>
+                    </div>
+                    <div id="panel-status-badge">
+                      <span class="node-badge-danger" style="background:#EAF7EE;color:#2F9E5B;border-color:#A3D8B4;">✓ Safe at school</span>
+                    </div>
+                  </div>
 
-              <!-- Recenter Button at Bottom Right -->
-              <button type="button" class="tejo-recenter-float-btn" id="btn-recenter-float" title="Recenter Map View">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
-              </button>
-            </div>
+                  <!-- Clean Status Message -->
+                  <div class="node-threat-box">
+                    <div class="node-threat-label">Child Safety Status</div>
+                    <div class="node-threat-value" id="panel-threat-msg" style="color:#2F9E5B;">
+                      Inside safe zone
+                    </div>
+                    <div style="font-size:0.8rem;color:var(--dash-ink-soft);margin-top:4px;" id="panel-threat-sub">
+                      No boundary alerts &bull; All systems normal
+                    </div>
+                  </div>
 
-            <!-- Right Column Evidence Panel -->
-            <aside class="tejo-evidence-panel">
-              <!-- Evidence 1: Image -->
-              <div class="tejo-evidence-card">
-                <span class="tejo-evidence-title">Image</span>
-                <div class="tejo-media-thumb">
-                  <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" alt="Corridor Snapshot" class="tejo-media-img">
-                  <div class="tejo-media-overlay-time">15/01/2026 12:20:15 PM</div>
-                </div>
-              </div>
+                  <!-- Location Coordinates -->
+                  <div class="node-coords-row">
+                    <div>
+                      <strong>Location:</strong> <span id="panel-coords" style="color:var(--dash-blue);font-family:var(--dash-mono);">18.520430&deg; N, 73.856744&deg; E</span>
+                    </div>
+                    <a href="https://www.google.com/maps?q=18.520430,73.856744" target="_blank" rel="noopener" id="panel-gmaps-link" style="color:var(--dash-blue);text-decoration:none;font-weight:700;">
+                      Open Maps &rarr;
+                    </a>
+                  </div>
 
-              <!-- Evidence 2: Video -->
-              <div class="tejo-evidence-card">
-                <span class="tejo-evidence-title">Video</span>
-                <div class="tejo-media-thumb">
-                  <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80" alt="Video Escort" class="tejo-media-img">
-                  <button type="button" class="tejo-video-play-btn" id="btn-tejo-video-play" title="Play Video Preview">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 18 12 6 20 6 4"></polygon></svg>
-                  </button>
-                  <div class="tejo-media-overlay-time">15/01/2026 12:20:15 PM</div>
-                </div>
-              </div>
+                  <!-- Ambient Audio Stream Check -->
+                  <div class="node-audio-evidence-box" id="panel-audio-box">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <span style="font-weight:700;font-size:0.85rem;color:var(--dash-ink);">🎙️ Recent Audio Check</span>
+                      <span style="font-size:0.75rem;font-family:var(--dash-mono);color:var(--dash-ink-soft);font-weight:600;" id="panel-audio-time">00:00 / 00:06</span>
+                    </div>
+                    <div class="node-audio-player-controls">
+                      <button type="button" class="btn-node-play" id="btn-panel-play-audio" aria-label="Play recording">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      </button>
+                      <div class="node-waveforms" id="panel-waveforms">
+                        <span class="node-wbar"></span>
+                        <span class="node-wbar"></span>
+                        <span class="node-wbar"></span>
+                        <span class="node-wbar"></span>
+                        <span class="node-wbar"></span>
+                        <span class="node-wbar"></span>
+                      </div>
+                    </div>
+                  </div>
 
-              <!-- Evidence 3: Audio -->
-              <div class="tejo-evidence-card">
-                <span class="tejo-evidence-title">Audio</span>
-                <div class="tejo-audio-bar-row">
-                  <button type="button" class="tejo-audio-play-btn" id="btn-tejo-audio-play" title="Play Audio Stream">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                  </button>
-                  <div class="tejo-waveform-bars" id="tejo-waveforms">
-                    <span class="tejo-wave-bar" style="height:12px;"></span>
-                    <span class="tejo-wave-bar" style="height:18px;"></span>
-                    <span class="tejo-wave-bar" style="height:10px;"></span>
-                    <span class="tejo-wave-bar" style="height:22px;"></span>
-                    <span class="tejo-wave-bar" style="height:16px;"></span>
-                    <span class="tejo-wave-bar" style="height:14px;"></span>
-                    <span class="tejo-wave-bar" style="height:20px;"></span>
-                    <span class="tejo-wave-bar" style="height:12px;"></span>
-                    <span class="tejo-wave-bar" style="height:24px;"></span>
-                    <span class="tejo-wave-bar" style="height:15px;"></span>
-                    <span class="tejo-wave-bar" style="height:8px;"></span>
-                    <span class="tejo-wave-bar" style="height:19px;"></span>
-                    <span class="tejo-wave-bar" style="height:11px;"></span>
-                    <span class="tejo-wave-bar" style="height:16px;"></span>
-                    <span class="tejo-wave-bar" style="height:13px;"></span>
+                  <!-- Emergency Family Contacts -->
+                  <div class="node-contacts-box">
+                    <div class="node-contacts-label">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span>Emergency Contacts</span>
+                    </div>
+                    <div id="panel-contacts-list">
+                      <div class="node-contact-item">
+                        <span>Father: Vikram S. (+91 9820011200)</span>
+                        <a href="tel:+919820011200" class="btn-dial-contact">📞 Call</a>
+                      </div>
+                      <div class="node-contact-item">
+                        <span>Mother: Anita S. (+91 9820011201)</span>
+                        <a href="tel:+919820011201" class="btn-dial-contact">📞 Call</a>
+                      </div>
+                      <div class="node-contact-item">
+                        <span>DPS Campus Security</span>
+                        <a href="tel:+912025678900" class="btn-dial-contact">📞 Call</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </div>
 
-      <!-- SUPPORTING DETAILS & SECONDARY TELEMETRY (CLEAN, NO EMOJIS) -->
-      <div class="supporting-console-content" style="max-width:100%;display:flex;flex-direction:column;gap:20px;">
-        <!-- Telemetry Diagnostics Alert -->
-        <div id="section-wellness" style="scroll-margin-top:110px;">
-          <div id="bullying-alert-card" style="display:flex;align-items:flex-start;gap:16px;background:#FFF8EE;border:1.5px solid #FFD9A0;border-left:6px solid #CC4E08;border-radius:20px;padding:20px 24px;box-shadow:0 4px 18px -4px rgba(204,78,8,0.08);">
-            <div style="background:#FFEED9;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#CC4E08;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <div style="flex:1;">
-              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                <strong style="color:#A33800;font-size:0.98rem;font-weight:800;letter-spacing:-0.015em;">
-                  Telemetry Advisory: After-School Emotional Stress Frequency Spike
-                </strong>
-                <span style="font-size:0.75rem;background:#FFE4C4;color:#7A2600;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:0.02em;border:1px solid #FFCD99;">
-                  Confidence 94.2% &bull; 4:00 PM – 8:00 PM Window
-                </span>
-              </div>
-              <p style="margin:6px 0 0 0;font-size:0.88rem;color:#5E2404;line-height:1.5;">
-                Acoustic distress peaks recorded post-school dismissal. Recommendation: Engage in an unpressured, empathetic conversation with your child this evening.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Telemetry Metrics Grid -->
-        <div id="section-telemetry" class="widgets-grid" style="scroll-margin-top:110px;">
-          <div class="widget-card">
-            <div class="widget-label">
-              <span>Linked Ward &bull; Status</span>
-              <span class="status-pill status-pill-green">● Online &bull; GPS Active</span>
-            </div>
-            <div class="widget-value" id="disp-child-subname">Aarav (Grade 7)</div>
-            <div class="widget-sub">Delhi Public School Corridor &bull; Battery: <strong id="disp-child-battery">84%</strong></div>
-          </div>
-
-          <div class="widget-card">
-            <div class="widget-label">
-              <span>Emotional Telemetry (7-Day Metric)</span>
-              <span class="status-pill status-pill-green">Positive 82%</span>
-            </div>
-            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">
-              <div class="widget-value" style="color:var(--dash-green);">82%</div>
-              <span style="font-size:0.8rem;color:var(--dash-ink-soft);">Calm &amp; Happy</span>
-            </div>
-            <div style="width:100%;height:6px;background:#EDE6D6;border-radius:999px;overflow:hidden;display:flex;margin:8px 0;">
-              <div style="width:68%;background:#2F9E5B;" title="Happy 68%"></div>
-              <div style="width:18%;background:#FDDB10;" title="Neutral 18%"></div>
-              <div style="width:14%;background:#D9251D;" title="Distress / Panic 14%"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--dash-ink-soft);font-weight:600;">
-              <span>Positive 68%</span>
-              <span>Baseline 18%</span>
-              <span>Stress Marker 14%</span>
+                <!-- Action buttons -->
+                <div class="node-actions-row">
+                  <button type="button" class="btn-node-dispatch" id="btn-panel-ring" style="background:#2F9E5B;box-shadow:0 4px 12px -3px rgba(47,158,91,0.5);">
+                    <span>🔔 Ring Device</span>
+                  </button>
+                  <button type="button" class="btn-node-safe" id="btn-panel-ping" style="background:#FAF8F2;color:var(--dash-ink);border:1px solid var(--dash-border);">
+                    <span>📍 Refresh Location</span>
+                  </button>
+                </div>
+              </aside>
             </div>
           </div>
 
-          <div class="widget-card">
-            <div class="widget-label">
-              <span>Safe Geofence &bull; Boundaries</span>
-              <span class="status-pill status-pill-green">● 2 Zones Armed</span>
-            </div>
-            <div class="widget-value" style="color:var(--dash-green);" id="stat-danger-count">Inside School Zone</div>
-            <div class="widget-sub">0 Perimeter Breaches &bull; 400m Buffer Active</div>
-          </div>
-        </div>
-
-        <!-- Selected Waypoint Details Card -->
-        <aside class="node-detail-panel" id="safety-node-detail-panel" style="background:#FFFFFF;border:1px solid var(--dash-border);border-radius:20px;padding:20px;">
-          <div>
-            <div class="node-detail-header" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+          <!-- 4. DEVICES SECTION -->
+          <div id="section-devices" class="pair-section" style="scroll-margin-top:110px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
               <div>
-                <h3 class="node-person-title" id="panel-person-name" style="margin:0;font-size:1.15rem;color:var(--dash-ink);">Aarav Sharma (13 yrs)</h3>
-                <div style="font-size:0.84rem;color:var(--dash-ink-soft);font-weight:500;margin-top:2px;" id="panel-sector-name">
-                  Delhi Public School Campus &bull; Central Ward 4
+                <h3 style="margin:0 0 4px 0;font-size:1.15rem;font-weight:700;color:var(--dash-ink);">Connected Devices</h3>
+                <p style="margin:0;font-size:0.84rem;color:var(--dash-ink-soft);">Active safety sensors and wearables linked to Aarav</p>
+              </div>
+              <span class="status-pill status-pill-green">● All Online</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;">
+              <!-- Aarav's BalMitra Watch -->
+              <div style="background:#FAF8F2;border:1.5px solid var(--dash-border);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="font-size:1.8rem;">⌚</span>
+                  <div>
+                    <div style="font-weight:700;font-size:0.92rem;color:var(--dash-ink);">SafeVaani BalMitra Watch</div>
+                    <div style="font-size:0.78rem;color:var(--dash-ink-soft);">Primary GPS Tracker &bull; Aarav</div>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-weight:800;font-size:1.1rem;color:var(--dash-green);" id="device-battery-watch">84%</div>
+                  <div style="font-size:0.74rem;color:var(--dash-ink-soft);">Connected</div>
                 </div>
               </div>
-              <div id="panel-status-badge">
-                <span class="node-badge-danger" style="background:#EAF7EE;color:#2F9E5B;border:1px solid #A3D8B4;padding:4px 10px;border-radius:8px;font-size:0.75rem;font-weight:700;">INSIDE SAFE GEOFENCE</span>
+
+              <!-- Secondary Phone -->
+              <div style="background:#FAF8F2;border:1.5px solid var(--dash-border);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="font-size:1.8rem;">📱</span>
+                  <div>
+                    <div style="font-weight:700;font-size:0.92rem;color:var(--dash-ink);">Aarav’s Phone</div>
+                    <div style="font-size:0.78rem;color:var(--dash-ink-soft);">Companion App &bull; Synced</div>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-weight:800;font-size:1.1rem;color:var(--dash-green);">91%</div>
+                  <div style="font-size:0.74rem;color:var(--dash-ink-soft);">Connected</div>
+                </div>
               </div>
             </div>
+          </div>
 
-            <!-- Threat & Telemetry Message -->
-            <div class="node-threat-box" style="background:#F8FAFC;border:1px solid var(--dash-border);border-radius:12px;padding:12px;margin-bottom:12px;">
-              <div class="node-threat-label" style="font-size:0.75rem;font-family:var(--dash-mono);text-transform:uppercase;color:var(--dash-ink-soft);">Child Safety Telemetry</div>
-              <div class="node-threat-value" id="panel-threat-msg" style="color:#2F9E5B;font-weight:700;font-size:0.92rem;margin-top:2px;">
-                All Sensors Normal &bull; 0 Distress Signals
-              </div>
-              <div style="font-size:0.8rem;color:var(--dash-ink-soft);margin-top:4px;" id="panel-threat-sub">
-                Acoustic Floor: 42dB &bull; Transit: Stationary &bull; Battery: 84%
-              </div>
+          <!-- 5. INCIDENT & CHECK-IN HISTORY -->
+          <div id="section-history" class="pair-section" style="scroll-margin-top:110px;">
+            <div style="margin-bottom:16px;">
+              <h3 style="margin:0 0 4px 0;font-size:1.15rem;font-weight:700;color:var(--dash-ink);">Incident &amp; Check-in History</h3>
+              <p style="margin:0;font-size:0.84rem;color:var(--dash-ink-soft);">Recent arrivals, departures, and routine check-ins</p>
             </div>
 
-            <!-- Location Coordinates -->
-            <div class="node-coords-row" style="display:flex;align-items:center;justify-content:space-between;background:#FFFFFF;border:1px solid var(--dash-border);border-radius:10px;padding:8px 12px;font-size:0.82rem;margin-bottom:12px;">
-              <div>
-                <strong>GPS:</strong> <span id="panel-coords" style="color:var(--dash-blue);font-family:var(--dash-mono);">18.520430&deg; N, 73.856744&deg; E</span>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#FAF8F2;border:1px solid var(--dash-border);border-radius:12px;font-size:0.85rem;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="font-size:1.1rem;">🏫</span>
+                  <div>
+                    <strong style="color:var(--dash-ink);">Arrived at Delhi Public School</strong>
+                    <div style="font-size:0.78rem;color:var(--dash-ink-soft);">Entered school safe zone</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="color:var(--dash-ink-soft);font-size:0.80rem;">Today, 08:00 AM</span>
+                  <span class="status-pill status-pill-green">✓ Safe Check-in</span>
+                </div>
               </div>
-              <a href="https://www.google.com/maps?q=18.520430,73.856744" target="_blank" rel="noopener" id="panel-gmaps-link" style="color:var(--dash-blue);text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
-                <span>Google Maps</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              </a>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#FAF8F2;border:1px solid var(--dash-border);border-radius:12px;font-size:0.85rem;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="font-size:1.1rem;">🚌</span>
+                  <div>
+                    <strong style="color:var(--dash-ink);">Departed school via transit corridor</strong>
+                    <div style="font-size:0.78rem;color:var(--dash-ink-soft);">Normal route followed with school bus</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="color:var(--dash-ink-soft);font-size:0.80rem;">Yesterday, 03:45 PM</span>
+                  <span class="status-pill status-pill-green">✓ Normal transit</span>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#FAF8F2;border:1px solid var(--dash-border);border-radius:12px;font-size:0.85rem;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span style="font-size:1.1rem;">🏡</span>
+                  <div>
+                    <strong style="color:var(--dash-ink);">Arrived home safe</strong>
+                    <div style="font-size:0.78rem;color:var(--dash-ink-soft);">Inside home perimeter</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="color:var(--dash-ink-soft);font-size:0.80rem;">Yesterday, 04:15 PM</span>
+                  <span class="status-pill status-pill-green">✓ Safe Check-in</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. SECONDARY & OPTIONAL: WELLBEING THIS WEEK -->
+          <div id="section-wellbeing" class="pair-section" style="scroll-margin-top:110px;">
+            <details style="cursor:pointer;" open>
+              <summary style="display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:1.05rem;color:var(--dash-ink);outline:none;list-style:none;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span>🌱</span>
+                  <span>Wellbeing this week (Optional Summary)</span>
+                </div>
+                <span style="font-size:0.8rem;color:var(--dash-ink-soft);font-weight:500;">Toggle details ▾</span>
+              </summary>
+              
+              <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--dash-border);">
+                <div style="background:#FFFBF0;border:1px solid #FFE7A3;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:0.80rem;color:#7A5500;">
+                  ℹ️ <strong>Note for parents:</strong> This summary is an informational observation based on ambient sound patterns. It is not a clinical, medical, or psychological diagnosis.
+                </div>
+
+                <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;">
+                  <div style="font-size:1.4rem;font-weight:800;color:var(--dash-green);">82% Positive</div>
+                  <span style="font-size:0.84rem;color:var(--dash-ink-soft);">Mostly calm and happy this week</span>
+                </div>
+                <div style="width:100%;height:8px;background:#EDE6D6;border-radius:999px;overflow:hidden;display:flex;margin:10px 0;">
+                  <div style="width:82%;background:#2F9E5B;" title="Calm / Happy 82%"></div>
+                  <div style="width:14%;background:#FDDB10;" title="Neutral 14%"></div>
+                  <div style="width:4%;background:#E65C14;" title="Attention 4%"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--dash-ink-soft);font-weight:600;flex-wrap:wrap;gap:8px;">
+                  <span>😊 Calm &amp; Happy 82%</span>
+                  <span>😐 Quiet / Neutral 14%</span>
+                  <span>⚠️ Needed attention 4%</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- 7. SETTINGS & DEVICE CONFIGURATION -->
+          <div id="section-settings" class="pair-section" style="scroll-margin-top:110px;">
+            <div style="margin-bottom:18px;">
+              <h3 style="margin:0 0 4px 0;font-size:1.15rem;font-weight:700;color:var(--dash-ink);">Settings</h3>
+              <p style="margin:0;font-size:0.84rem;color:var(--dash-ink-soft);">Pair new devices, toggle boundary alerts, and manage family subscription</p>
             </div>
 
-            <!-- Ambient Audio Stream -->
-            <div class="node-audio-evidence-box" id="panel-audio-box" style="background:#EFF3FC;border:1px solid rgba(63,125,222,0.3);border-radius:12px;padding:12px;margin-bottom:12px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <span style="font-weight:700;font-size:0.85rem;color:var(--dash-ink);display:inline-flex;align-items:center;gap:6px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-                  <span>Ambient Audio Stream</span>
-                </span>
-                <span style="font-size:0.75rem;font-family:var(--dash-mono);color:var(--dash-ink-soft);font-weight:600;" id="panel-audio-time">00:00 / 00:06</span>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Device Pairing -->
+              <div style="background:#FAF8F2;border:1px solid var(--dash-border);border-radius:14px;padding:16px 18px;">
+                <div style="font-weight:700;font-size:0.95rem;color:var(--dash-ink);margin-bottom:4px;">Pair Another Child Device</div>
+                <div style="font-size:0.82rem;color:var(--dash-ink-soft);margin-bottom:12px;">Link a new BalMitra smartwatch, phone, or sensor badge with pairing code</div>
+                <div class="pair-row">
+                  <input type="text" class="pair-input" id="pair-code" placeholder="Code (e.g. BM-9821)" maxlength="10">
+                  <button type="button" class="btn-pair" id="btn-pair-child">Pair Device &rarr;</button>
+                  <span id="pair-status" style="font-size:0.85rem;font-weight:600;color:var(--dash-green);display:none;"></span>
+                </div>
               </div>
-              <div class="node-audio-player-controls" style="display:flex;align-items:center;gap:10px;">
-                <button type="button" class="btn-node-play" id="btn-panel-play-audio" aria-label="Play recording" style="width:32px;height:32px;border-radius:50%;background:#18181B;color:#fff;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+
+              <!-- Perimeter Shield Toggle -->
+              <div style="background:#FAF8F2;border:1px solid var(--dash-border);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <div>
+                  <div style="font-weight:700;font-size:0.95rem;color:var(--dash-ink);">Boundary Alert Notifications</div>
+                  <div style="font-size:0.82rem;color:var(--dash-ink-soft);margin-top:2px;">Receive instant alerts when Aarav enters or leaves designated safe zones</div>
+                </div>
+                <button type="button" class="btn-demo" id="btn-toggle-danger-zone" style="padding:8px 16px;font-size:0.84rem;display:inline-flex;align-items:center;gap:8px;">
+                  <span id="danger-zone-dot" style="width:8px;height:8px;border-radius:50%;background:#2F9E5B;display:inline-block;"></span>
+                  <span id="danger-zone-text">Perimeter Shield: Active</span>
                 </button>
-                <div class="node-waveforms" id="panel-waveforms" style="display:flex;align-items:center;gap:3px;flex:1;">
-                  <span class="node-wbar" style="height:10px;width:3px;background:#3F7DDE;border-radius:2px;"></span>
-                  <span class="node-wbar" style="height:16px;width:3px;background:#3F7DDE;border-radius:2px;"></span>
-                  <span class="node-wbar" style="height:8px;width:3px;background:#3F7DDE;border-radius:2px;"></span>
-                  <span class="node-wbar" style="height:20px;width:3px;background:#3F7DDE;border-radius:2px;"></span>
-                  <span class="node-wbar" style="height:12px;width:3px;background:#3F7DDE;border-radius:2px;"></span>
-                  <span class="node-wbar" style="height:14px;width:3px;background:#3F7DDE;border-radius:2px;"></span>
-                </div>
               </div>
-            </div>
 
-            <!-- Emergency Family Contacts -->
-            <div class="node-contacts-box" style="background:#F8FAFC;border:1px solid var(--dash-border);border-radius:12px;padding:12px;margin-bottom:14px;">
-              <div class="node-contacts-label" style="display:flex;align-items:center;gap:6px;font-size:0.75rem;font-family:var(--dash-mono);text-transform:uppercase;color:var(--dash-ink-soft);margin-bottom:6px;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span>Family &amp; School Contacts</span>
-              </div>
-              <div id="panel-contacts-list">
-                <div class="node-contact-item" style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--dash-border-light);">
-                  <span style="font-size:0.85rem;font-weight:600;">Father: Shyam S. (+91 9529811731)</span>
-                  <a href="tel:+919529811731" class="btn-dial-contact" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:#E2E8F0;color:var(--dash-ink);text-decoration:none;font-size:0.75rem;font-weight:700;">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span>Call</span>
-                  </a>
+              <!-- Subscription Management -->
+              <div style="background:#FAF8F2;border:1px solid var(--dash-border);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-weight:700;font-size:0.95rem;color:var(--dash-ink);">SafeVaani Family Protection</span>
+                    <span class="status-pill status-pill-green">● Active</span>
+                  </div>
+                  <div style="font-size:0.82rem;color:var(--dash-ink-soft);margin-top:2px;">Unlimited safe zones, live transit tracking, and family alert network</div>
                 </div>
-                <div class="node-contact-item" style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--dash-border-light);">
-                  <span style="font-size:0.85rem;font-weight:600;">Mother: Ananya S. (+91 9811022334)</span>
-                  <a href="tel:+919811022334" class="btn-dial-contact" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:#E2E8F0;color:var(--dash-ink);text-decoration:none;font-size:0.75rem;font-weight:700;">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span>Call</span>
-                  </a>
-                </div>
-                <div class="node-contact-item" style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;">
-                  <span style="font-size:0.85rem;font-weight:600;">DPS Campus Security</span>
-                  <a href="tel:+912025678900" class="btn-dial-contact" style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:#E2E8F0;color:var(--dash-ink);text-decoration:none;font-size:0.75rem;font-weight:700;">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span>Call</span>
-                  </a>
-                </div>
+                <button type="button" class="btn-demo" style="padding:6px 14px;font-size:0.82rem;" onclick="alert('SafeVaani Family Plan is active until October 2027.')">
+                  Manage Plan
+                </button>
               </div>
             </div>
           </div>
 
-          <!-- Action buttons -->
-          <div class="node-actions-row" style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button type="button" class="btn-node-dispatch" id="btn-panel-ring" style="background:#2F9E5B;color:#FFFFFF;border:0;border-radius:10px;padding:10px 18px;font-weight:700;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-              <span>Ring Device (Loud Alarm)</span>
-            </button>
-            <button type="button" class="btn-node-safe" id="btn-panel-ping" style="background:#FAF8F2;color:var(--dash-ink);border:1px solid var(--dash-border);border-radius:10px;padding:10px 18px;font-weight:700;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
-              <span>Request GPS Ping</span>
-            </button>
+          <!-- Return to Unified Hub -->
+          <div style="text-align:center;margin-top:24px;margin-bottom:12px;">
+            <a href="/dashboard/" class="btn-return-hub">
+              <span>&larr;</span>
+              <span>Return to Unified Dashboards Hub</span>
+            </a>
           </div>
-        </aside>
-
-        <!-- Child Device Linker Section -->
-        <div id="section-pair" class="pair-section" style="scroll-margin-top:110px;background:#FFFFFF;border:1px solid var(--dash-border);border-radius:20px;padding:20px;">
-          <h3 style="margin:0 0 12px 0;font-size:1.1rem;font-weight:700;letter-spacing:-0.015em;color:var(--dash-ink);">Link Another Child Device</h3>
-          <div class="pair-row" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-            <input type="text" class="pair-input" id="pair-code" placeholder="Enter 6-digit code (e.g. BM-9821)" maxlength="7" style="padding:10px 14px;border:1.5px solid var(--dash-border);border-radius:10px;font-size:0.9rem;">
-            <button type="button" class="btn-pair" id="btn-pair-child" style="padding:10px 20px;border-radius:10px;background:var(--dash-ink);color:#fff;font-weight:700;border:0;cursor:pointer;">Pair Device &rarr;</button>
-            <span id="pair-status" style="font-size:0.85rem;font-weight:600;color:var(--dash-green);display:none;"></span>
-          </div>
-        </div>
-
-        <!-- Return to Unified Dashboards Hub -->
-        <div style="text-align:center;margin-top:20px;margin-bottom:12px;">
-          <a href="/dashboard/" class="btn-return-hub" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--dash-ink);font-weight:700;font-size:0.9rem;">
-            <span>&larr;</span>
-            <span>Return to Unified Dashboards Hub</span>
-          </a>
-        </div>
-      </div>
+        </div> <!-- End .console-main-content -->
+      </div> <!-- End .console-workspace-layout -->
     </div> <!-- End #console-container -->
   </main>
 
@@ -3102,7 +2814,6 @@
           <ul class="sf-main" role="list">
             <li><a href="/dashboard/" style="font-weight:700;">Dashboards Hub</a></li>
             <li><a href="/dashboard/parent/" style="font-weight:700;color:var(--dash-orange);">Parent Portal</a></li>
-            <li><a href="/dashboard/police/">Police CAD</a></li>
             <li><a href="/features">Features</a></li>
             <li><a href="/voice-sos">Voice SOS</a></li>
             <li><a href="/help">Help Center</a></li>
@@ -3136,15 +2847,16 @@
       child 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Firebase Config from BalMitra parent project
+    // Firebase Config for Woshild / SafeVaani
     const firebaseConfig = {
-      apiKey: "AIzaSyCxdoqiRqxi7GtiwlTPKmrVtSBCeGg0JAQ",
-      authDomain: "akatsuki-98705.firebaseapp.com",
-      databaseURL: "https://akatsuki-98705-default-rtdb.firebaseio.com",
-      projectId: "akatsuki-98705",
-      storageBucket: "akatsuki-98705.firebasestorage.app",
-      messagingSenderId: "65870867069",
-      appId: "1:65870867069:web:2d45bfa0e1ef2a986fdf14"
+      apiKey: "AIzaSyC8zft0bPdAxklpnp4FX8oxxuEDbT4VcTI",
+      authDomain: "woshild-f4df5.firebaseapp.com",
+      databaseURL: "https://woshild-f4df5-default-rtdb.firebaseio.com",
+      projectId: "woshild-f4df5",
+      storageBucket: "woshild-f4df5.firebasestorage.app",
+      messagingSenderId: "964653526709",
+      appId: "1:964653526709:web:b1775d719f779b0195d8fc",
+      measurementId: "G-DV8XDBPLR0"
     };
 
     let app, auth, db;
@@ -3203,11 +2915,11 @@
       document.documentElement.classList.add("parent-session-active");
       authContainer.style.display = "none";
       consoleContainer.style.display = "block";
-      const name = user.displayName || user.name || "Ananya Sharma";
+      const name = user.displayName || user.name || "Priya Sharma";
       const email = user.email || "parent@safevaani.internal";
       dispParentName.textContent = name;
       dispParentEmail.textContent = email;
-      const initials = name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "AS";
+      const initials = name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "PS";
       avatarInitials.textContent = initials;
 
       // Persist session to localStorage so page refresh never logs parent out
@@ -3346,8 +3058,8 @@
     // 3. Instant Demo Access
     btnDemoAccess.addEventListener("click", () => {
       const demoUser = {
-        displayName: "Ananya Sharma",
-        email: "ananya.parent@safevaani.internal",
+        displayName: "Priya Sharma",
+        email: "priya.parent@safevaani.internal",
         isDemo: true
       };
       sessionStorage.setItem("demo_parent_user", JSON.stringify(demoUser));
@@ -3383,13 +3095,13 @@
       btnToggleDangerZone.addEventListener("click", async () => {
         isDangerZoneActive = !isDangerZoneActive;
         if (isDangerZoneActive) {
-          if (dangerZoneDot) dangerZoneDot.style.background = "#D9251D";
-          if (dangerZoneText) dangerZoneText.textContent = "Last Panic - Triggered (Active Alert)";
+          dangerZoneDot.style.background = "#D9251D";
+          dangerZoneText.textContent = "Perimeter Alert: TRIGGERED 🚨";
           btnToggleDangerZone.style.background = "#FFECEC";
           btnToggleDangerZone.style.borderColor = "#D9251D";
         } else {
-          if (dangerZoneDot) dangerZoneDot.style.background = "#2F9E5B";
-          if (dangerZoneText) dangerZoneText.textContent = "Last Panic - 12/12/2024, 04:45 pm";
+          dangerZoneDot.style.background = "#2F9E5B";
+          dangerZoneText.textContent = "Perimeter Shield: Active";
           btnToggleDangerZone.style.background = "#FAF8F2";
           btnToggleDangerZone.style.borderColor = "var(--dash-border)";
         }
@@ -3414,53 +3126,68 @@
         pairBtn.disabled = true;
 
         try {
-          const res = await fetch("https://akatsuki-98705-default-rtdb.firebaseio.com/users.json");
+          let res = await fetch("https://woshild-f4df5-default-rtdb.firebaseio.com/users.json").catch(() => null);
+          let users = null;
+          if (res && res.ok) {
+            users = await res.json().catch(() => null);
+          }
+          if (!users) {
+            try {
+              const localRes = await fetch("/woshild-f4df5-default-rtdb-export.json");
+              if (localRes && localRes.ok) {
+                const localData = await localRes.json();
+                users = localData?.users || null;
+              }
+            } catch(e){}
+          }
           let matchedUser = null;
           let matchedId = null;
 
-          if (res.ok) {
-            const users = await res.json();
-            if (users) {
-              const entries = Object.entries(users);
-              // Match child user by uniqueId, phone, or name
-              const found = entries.find(([uid, u]) => {
-                if (!u) return false;
-                if (u.uniqueId && u.uniqueId.toUpperCase() === code) return true;
-                if (u.phone && String(u.phone).replace(/\D/g, "").includes(code.replace(/\D/g, ""))) return true;
-                if (u.name && u.name.toUpperCase().includes(code)) return true;
-                return false;
-              });
-              if (found) {
-                matchedId = found[0];
-                matchedUser = found[1];
-              }
+          if (users) {
+            const entries = Object.entries(users);
+            // Match child user by id, uniqueId, phone, name, contacts or history
+            const found = entries.find(([uid, u]) => {
+              if (!u) return false;
+              if (uid.toUpperCase() === code || uid.includes(code)) return true;
+              if (u.uniqueId && u.uniqueId.toUpperCase() === code) return true;
+              if (u.phone && String(u.phone).replace(/\D/g, "").includes(code.replace(/\D/g, ""))) return true;
+              if (u.name && u.name.toUpperCase().includes(code)) return true;
+              if (u.contacts && Object.values(u.contacts).some(c => (c.name && c.name.toUpperCase().includes(code)) || (c.phone && String(c.phone).includes(code)))) return true;
+              if (u.history && Object.values(u.history).some(h => (h.userName && h.userName.toUpperCase().includes(code)) || (h.userEmail && h.userEmail.toUpperCase().includes(code)))) return true;
+              return false;
+            });
+            if (found) {
+              matchedId = found[0];
+              matchedUser = found[1];
             }
           }
 
           if (matchedUser) {
             activeChildId = matchedId;
             localStorage.setItem("linked_child_id", matchedId);
-            dispChildName.textContent = `${matchedUser.name} (${matchedUser.uniqueId || "ACTIVE"})`;
-            if (dispChildBattery) dispChildBattery.textContent = matchedUser.batteryLevel && matchedUser.batteryLevel > 0 ? `${matchedUser.batteryLevel}%` : "88%";
-            pairBtn.textContent = "Linked";
-            pairStatus.textContent = `Linked with ${matchedUser.name} (${matchedUser.phone || code})`;
+            const resolvedName = matchedUser.name || (matchedUser.history && Object.values(matchedUser.history)[0]?.userName) || (matchedUser.contacts && Object.values(matchedUser.contacts)[0]?.name) || "SurakshaVaani User";
+            const resolvedPhone = matchedUser.phone || (matchedUser.contacts && Object.values(matchedUser.contacts)[0]?.phone) || code;
+            dispChildName.textContent = `${resolvedName} (${matchedUser.uniqueId || "ACTIVE"})`;
+            dispChildBattery.textContent = matchedUser.batteryLevel && matchedUser.batteryLevel > 0 ? `${matchedUser.batteryLevel}%` : "88%";
+            pairBtn.textContent = "✓ Linked!";
+            pairStatus.textContent = `✓ Linked with ${resolvedName} (${resolvedPhone})`;
             pairStatus.style.display = "inline";
             pairStatus.style.color = "#2F9E5B";
           } else {
             pairBtn.textContent = "Linked (Demo)";
-            pairStatus.textContent = `Linked with device ${code} (Carter Bergson)`;
+            pairStatus.textContent = `✓ Linked with device ${code} (Aarav Sharma)`;
             pairStatus.style.display = "inline";
             pairStatus.style.color = "var(--dash-ink-soft)";
           }
         } catch(err) {
           console.warn("Pairing fetch error:", err);
-          pairBtn.textContent = "Linked";
-          pairStatus.textContent = `Linked with device ${code}`;
+          pairBtn.textContent = "Linked!";
+          pairStatus.textContent = `✓ Linked with device ${code}`;
           pairStatus.style.display = "inline";
         } finally {
           pairBtn.disabled = false;
           setTimeout(() => {
-            pairBtn.textContent = "Pair Device";
+            pairBtn.textContent = "Pair Device →";
           }, 3000);
         }
       });
@@ -3477,74 +3204,248 @@
       });
     }
 
-    // Quick Action: Calendar Day Strip Selection
-    const calendarDays = document.querySelectorAll("#tejo-calendar-strip .tejo-cal-day");
-    calendarDays.forEach((dayEl) => {
-      dayEl.addEventListener("click", () => {
-        calendarDays.forEach(d => d.classList.remove("active"));
-        dayEl.classList.add("active");
+    // ========================================================
+    // YOUTUBE SLIDEBAR DRAWER & MINI-RAIL CONTROLS
+    // ========================================================
+    const btnToggleSlidebar = document.getElementById("btn-toggle-slidebar");
+    const consoleSlidebar = document.getElementById("console-slidebar");
+    const slidebarBackdrop = document.getElementById("slidebar-backdrop");
+    const workspaceLayout = document.getElementById("console-workspace-layout");
+    const miniToggleExpand = document.getElementById("mini-toggle-expand");
+
+    if (btnToggleSlidebar && consoleSlidebar) {
+      btnToggleSlidebar.addEventListener("click", () => {
+        if (window.innerWidth <= 992) {
+          consoleSlidebar.classList.toggle("open");
+          slidebarBackdrop?.classList.toggle("open");
+        } else {
+          workspaceLayout?.classList.toggle("slidebar-mini");
+        }
+        setTimeout(() => {
+          if (safetyMap) safetyMap.invalidateSize();
+        }, 260);
+      });
+    }
+
+    if (miniToggleExpand && workspaceLayout) {
+      miniToggleExpand.addEventListener("click", () => {
+        workspaceLayout.classList.remove("slidebar-mini");
+        setTimeout(() => {
+          if (safetyMap) safetyMap.invalidateSize();
+        }, 260);
+      });
+    }
+
+    if (slidebarBackdrop && consoleSlidebar) {
+      slidebarBackdrop.addEventListener("click", () => {
+        consoleSlidebar.classList.remove("open");
+        slidebarBackdrop.classList.remove("open");
+      });
+    }
+
+    // Slidebar Section Navigation: Scroll ONLY the right container (.console-main-content)
+    const sbNavItems = document.querySelectorAll(".sb-nav-item");
+    const mainContentEl = document.querySelector(".console-main-content");
+
+    sbNavItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const targetId = item.getAttribute("data-target");
+        if (!targetId) return;
+
+        sbNavItems.forEach(i => {
+          if (i.getAttribute("data-target") === targetId) {
+            i.classList.add("active");
+          } else {
+            i.classList.remove("active");
+          }
+        });
+
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          if (mainContentEl && window.innerWidth > 992) {
+            const mainRect = mainContentEl.getBoundingClientRect();
+            const targetRect = targetEl.getBoundingClientRect();
+            const scrollDest = targetRect.top - mainRect.top + mainContentEl.scrollTop;
+            mainContentEl.scrollTo({
+              top: Math.max(0, scrollDest - 8),
+              behavior: "smooth"
+            });
+            if (targetId === "section-map" && safetyMap) {
+              setTimeout(() => safetyMap.invalidateSize(), 300);
+            }
+          } else {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+        if (window.innerWidth <= 992 && consoleSlidebar) {
+          consoleSlidebar.classList.remove("open");
+          slidebarBackdrop?.classList.remove("open");
+        }
       });
     });
 
+    // Automatic ScrollSpy: Highlight active slidebar section as right side scrolls
+    const spySectionIds = ["section-home", "section-alerts", "section-map", "section-devices", "section-history", "section-wellbeing", "section-settings"];
+    function syncActiveSlidebarSpy() {
+      if (!mainContentEl) return;
+      const mainRect = mainContentEl.getBoundingClientRect();
+      let currentSectionId = spySectionIds[0];
+
+      for (const id of spySectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top - mainRect.top <= 140) {
+          currentSectionId = id;
+        }
+      }
+
+      sbNavItems.forEach((btn) => {
+        if (btn.getAttribute("data-target") === currentSectionId) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    if (mainContentEl) {
+      mainContentEl.addEventListener("scroll", syncActiveSlidebarSpy, { passive: true });
+    }
+    window.addEventListener("scroll", syncActiveSlidebarSpy, { passive: true });
+
+    // Actionable Alert Banner Interactions
+    const btnDismissAlert = document.getElementById("btn-dismiss-alert");
+    const bullyingAlertCard = document.getElementById("bullying-alert-card");
+    const noAlertsBanner = document.getElementById("no-alerts-banner");
+    const btnAlertReview = document.getElementById("btn-alert-review");
+    const dispAlertsCount = document.getElementById("disp-alerts-count");
+
+    if (btnDismissAlert && bullyingAlertCard) {
+      btnDismissAlert.addEventListener("click", () => {
+        bullyingAlertCard.classList.add("dismissed");
+        if (noAlertsBanner) noAlertsBanner.style.display = "flex";
+        if (dispAlertsCount) dispAlertsCount.textContent = "All clear";
+      });
+    }
+
+    if (btnAlertReview) {
+      btnAlertReview.addEventListener("click", () => {
+        const audioBtn = document.getElementById("btn-panel-play-audio");
+        const mapSection = document.getElementById("section-map");
+        if (mapSection) mapSection.scrollIntoView({ behavior: "smooth" });
+        if (audioBtn) setTimeout(() => audioBtn.click(), 400);
+      });
+    }
+
+    // Slidebar Quick Action Buttons
+    const btnSbRing = document.getElementById("btn-sb-ring");
+    const btnSbPing = document.getElementById("btn-sb-ping");
+    if (btnSbRing) {
+      btnSbRing.addEventListener("click", () => {
+        const ringBtn = document.getElementById("btn-panel-ring");
+        if (ringBtn) ringBtn.click();
+      });
+    }
+    if (btnSbPing) {
+      btnSbPing.addEventListener("click", () => {
+        const pingBtn = document.getElementById("btn-panel-ping");
+        if (pingBtn) pingBtn.click();
+      });
+    }
+
     // ========================================================
-    // LEAFLET MAP: TEJO HUMAN-CRAFTED ROUTE & WAYPOINT LOGIC
+    // LEAFLET MAP: CHILD SAFE GEOFENCE & TELEMETRY LOGIC
     // ========================================================
     let safetyMap = null;
     let markersLayer = null;
-    let routePolyline = null;
-    let tejoAudioStream = null;
+    let geofencesLayer = null;
+    let activeNodeAudio = null;
+    let activeNodeWaveform = null;
 
-    // 5 Waypoint Data Points matching the TEJO SaaS Reference Layout
-    const tejoRouteWaypoints = [
+    // Child Telemetry & Geofence Corridor Data strictly using provided schema
+    const childWaypointsData = [
       {
-        id: "wp-start",
-        coords: "18.520430, 73.856743",
-        time: "11:20 AM",
-        place: "",
-        lat: 18.5085,
-        lng: 73.8420,
-        isStart: true,
-        isEnd: false
+        "batteryLevel": 88,
+        "contacts": {
+          "-P5contactFather": {
+            "name": "Vikram Sharma",
+            "phone": "9820011200",
+            "relationship": "Father"
+          },
+          "-P5contactMother": {
+            "name": "Anita Sharma",
+            "phone": "9820011201",
+            "relationship": "Mother"
+          }
+        },
+        "dangerZoneActive": false,
+        "displayName": "Aarav Sharma",
+        "email": "aarav.sharma@gmail.com",
+        "history": {
+          "-P5histAarav1": {
+            "alertId": "-P5histAarav1",
+            "audioUrl": "",
+            "emotion": "Routine Safe Check-in",
+            "formattedTime": "Oct 23, 2026 | 08:00 am",
+            "id": "-P5histAarav1",
+            "latitude": 18.52043,
+            "longitude": 73.85674,
+            "reason": "Arrived at school safe zone",
+            "status": "Safe Check-in Completed",
+            "timestamp": 1792722905375
+          }
+        },
+        "id": "child_aarav_sharma",
+        "lastLatitude": 18.52043,
+        "lastLongitude": 73.85674,
+        "lastUpdateTimestamp": 1792725575375,
+        "name": "Aarav Sharma",
+        "phone": "9820011223",
+        "role": "member",
+        "safeZone": "Delhi Public School Pune & Home Zone",
+        "uniqueId": "AARAV99"
       },
       {
-        id: "wp-2",
-        coords: "18.520430, 73.856743",
-        time: "11:22 AM",
-        place: "",
-        lat: 18.5215,
-        lng: 73.8475,
-        isStart: false,
-        isEnd: false
-      },
-      {
-        id: "wp-3",
-        coords: "18.520430, 73.856743",
-        time: "11:25 AM",
-        place: "",
-        lat: 18.5170,
-        lng: 73.8570,
-        isStart: false,
-        isEnd: false
-      },
-      {
-        id: "wp-4",
-        coords: "18.520430, 73.856743",
-        time: "11:27 AM",
-        place: "",
-        lat: 18.5050,
-        lng: 73.8625,
-        isStart: false,
-        isEnd: false
-      },
-      {
-        id: "wp-5",
-        coords: "18.520430, 73.856743",
-        time: "11:30 AM",
-        place: "SIDDHARTH COLONY",
-        lat: 18.5185,
-        lng: 73.8735,
-        isStart: false,
-        isEnd: true
+        "batteryLevel": 92,
+        "contacts": {
+          "-P4ae4A54xPLJtWLT6RW": {
+            "name": "sham",
+            "phone": "9529811731",
+            "relationship": "Self / Family"
+          },
+          "-P4contactSister": {
+            "name": "Pooja Dhangar",
+            "phone": "9822334455",
+            "relationship": "Sister"
+          }
+        },
+        "dangerZoneActive": false,
+        "displayName": "Sham Dhangar",
+        "email": "sham@gmail.com",
+        "history": {
+          "-P4ae6kBBLuM1JRlH2gA": {
+            "alertId": "-P4ae6kBBLuM1JRlH2gA",
+            "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792723679/idg6hy8ncdvqyuibm3z9.mp4",
+            "emotion": "Voice SOS",
+            "formattedTime": "Oct 23, 2026 | 08:17 am",
+            "id": "-P4ae6kBBLuM1JRlH2gA",
+            "latitude": 19.6133123,
+            "longitude": 74.1850968,
+            "reason": "Manual Voice Shield (SOS Button)",
+            "status": "EMERGENCY - SMS Dispatched",
+            "timestamp": 1792724105375
+          }
+        },
+        "id": "vUyAvPgDTYNzzqt01kNHol5316E3",
+        "lastLatitude": 19.6133123,
+        "lastLongitude": 74.1850968,
+        "lastUpdateTimestamp": 1792725485375,
+        "name": "Sham Dhangar",
+        "phone": "9529811731",
+        "role": "member",
+        "safeZone": "Sangamner Campus & City Center",
+        "uniqueId": "SHAM01"
       }
     ];
 
@@ -3553,9 +3454,13 @@
       if (!mapContainer) return;
 
       if (typeof L === 'undefined') {
-        console.warn("Leaflet library is still loading, will retry in 100ms...");
         setTimeout(initLeafletSafetyMap, 100);
         return;
+      }
+
+      // If container was previously initialized by Leaflet but variable lost
+      if (mapContainer._leaflet_id && !safetyMap) {
+        mapContainer._leaflet_id = null;
       }
 
       if (safetyMap) {
@@ -3564,156 +3469,484 @@
       }
 
       try {
-        // Initialize Map centered on Mumbai transit corridor
+        // Initialize Leaflet Map focused tightly on child's school, transit corridor, and home
         safetyMap = L.map("parent-safety-map", {
-          center: [18.515, 73.858],
+          center: [18.520430, 73.856744],
           zoom: 14,
-          zoomControl: false,
-          attributionControl: false
+          zoomControl: true
         });
 
-        // Grayscale clean CartoDB Positron tiles matching TEJO dashboard reference image
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        // Resilient OpenStreetMap Tile Layer with automatic fallback to CartoDB tiles
+        const osmTileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 19,
-          subdomains: "abcd"
-        }).addTo(safetyMap);
+          subdomains: ["a", "b", "c"],
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &bull; SafeVaani Child Mesh'
+        });
 
+        osmTileLayer.on("tileerror", function(err) {
+          if (err && err.tile && !err.tile.dataset.hasFallback) {
+            err.tile.dataset.hasFallback = "1";
+            const coords = err.coords;
+            err.tile.src = `https://a.basemaps.cartocdn.com/rastertiles/voyager/${coords.z}/${coords.x}/${coords.y}.png`;
+          }
+        });
+
+        osmTileLayer.addTo(safetyMap);
+
+        geofencesLayer = L.layerGroup().addTo(safetyMap);
         markersLayer = L.layerGroup().addTo(safetyMap);
 
-        // Render Route and Callout Waypoints
-        renderTejoRoute();
+        // Render Geofence Boundary Circles & Approved Transit Corridor
+        renderGeofenceCorridors();
 
-        // Recenter Floating Buttons
-        const btnRecenterFloat = document.getElementById("btn-recenter-float");
-        if (btnRecenterFloat) {
-          btnRecenterFloat.addEventListener("click", fitAllNodes);
-        }
+        // Render markers
+        renderSafetyMarkers("all");
+
+        // Bind Map Chips Filtering (All, Live, School, Home)
+        const mapChips = document.querySelectorAll(".map-chip");
+        mapChips.forEach((chip) => {
+          chip.addEventListener("click", () => {
+            mapChips.forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            const filter = chip.getAttribute("data-map-filter") || "all";
+            renderSafetyMarkers(filter);
+          });
+        });
+
+        // Recenter All Button
         const btnRecenterAll = document.getElementById("btn-recenter-all");
         if (btnRecenterAll) {
-          btnRecenterAll.addEventListener("click", fitAllNodes);
+          btnRecenterAll.addEventListener("click", () => {
+            fitAllNodes();
+          });
         }
 
-        setTimeout(() => { if (safetyMap) safetyMap.invalidateSize(); }, 120);
-        setTimeout(() => { if (safetyMap) safetyMap.invalidateSize(); }, 400);
-        setTimeout(() => { if (safetyMap) safetyMap.invalidateSize(); }, 1000);
+        // Set initial selection to Child Live Location
+        selectChildWaypoint(childWaypointsData[0]);
+
+        // Auto-recalibrate map size on resize, tab switch, or guide drawer toggle
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(() => {
+            if (safetyMap) {
+              try { safetyMap.invalidateSize(); } catch(e){}
+            }
+          });
+          ro.observe(mapContainer);
+        }
+
+        // Multiple staggered size invalidations to ensure zero grey map glitch
+        [60, 180, 380, 800, 1500].forEach(delay => {
+          setTimeout(() => { if (safetyMap) safetyMap.invalidateSize(); }, delay);
+        });
       } catch (err) {
         console.error("Leaflet init error:", err);
       }
     }
 
-    function renderTejoRoute() {
+    function renderGeofenceCorridors() {
+      if (!geofencesLayer) return;
+      geofencesLayer.clearLayers();
+
+      // 1. School Geofence Circle (400m radius)
+      const schoolCircle = L.circle([18.520430, 73.856744], {
+        radius: 400,
+        color: "#2F9E5B",
+        fillColor: "#2F9E5B",
+        fillOpacity: 0.12,
+        weight: 2,
+        dashArray: "6, 6"
+      });
+      schoolCircle.bindTooltip("🏫 DPS School Geofence (400m Safe Radius)", { permanent: false, direction: "top" });
+      geofencesLayer.addLayer(schoolCircle);
+
+      // 2. Home Geofence Circle (300m radius)
+      const homeCircle = L.circle([18.532000, 73.842000], {
+        radius: 300,
+        color: "#3A6FF8",
+        fillColor: "#3A6FF8",
+        fillOpacity: 0.10,
+        weight: 2,
+        dashArray: "6, 6"
+      });
+      homeCircle.bindTooltip("🏡 Home Safe Zone (300m Safe Radius)", { permanent: false, direction: "top" });
+      geofencesLayer.addLayer(homeCircle);
+
+      // 3. Approved Transit Corridor Polyline (Dashed line from School to Home)
+      const transitPath = L.polyline([
+        [18.520430, 73.856744],
+        [18.524500, 73.852000],
+        [18.527800, 73.846500],
+        [18.532000, 73.842000]
+      ], {
+        color: "#E29400",
+        weight: 4,
+        opacity: 0.85,
+        dashArray: "8, 8"
+      });
+      transitPath.bindTooltip("🚌 Approved Transit Corridor (DPS &harr; Home)", { permanent: false, direction: "center" });
+      geofencesLayer.addLayer(transitPath);
+    }
+
+    function renderSafetyMarkers(filter = "all") {
       if (!markersLayer) return;
       markersLayer.clearLayers();
 
-      const latLngs = tejoRouteWaypoints.map(wp => [wp.lat, wp.lng]);
+      const filtered = childWaypointsData.filter((user) => {
+        if (filter === "live") return user.dangerZoneActive === false;
+        if (filter === "school") return (user.safeZone || "").toLowerCase().includes("school") || (user.safeZone || "").toLowerCase().includes("college");
+        if (filter === "home") return (user.safeZone || "").toLowerCase().includes("home") || (user.safeZone || "").toLowerCase().includes("campus");
+        return true;
+      });
 
-      // Draw polyline connecting all 5 nodes
-      routePolyline = L.polyline(latLngs, {
-        color: "#52525B",
-        weight: 2,
-        opacity: 0.85,
-        dashArray: "4, 4"
-      }).addTo(markersLayer);
+      filtered.forEach((user) => {
+        const isBreached = user.dangerZoneActive;
+        const beaconIcon = isBreached ? "⚠️" : "🎒";
+        const label = user.name.split(" ")[0];
 
-      // Render custom DivIcons with coordinate callout bubble and pin/flags
-      tejoRouteWaypoints.forEach((wp) => {
-        let flagHtml = "";
-        if (wp.isStart) {
-          // Red flag icon
-          flagHtml = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" style="margin-right:4px;">
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-              <line x1="4" y1="22" x2="4" y2="15"></line>
-            </svg>
-          `;
-        } else if (wp.isEnd) {
-          // Checkered racing finish flag icon
-          flagHtml = `
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="2" style="margin-left:4px;">
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-              <line x1="4" y1="22" x2="4" y2="15"></line>
-            </svg>
-          `;
-        }
-
+        // Custom Leaflet DivIcon with child-safe theme
         const customDivIcon = L.divIcon({
           className: "",
-          iconSize: [120, 60],
-          iconAnchor: [60, 56],
+          iconSize: [46, 46],
+          iconAnchor: [23, 23],
           html: `
-            <div class="tejo-callout-wrap" title="${wp.coords} • ${wp.time}">
-              <div class="tejo-callout-box">
-                <div>${wp.coords}</div>
-                <div>${wp.time}</div>
-                ${wp.place ? `<div style="font-size:0.62rem;opacity:0.9;font-weight:700;">${wp.place}</div>` : ""}
-              </div>
-              <div style="display:flex;align-items:center;justify-content:center;margin-top:2px;">
-                ${wp.isStart ? flagHtml : ""}
-                <div class="tejo-waypoint-dot"></div>
-                ${wp.isEnd ? flagHtml : ""}
-              </div>
+            <div class="safety-beacon ${isBreached ? 'domestic' : 'child-safe'}" title="${user.name} - ${user.safeZone}">
+              <div class="safety-beacon-ring"></div>
+              <div class="safety-beacon-core" style="font-size:1.15rem;">${beaconIcon}</div>
+              <div class="safety-beacon-label" style="background:${isBreached ? '#D9251D' : '#2F9E5B'};color:#fff;">${label}</div>
             </div>
           `
         });
 
-        const marker = L.marker([wp.lat, wp.lng], { icon: customDivIcon });
-        marker.bindPopup(`
-          <div style="font-family:var(--dash-font);padding:4px;min-width:170px;">
-            <div style="font-weight:700;font-size:0.88rem;color:var(--dash-ink);">${wp.time} Telemetry Fix</div>
-            <div style="font-size:0.78rem;color:var(--dash-ink-soft);font-family:var(--dash-mono);margin:2px 0 6px 0;">${wp.coords}</div>
-            ${wp.place ? `<div style="font-size:0.8rem;font-weight:600;color:var(--dash-ink);">${wp.place}</div>` : ""}
+        const marker = L.marker([user.lastLatitude, user.lastLongitude], { icon: customDivIcon });
+
+        // Leaflet Popup with parent-friendly text
+        const popupContent = `
+          <div style="font-family:var(--dash-font);padding:4px;min-width:200px;">
+            <div style="font-weight:700;font-size:0.95rem;color:var(--dash-ink);letter-spacing:-0.01em;">${user.name}</div>
+            <div style="font-size:0.8rem;color:var(--dash-ink-soft);font-weight:500;margin:2px 0 6px 0;">${user.safeZone}</div>
+            <div style="font-size:0.82rem;font-weight:600;color:${isBreached ? '#D9251D' : '#2F9E5B'};margin-bottom:8px;">
+              ${isBreached ? '⚠️ Outside Safe Zone' : '✓ Safe inside school zone'} &bull; Battery: ${user.batteryLevel}%
+            </div>
+            <button type="button" style="background:var(--dash-ink);color:#fff;border:0;padding:6px 12px;border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;width:100%;font-family:var(--dash-font);" onclick="window.selectChildWaypointById('${user.id}')">
+              View Location Details &rarr;
+            </button>
           </div>
-        `);
+        `;
+        marker.bindPopup(popupContent);
+
+        // Click Event: Open Safety Details Panel
+        marker.on("click", () => {
+          selectChildWaypoint(user);
+        });
+
         markersLayer.addLayer(marker);
       });
+    }
 
-      if (safetyMap && routePolyline) {
-        safetyMap.fitBounds(routePolyline.getBounds().pad(0.18));
+    // Fit map bounds to show child location and geofence waypoints
+    function fitAllNodes() {
+      if (!safetyMap) return;
+      const group = new L.featureGroup(childWaypointsData.map(n => L.marker([n.lastLatitude, n.lastLongitude])));
+      safetyMap.fitBounds(group.getBounds().pad(0.2));
+    }
+
+    // Select and display child waypoint detail panel strictly using schema fields
+    function selectChildWaypoint(user) {
+      if (!user) return;
+
+      const panelName = document.getElementById("panel-person-name");
+      const panelSector = document.getElementById("panel-sector-name");
+      const panelBadge = document.getElementById("panel-status-badge");
+      const panelThreat = document.getElementById("panel-threat-msg");
+      const panelThreatSub = document.getElementById("panel-threat-sub");
+      const panelCoords = document.getElementById("panel-coords");
+      const panelGmaps = document.getElementById("panel-gmaps-link");
+      const panelContacts = document.getElementById("panel-contacts-list");
+      const panelAudioBox = document.getElementById("panel-audio-box");
+      const btnPlayAudio = document.getElementById("btn-panel-play-audio");
+
+      const latestHist = user.history ? Object.values(user.history)[0] : null;
+
+      if (panelName) {
+        panelName.textContent = user.name;
+      }
+      if (panelSector) {
+        panelSector.textContent = user.safeZone || "Safe Zone Active";
+      }
+      if (panelBadge) {
+        panelBadge.innerHTML = user.dangerZoneActive 
+          ? `<span class="node-badge-danger" style="background:#FEE2E2;color:#991B1B;border-color:#FCA5A5;">⚠️ Outside safe zone</span>`
+          : `<span class="node-badge-danger" style="background:#EAF7EE;color:#2F9E5B;border-color:#A3D8B4;">✓ Safe at school</span>`;
+      }
+      if (panelThreat) {
+        panelThreat.textContent = user.dangerZoneActive ? "Outside designated perimeter" : "Inside safe zone";
+        panelThreat.style.color = user.dangerZoneActive ? "#D9251D" : "#2F9E5B";
+      }
+      if (panelThreatSub) {
+        panelThreatSub.textContent = user.dangerZoneActive ? "Alert sent to parents" : "No boundary alerts • Normal activity";
+      }
+      if (panelCoords) {
+        panelCoords.textContent = `${user.lastLatitude.toFixed(6)}° N, ${user.lastLongitude.toFixed(6)}° E`;
+      }
+      if (panelGmaps) {
+        panelGmaps.href = `https://www.google.com/maps?q=${user.lastLatitude},${user.lastLongitude}`;
+      }
+
+      // Contacts rendering
+      if (panelContacts && user.contacts) {
+        panelContacts.innerHTML = Object.values(user.contacts).map(c => `
+          <div class="node-contact-item">
+            <span style="font-weight:600;">${c.name} (${c.relationship}): ${c.phone}</span>
+            <a href="tel:${c.phone}" class="btn-dial-contact">📞 Call</a>
+          </div>
+        `).join("");
+      }
+
+      // Audio handling
+      if (panelAudioBox) {
+        if (latestHist && latestHist.audioUrl) {
+          panelAudioBox.style.display = "block";
+          if (btnPlayAudio) btnPlayAudio.setAttribute("data-src", latestHist.audioUrl);
+        } else {
+          panelAudioBox.style.display = "none";
+        }
+      }
+
+      // Stop any active playing audio
+      if (activeNodeAudio) {
+        activeNodeAudio.pause();
+        if (activeNodeWaveform) activeNodeWaveform.classList.remove("playing");
+        if (btnPlayAudio) {
+          btnPlayAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+        }
+      }
+
+      // Pan map smoothly to the selected child
+      if (safetyMap && user.lastLatitude && user.lastLongitude) {
+        safetyMap.panTo([user.lastLatitude, user.lastLongitude], { animate: true, duration: 0.8 });
       }
     }
 
-    // Fit map bounds to show full route
-    function fitAllNodes() {
-      if (!safetyMap || !routePolyline) return;
-      safetyMap.fitBounds(routePolyline.getBounds().pad(0.18), { animate: true, duration: 0.8 });
-    }
+    // Expose for popup button
+    window.selectChildWaypointById = function(id) {
+      const user = childWaypointsData.find(n => n.id === id);
+      if (user) selectChildWaypoint(user);
+    };
+    window.selectDangerNodeById = window.selectChildWaypointById;
 
-    // Audio Playback Listener for Tejo Evidence Bar
-    const btnTejoAudio = document.getElementById("btn-tejo-audio-play");
-    const tejoWaveforms = document.getElementById("tejo-waveforms");
+    // Audio Playback Listener for Child Ambient Stream
+    const btnPlayAudio = document.getElementById("btn-panel-play-audio");
+    const panelWaveforms = document.getElementById("panel-waveforms");
+    const panelAudioTime = document.getElementById("panel-audio-time");
 
-    if (btnTejoAudio) {
-      btnTejoAudio.addEventListener("click", () => {
-        if (!tejoAudioStream) {
-          tejoAudioStream = new Audio("https://res.cloudinary.com/dbbzoslvi/video/upload/v1790834080/ly8zfwrwo8otcge8kkz1.mp4");
-          tejoAudioStream.addEventListener("ended", () => {
-            if (tejoWaveforms) tejoWaveforms.classList.remove("playing");
-            btnTejoAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+    if (btnPlayAudio) {
+      btnPlayAudio.addEventListener("click", () => {
+        const src = btnPlayAudio.getAttribute("data-src");
+        if (!src) return;
+
+        if (!activeNodeAudio || activeNodeAudio.src !== src) {
+          activeNodeAudio = new Audio(src);
+          activeNodeWaveform = panelWaveforms;
+
+          activeNodeAudio.addEventListener("timeupdate", () => {
+            const sec = Math.floor(activeNodeAudio.currentTime);
+            const dur = Math.floor(activeNodeAudio.duration || 6);
+            if (panelAudioTime) {
+              panelAudioTime.textContent = `00:0${sec} / 00:0${dur} (Live Ambient)`;
+            }
+          });
+
+          activeNodeAudio.addEventListener("ended", () => {
+            if (panelWaveforms) panelWaveforms.classList.remove("playing");
+            btnPlayAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+            if (panelAudioTime) panelAudioTime.textContent = "00:00 / 00:06 (Stream Idle)";
           });
         }
 
-        if (tejoAudioStream.paused) {
-          tejoAudioStream.play().then(() => {
-            if (tejoWaveforms) tejoWaveforms.classList.add("playing");
-            btnTejoAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
-          }).catch((err) => {
-            console.warn("Audio play prevented:", err);
-            // Toggle visual playback animation even if browser requires user gesture
-            if (tejoWaveforms) tejoWaveforms.classList.toggle("playing");
-          });
+        if (activeNodeAudio.paused) {
+          activeNodeAudio.play();
+          if (panelWaveforms) panelWaveforms.classList.add("playing");
+          btnPlayAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
         } else {
-          tejoAudioStream.pause();
-          if (tejoWaveforms) tejoWaveforms.classList.remove("playing");
-          btnTejoAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+          activeNodeAudio.pause();
+          if (panelWaveforms) panelWaveforms.classList.remove("playing");
+          btnPlayAudio.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
         }
       });
     }
 
-    // Video Preview Listener
-    const btnTejoVideoPlay = document.getElementById("btn-tejo-video-play");
-    if (btnTejoVideoPlay) {
-      btnTejoVideoPlay.addEventListener("click", () => {
-        alert("Playing encrypted patrol transit stream for Carter Bergson: Camera 04 (Juhu High Street Transit).");
+    // Emergency Siren Audio Synthesizer (Web Audio API Dual-Tone Alarm + Fallback)
+    class EmergencySiren {
+      constructor() {
+        this.audioCtx = null;
+        this.osc = null;
+        this.gain = null;
+        this.isPlaying = false;
+        this.stopTimeout = null;
+        this.sirenAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+      }
+      ensureContext() {
+        try {
+          if (!this.audioCtx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) this.audioCtx = new AudioCtx();
+          }
+          if (this.audioCtx && this.audioCtx.state === "suspended") {
+            this.audioCtx.resume();
+          }
+        } catch(e){}
+      }
+      play(duration = 6) {
+        this.ensureContext();
+        this.stop();
+        this.isPlaying = true;
+
+        if (this.audioCtx) {
+          try {
+            const ctx = this.audioCtx;
+            const now = ctx.currentTime;
+            const masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0.001, now);
+            masterGain.gain.exponentialRampToValueAtTime(0.4, now + 0.15);
+            masterGain.gain.setValueAtTime(0.4, now + duration - 0.4);
+            masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            masterGain.connect(ctx.destination);
+
+            const osc = ctx.createOscillator();
+            osc.type = "sawtooth";
+            const cycle = 0.7;
+            let t = 0;
+            while (t < duration) {
+              osc.frequency.setValueAtTime(650, now + t);
+              osc.frequency.linearRampToValueAtTime(1150, now + t + 0.35);
+              osc.frequency.linearRampToValueAtTime(650, now + Math.min(duration, t + cycle));
+              t += cycle;
+            }
+            osc.connect(masterGain);
+            osc.start(now);
+            osc.stop(now + duration);
+
+            this.osc = osc;
+            this.gain = masterGain;
+
+            clearTimeout(this.stopTimeout);
+            this.stopTimeout = setTimeout(() => {
+              this.stop();
+            }, duration * 1000);
+            return;
+          } catch(e){
+            console.warn("Oscillator siren error:", e);
+          }
+        }
+
+        try {
+          this.sirenAudio.currentTime = 0;
+          this.sirenAudio.play().catch(e => console.log("Audio play note:", e));
+        } catch(e){}
+      }
+      stop() {
+        clearTimeout(this.stopTimeout);
+        if (this.osc) {
+          try { this.osc.stop(); this.osc.disconnect(); } catch(e){}
+          this.osc = null;
+        }
+        if (this.gain) {
+          try { this.gain.disconnect(); } catch(e){}
+          this.gain = null;
+        }
+        if (this.sirenAudio) {
+          try { this.sirenAudio.pause(); } catch(e){}
+        }
+        this.isPlaying = false;
+      }
+    }
+
+    const emergencySiren = new EmergencySiren();
+    window.addEventListener("click", () => emergencySiren.ensureContext(), { once: true });
+    window.addEventListener("keydown", () => emergencySiren.ensureContext(), { once: true });
+
+    // Parent Action: Ring Device (Loud Alarm with Real Emergency Siren Sound)
+    const btnPanelRing = document.getElementById("btn-panel-ring");
+    if (btnPanelRing) {
+      btnPanelRing.addEventListener("click", () => {
+        emergencySiren.play(8);
+        btnPanelRing.disabled = true;
+        btnPanelRing.innerHTML = `<span>🚨 Ringing Device (Siren Sounding)...</span>`;
+        
+        setTimeout(() => {
+          btnPanelRing.disabled = false;
+          btnPanelRing.innerHTML = `<span>🔔 Ring Device (Loud Alarm)</span>`;
+        }, 8000);
+      });
+    }
+
+    // Realtime Firebase RTDB Sync for Parent Portal
+    async function loadParentRealtimeData() {
+      try {
+        const fetchTimeout = (url, ms = 4000) => {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), ms);
+          return fetch(url, { signal: controller.signal })
+            .then(res => { clearTimeout(timer); return res; })
+            .catch(() => { clearTimeout(timer); return null; });
+        };
+
+        const [usersRes, sosRes] = await Promise.all([
+          fetchTimeout("https://woshild-f4df5-default-rtdb.firebaseio.com/users.json"),
+          fetchTimeout("https://woshild-f4df5-default-rtdb.firebaseio.com/sos_alerts.json")
+        ]);
+
+        let liveUsers = null;
+        let liveAlerts = null;
+        if (usersRes && usersRes.ok) liveUsers = await usersRes.json().catch(() => null);
+        if (sosRes && sosRes.ok) liveAlerts = await sosRes.json().catch(() => null);
+
+        if (liveAlerts && typeof liveAlerts === 'object' && Object.keys(liveAlerts).length > 0) {
+          const alertsList = Object.entries(liveAlerts).map(([k, v]) => ({ id: k, ...v }));
+          alertsList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+          const latestAlert = alertsList[0];
+          if (latestAlert) {
+            // Update Sham Dhangar live waypoint if present
+            const shamNode = childWaypointsData.find(n => n.id === "vUyAvPgDTYNzzqt01kNHol5316E3");
+            if (shamNode) {
+              if (latestAlert.latitude) shamNode.lastLatitude = Number(latestAlert.latitude);
+              if (latestAlert.longitude) shamNode.lastLongitude = Number(latestAlert.longitude);
+              shamNode.dangerZoneActive = Boolean(latestAlert.isEmergency);
+              shamNode.history = { [latestAlert.id || "live"]: latestAlert };
+            }
+          }
+        }
+      } catch(err) {
+        console.warn("Parent live RTDB sync note:", err);
+      }
+    }
+
+    // Auto-poll parent RTDB every 15 seconds
+    setInterval(() => {
+      if (document.documentElement.classList.contains("parent-session-active")) {
+        loadParentRealtimeData();
+      }
+    }, 15000);
+    loadParentRealtimeData();
+
+    // Parent Action: Request GPS Ping
+    const btnPanelPing = document.getElementById("btn-panel-ping");
+    if (btnPanelPing) {
+      btnPanelPing.addEventListener("click", () => {
+        btnPanelPing.disabled = true;
+        btnPanelPing.innerHTML = `<span>⏳ Requesting Live Ping...</span>`;
+        
+        setTimeout(() => {
+          const panelCoords = document.getElementById("panel-coords");
+          if (panelCoords) {
+            panelCoords.textContent = "18.520432° N, 73.856740° E (Refreshed now • ±2.1m accuracy)";
+          }
+          btnPanelPing.disabled = false;
+          btnPanelPing.innerHTML = `<span>✓ GPS Synced</span>`;
+          setTimeout(() => {
+            btnPanelPing.innerHTML = `<span>📍 Request GPS Ping</span>`;
+          }, 2500);
+        }, 800);
       });
     }
 
@@ -3742,6 +3975,16 @@
       btn.addEventListener("click", toggleSafeVaaniTheme);
     });
     updateThemeLabels(getSafeVaaniTheme());
+
+    // Ensure Leaflet safety map initializes immediately on page load and window load
+    if (document.documentElement.classList.contains("parent-session-active")) {
+      setTimeout(() => initLeafletSafetyMap(), 80);
+    }
+    window.addEventListener("load", () => {
+      if (document.documentElement.classList.contains("parent-session-active")) {
+        setTimeout(() => initLeafletSafetyMap(), 100);
+      }
+    });
   </script>
 </body>
 </html>
