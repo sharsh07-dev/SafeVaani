@@ -2712,7 +2712,7 @@
               <p style="margin:0;font-size:0.84rem;color:var(--dash-ink-soft);">Recent arrivals, departures, and routine check-ins</p>
             </div>
 
-            <div style="display:flex;flex-direction:column;gap:10px;">
+            <div id="parent-history-feed" style="display:flex;flex-direction:column;gap:10px;">
               <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#FAF8F2;border:1px solid var(--dash-border);border-radius:12px;font-size:0.85rem;gap:12px;flex-wrap:wrap;">
                 <div style="display:flex;align-items:center;gap:10px;">
                   <span style="font-size:1.1rem;">🏫</span>
@@ -2888,7 +2888,8 @@
       ref, 
       set, 
       get, 
-      child 
+      child,
+      onValue 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     // Firebase Config for Woshild / SafeVaani
@@ -2908,6 +2909,15 @@
       app = initializeApp(firebaseConfig);
       auth = getAuth(app);
       db = getDatabase(app);
+
+      if (db) {
+        onValue(ref(db, "sos_alerts"), (snapshot) => {
+          const val = snapshot.val();
+          if (val && typeof applyParentAlertsData === 'function') {
+            applyParentAlertsData(val);
+          }
+        });
+      }
     } catch(err) {
       console.warn("Firebase initialization note:", err);
     }
@@ -3410,6 +3420,47 @@
     // Child Telemetry & Geofence Corridor Data strictly using provided schema
     const childWaypointsData = [
       {
+        "batteryLevel": 92,
+        "contacts": {
+          "-P4ae4A54xPLJtWLT6RW": {
+            "name": "sham",
+            "phone": "9529811731",
+            "relationship": "Self / Family"
+          },
+          "-P4contactSister": {
+            "name": "Pooja Dhangar",
+            "phone": "9822334455",
+            "relationship": "Sister"
+          }
+        },
+        "dangerZoneActive": true,
+        "displayName": "Sham Dhangar",
+        "email": "sham@gmail.com",
+        "history": {
+          "-P4bNo_uwTfm4kJf3IJl": {
+            "alertId": "-P4bNo_uwTfm4kJf3IJl",
+            "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792735921/x4bp4zpfbqwbkih567n8.mp4",
+            "emotion": "Voice SOS",
+            "formattedTime": "Oct 23, 2026 | 11:42 am",
+            "id": "-P4bNo_uwTfm4kJf3IJl",
+            "latitude": 19.6144773,
+            "longitude": 74.1846288,
+            "reason": "Manual Voice Shield (SOS Button)",
+            "status": "EMERGENCY - SMS Dispatched",
+            "timestamp": 1792735922491
+          }
+        },
+        "id": "vUyAvPgDTYNzzqt01kNHol5316E3",
+        "lastLatitude": 19.6144773,
+        "lastLongitude": 74.1846288,
+        "lastUpdateTimestamp": 1792735922491,
+        "name": "Sham Dhangar",
+        "phone": "9529811731",
+        "role": "member",
+        "safeZone": "Sangamner Campus & City Center",
+        "uniqueId": "SHAM01"
+      },
+      {
         "batteryLevel": 88,
         "contacts": {
           "-P5contactFather": {
@@ -3449,47 +3500,6 @@
         "role": "member",
         "safeZone": "Delhi Public School Pune & Home Zone",
         "uniqueId": "AARAV99"
-      },
-      {
-        "batteryLevel": 92,
-        "contacts": {
-          "-P4ae4A54xPLJtWLT6RW": {
-            "name": "sham",
-            "phone": "9529811731",
-            "relationship": "Self / Family"
-          },
-          "-P4contactSister": {
-            "name": "Pooja Dhangar",
-            "phone": "9822334455",
-            "relationship": "Sister"
-          }
-        },
-        "dangerZoneActive": false,
-        "displayName": "Sham Dhangar",
-        "email": "sham@gmail.com",
-        "history": {
-          "-P4ae6kBBLuM1JRlH2gA": {
-            "alertId": "-P4ae6kBBLuM1JRlH2gA",
-            "audioUrl": "https://res.cloudinary.com/dbbzoslvi/video/upload/v1792723679/idg6hy8ncdvqyuibm3z9.mp4",
-            "emotion": "Voice SOS",
-            "formattedTime": "Oct 23, 2026 | 08:17 am",
-            "id": "-P4ae6kBBLuM1JRlH2gA",
-            "latitude": 19.6133123,
-            "longitude": 74.1850968,
-            "reason": "Manual Voice Shield (SOS Button)",
-            "status": "EMERGENCY - SMS Dispatched",
-            "timestamp": 1792724105375
-          }
-        },
-        "id": "vUyAvPgDTYNzzqt01kNHol5316E3",
-        "lastLatitude": 19.6133123,
-        "lastLongitude": 74.1850968,
-        "lastUpdateTimestamp": 1792725485375,
-        "name": "Sham Dhangar",
-        "phone": "9529811731",
-        "role": "member",
-        "safeZone": "Sangamner Campus & City Center",
-        "uniqueId": "SHAM01"
       }
     ];
 
@@ -3972,7 +3982,7 @@
 
       const isNewAlert = parentInitialLoad &&
         parentLastSeenAlertId &&
-        (latestAlert.alertId !== parentLastSeenAlertId || (latestAlert.id !== parentLastSeenAlertId)) &&
+        (latestAlert.alertId !== parentLastSeenAlertId && latestAlert.id !== parentLastSeenAlertId) &&
         (latestAlert.isEmergency || String(latestAlert.status).toUpperCase().includes("EMERGENCY") || latestAlert.emotion === "Voice SOS");
 
       if (isNewAlert) {
@@ -3982,15 +3992,144 @@
       parentLastSeenAlertId = latestAlert.alertId || latestAlert.id;
       parentInitialLoad = true;
 
-      // Update Sham Dhangar live waypoint if present
-      const shamNode = childWaypointsData.find(n => n.id === "vUyAvPgDTYNzzqt01kNHol5316E3");
+      // 1. Update Ward Identity across top and side navigation
+      const wardName = latestAlert.userName || "Sham Dhangar";
+      const dispChildName = document.getElementById("disp-child-name");
+      if (dispChildName) dispChildName.textContent = wardName;
+
+      const panelPersonName = document.getElementById("panel-person-name");
+      if (panelPersonName) panelPersonName.textContent = wardName;
+
+      // 2. Update Top Metric Cards (Section Home)
+      const isEmergency = Boolean(latestAlert.isEmergency) || 
+                          String(latestAlert.status).toUpperCase().includes("EMERGENCY") || 
+                          latestAlert.emotion === "Voice SOS";
+
+      const card1 = document.querySelector("#section-home .widget-card:nth-child(1)");
+      if (card1) {
+        const pill = card1.querySelector(".status-pill");
+        if (pill) {
+          pill.className = isEmergency ? "status-pill status-pill-red" : "status-pill status-pill-green";
+          pill.textContent = isEmergency ? "🚨 Needs Attention" : "● Safe";
+          if (isEmergency) {
+            pill.style.background = "#FEE2E2";
+            pill.style.color = "#991B1B";
+          }
+        }
+        const sub = card1.querySelector(".widget-sub");
+        if (sub) {
+          sub.textContent = `${latestAlert.emotion || (isEmergency ? "Voice SOS Detected" : "Status normal")} • ${latestAlert.formattedTime || "Updated just now"}`;
+        }
+      }
+
+      const statDangerCount = document.getElementById("stat-danger-count");
+      if (statDangerCount) {
+        statDangerCount.textContent = isEmergency ? "🚨 Emergency Active" : "Inside safe zone";
+        statDangerCount.style.color = isEmergency ? "#D9251D" : "var(--dash-green)";
+        const card2Sub = statDangerCount.parentElement ? statDangerCount.parentElement.querySelector(".widget-sub") : null;
+        if (card2Sub) {
+          card2Sub.textContent = latestAlert.locationName || (latestAlert.latitude ? `${Number(latestAlert.latitude).toFixed(3)}° N, ${Number(latestAlert.longitude).toFixed(3)}° E` : "Sangamner / Akole Region");
+        }
+      }
+
+      const dispAlertsCount = document.getElementById("disp-alerts-count");
+      if (dispAlertsCount) {
+        const activeCount = alertsList.filter(a => a.isEmergency || String(a.status).toUpperCase().includes("EMERGENCY")).length;
+        dispAlertsCount.textContent = isEmergency ? `${activeCount} Active SOS` : "All clear";
+        dispAlertsCount.style.color = isEmergency ? "#D9251D" : "var(--dash-ink)";
+      }
+
+      // 3. Update Safety Alerts Banner (Section Alerts)
+      const bullyingCard = document.getElementById("bullying-alert-card");
+      const noAlerts = document.getElementById("no-alerts-banner");
+      if (bullyingCard) {
+        if (isEmergency) {
+          bullyingCard.classList.remove("dismissed");
+          bullyingCard.style.display = "flex";
+          if (noAlerts) noAlerts.style.display = "none";
+
+          const titleEl = bullyingCard.querySelector(".alert-title");
+          if (titleEl) titleEl.textContent = `🚨 ${latestAlert.emotion || "Emergency Voice SOS"} Alert`;
+
+          const tagEl = bullyingCard.querySelector(".alert-tag");
+          if (tagEl) {
+            tagEl.textContent = latestAlert.status || "EMERGENCY - SMS Dispatched";
+            tagEl.style.background = "#FEE2E2";
+            tagEl.style.color = "#991B1B";
+          }
+
+          const descEl = bullyingCard.querySelector(".alert-desc");
+          if (descEl) {
+            descEl.textContent = latestAlert.smsMessage || `${wardName} triggered a high-priority Voice SOS. Location: ${latestAlert.locationName || 'Live GPS'}. Time: ${latestAlert.formattedTime}.`;
+          }
+
+          const btnAudio = document.getElementById("btn-alert-review");
+          if (btnAudio) {
+            if (latestAlert.audioUrl) {
+              btnAudio.style.display = "inline-flex";
+              btnAudio.setAttribute("data-audio-src", latestAlert.audioUrl);
+              btnAudio.onclick = () => {
+                const a = new Audio(latestAlert.audioUrl);
+                a.play().catch(e => console.log("Audio play:", e));
+              };
+            }
+          }
+        }
+      }
+
+      // 4. Update Incident & Check-in History (Section History)
+      const historyFeed = document.getElementById("parent-history-feed");
+      if (historyFeed) {
+        const recentAlerts = alertsList.slice(0, 8);
+        historyFeed.innerHTML = recentAlerts.map(alt => {
+          const isAltEmerg = Boolean(alt.isEmergency) || String(alt.status).toUpperCase().includes("EMERGENCY") || alt.emotion === "Voice SOS";
+          const icon = isAltEmerg ? "🚨" : (String(alt.emotion).toLowerCase().includes("sad") ? "⚠️" : "🎒");
+          const bg = isAltEmerg ? "#FFF5F5" : "#FAF8F2";
+          const border = isAltEmerg ? "1px solid #FECACA" : "1px solid var(--dash-border)";
+          const pillClass = isAltEmerg ? "status-pill status-pill-red" : "status-pill status-pill-green";
+          const pillText = isAltEmerg ? "🚨 Emergency SOS" : (String(alt.emotion).toLowerCase().includes("sad") ? "⚠️ Emotional Distress" : "✓ Safe Check-in");
+          const pillStyle = isAltEmerg ? "background:#FEE2E2;color:#991B1B;" : "";
+
+          const audioBtn = alt.audioUrl ? `
+            <button type="button" class="btn-demo" style="padding:4px 10px;font-size:0.75rem;margin-top:6px;" onclick="new Audio('${alt.audioUrl}').play().catch(()=>{})">
+              🎙️ Play Voice Recording
+            </button>
+          ` : '';
+
+          return `
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:12px 16px;background:${bg};border:${border};border-radius:12px;font-size:0.85rem;gap:12px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:flex-start;gap:12px;flex:1;min-width:240px;">
+                <span style="font-size:1.3rem;line-height:1;">${icon}</span>
+                <div>
+                  <strong style="color:var(--dash-ink);font-size:0.92rem;">${alt.emotion || "Voice SOS Alert"}</strong>
+                  <div style="font-size:0.80rem;color:var(--dash-ink-soft);margin-top:2px;">
+                    ${alt.triggerSource || "SOS Sensor Trigger"} • ${alt.userName || wardName}
+                  </div>
+                  <div style="font-size:0.78rem;color:var(--dash-ink-soft);margin-top:2px;">
+                    📍 ${alt.locationName || (alt.latitude ? `${Number(alt.latitude).toFixed(4)}° N, ${Number(alt.longitude).toFixed(4)}° E` : "Location fix pending")}
+                  </div>
+                  ${audioBtn}
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+                <span class="${pillClass}" style="${pillStyle}">${pillText}</span>
+                <span style="color:var(--dash-ink-soft);font-size:0.78rem;">${alt.formattedTime || "Recent"}</span>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      // 5. Update Map Waypoint
+      const shamNode = childWaypointsData.find(n => n.id === "vUyAvPgDTYNzzqt01kNHol5316E3") || childWaypointsData[0];
       if (shamNode) {
+        if (latestAlert.userName) shamNode.name = latestAlert.userName;
         if (latestAlert.latitude) shamNode.lastLatitude = Number(latestAlert.latitude);
         if (latestAlert.longitude) shamNode.lastLongitude = Number(latestAlert.longitude);
-        shamNode.dangerZoneActive = Boolean(latestAlert.isEmergency);
+        shamNode.dangerZoneActive = isEmergency;
         shamNode.history = { [latestAlert.id || "live"]: latestAlert };
-        if (typeof renderChildMarkers === 'function') {
-          renderChildMarkers();
+        if (typeof renderSafetyMarkers === 'function') {
+          renderSafetyMarkers();
         }
       }
     }
@@ -4022,13 +4161,21 @@
       } catch(e){}
     }
 
-    // Realtime Firebase RTDB Sync for Parent Portal
+    // Realtime Firebase RTDB Sync for Parent Portal (with cache-busting)
     async function loadParentRealtimeData() {
       try {
-        const fetchTimeout = (url, ms = 3000) => {
+        const fetchTimeout = (url, ms = 8000) => {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), ms);
-          return fetch(url, { signal: controller.signal })
+          const noCacheUrl = url + (url.includes('?') ? '&' : '?') + `_t=${Date.now()}`;
+          return fetch(noCacheUrl, { 
+            cache: "no-store",
+            headers: {
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              "Pragma": "no-cache"
+            },
+            signal: controller.signal 
+          })
             .then(res => { clearTimeout(timer); return res; })
             .catch(() => { clearTimeout(timer); return null; });
         };
@@ -4051,12 +4198,10 @@
       }
     }
 
-    // Auto-poll parent RTDB every 4s and listen on realtime stream
+    // Auto-poll parent RTDB every 3s and listen on realtime stream
     setInterval(() => {
-      if (document.documentElement.classList.contains("parent-session-active")) {
-        loadParentRealtimeData();
-      }
-    }, 4000);
+      loadParentRealtimeData();
+    }, 3000);
     initParentRealtimeStream();
     loadParentRealtimeData();
 
