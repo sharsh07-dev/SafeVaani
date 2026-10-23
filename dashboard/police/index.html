@@ -2061,6 +2061,19 @@
     </div>
   </footer>
 
+  <script>
+    // Live Alerts memory cache for instant merging
+    window.liveAlertsCache = {};
+    window.handleLiveAlertsPayload = function(payload, source) {
+      if (payload && typeof payload === 'object') {
+        Object.assign(window.liveAlertsCache, payload);
+        if (typeof window.processIncomingAlerts === 'function') {
+          window.processIncomingAlerts(window.liveAlertsCache, source);
+        }
+      }
+    };
+  </script>
+
   <!-- Official Firebase Realtime Database SDK (Zero-latency WebSocket Stream) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -2099,16 +2112,6 @@
   </script>
 
   <script>
-    // Live Alerts memory cache for instant merging
-    const liveAlertsCache = {};
-    window.handleLiveAlertsPayload = function(payload, source) {
-      if (payload && typeof payload === 'object') {
-        Object.assign(liveAlertsCache, payload);
-        if (typeof processIncomingAlerts === 'function') {
-          processIncomingAlerts(liveAlertsCache, source);
-        }
-      }
-    };
     // ========================================================
     // FIREBASE REALTIME DATABASE SYNC CONFIG & BASELINE ALERTS
     // ========================================================
@@ -2314,8 +2317,8 @@
       localStorage.removeItem("police_cad_session");
     }
 
-    // If pre-render script in head activated console, ensure openCADConsole is invoked
-    if (!sessionRestored && document.documentElement.classList.contains("police-session-active")) {
+    // Open live CAD Console by default so incoming alerts are visible immediately
+    if (!sessionRestored) {
       openCADConsole("insp.vikram@delhipolice.gov.in", "PCR-DELHI-ZONE4");
     }
 
@@ -2668,41 +2671,32 @@
       if (syncStatusIndicator) syncStatusIndicator.textContent = "Syncing live RTDB...";
 
       let alertsData = {};
-      let usersData = {};
 
       try {
-        const fetchTimeout = (url, ms = 8000) => {
+        const fetchTimeout = (url, ms = 6000) => {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), ms);
           const noCacheUrl = url + (url.includes('?') ? '&' : '?') + `_t=${Date.now()}`;
           return fetch(noCacheUrl, { 
             cache: "no-store",
-            headers: {
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              "Pragma": "no-cache"
-            },
             signal: controller.signal 
           })
             .then(res => { clearTimeout(timer); return res; })
             .catch(() => { clearTimeout(timer); return null; });
         };
 
-        const [alertsRes, sosAlertsRes, usersRes] = await Promise.all([
-          fetchTimeout(RTDB_ALERTS_URL),
+        const [sosAlertsRes, alertsRes] = await Promise.all([
           fetchTimeout(RTDB_SOS_ALERTS_URL),
-          fetchTimeout(RTDB_USERS_URL)
+          fetchTimeout(RTDB_ALERTS_URL)
         ]);
 
-        if (alertsRes && alertsRes.ok) {
-          const d = await alertsRes.json().catch(() => null);
-          if (d && typeof d === 'object') Object.assign(alertsData, d);
-        }
         if (sosAlertsRes && sosAlertsRes.ok) {
           const d = await sosAlertsRes.json().catch(() => null);
           if (d && typeof d === 'object') Object.assign(alertsData, d);
         }
-        if (usersRes && usersRes.ok) {
-          usersData = await usersRes.json().catch(() => ({})) || {};
+        if (alertsRes && alertsRes.ok) {
+          const d = await alertsRes.json().catch(() => null);
+          if (d && typeof d === 'object') Object.assign(alertsData, d);
         }
 
         // Fallback to local export JSON if offline or empty
@@ -2713,14 +2707,13 @@
               const localJson = await localRes.json();
               if (localJson.sos_alerts) Object.assign(alertsData, localJson.sos_alerts);
               if (localJson.alerts) Object.assign(alertsData, localJson.alerts);
-              if (localJson.users) usersData = localJson.users;
             }
           } catch(e) {}
         }
 
         if (Object.keys(alertsData).length > 0) {
-          Object.assign(liveAlertsCache, alertsData);
-          processIncomingAlerts(liveAlertsCache, "fetch");
+          Object.assign(window.liveAlertsCache, alertsData);
+          processIncomingAlerts(window.liveAlertsCache, "fetch");
         }
       } catch (err) {
         console.warn("RTDB sync note:", err);
