@@ -381,9 +381,11 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 clamp(20px, 3.2vw, 56px);
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0 clamp(16px, 1.8vw, 32px);
+      box-sizing: border-box;
     }
     .hd-logo {
       display: inline-flex;
@@ -468,13 +470,14 @@
 
     .parent-main {
       flex: 1;
-      padding-top: 104px;
-      padding-bottom: 80px;
-      max-width: 1420px;
-      margin: 0 auto;
+      padding-top: 86px;
+      padding-bottom: 36px;
+      max-width: 100%;
       width: 100%;
-      padding-left: clamp(16px, 2.5vw, 40px);
-      padding-right: clamp(16px, 2.5vw, 40px);
+      margin: 0;
+      padding-left: clamp(14px, 1.4vw, 24px);
+      padding-right: clamp(14px, 1.4vw, 24px);
+      box-sizing: border-box;
     }
 
     /* Breadcrumbs */
@@ -484,8 +487,9 @@
       gap: 8px;
       font-size: 0.88rem;
       color: var(--dash-ink-soft);
-      margin-bottom: 24px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
+      width: 100%;
     }
     .crumb-bar a {
       color: var(--dash-ink-soft);
@@ -762,6 +766,8 @@
     .parent-console {
       display: none;
       animation: fadeIn .3s ease;
+      width: 100%;
+      max-width: 100%;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -774,15 +780,17 @@
     .console-top-action-bar {
       background: #FFFFFF;
       border: 1.5px solid var(--dash-border);
-      border-radius: 18px;
-      padding: 14px 22px;
+      border-radius: 14px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
       box-shadow: 0 4px 18px -6px rgba(31, 34, 54, 0.08);
+      width: 100%;
+      box-sizing: border-box;
     }
     .btn-toggle-slidebar {
       background: #FAF8F2;
@@ -1211,8 +1219,8 @@
     }
     @media (min-width: 993px) {
       .console-workspace-layout {
-        height: calc(100vh - 216px);
-        min-height: 560px;
+        height: calc(100vh - 170px);
+        min-height: 640px;
         align-items: stretch;
       }
       .console-slidebar {
@@ -1229,8 +1237,9 @@
         overflow-y: auto;
         overflow-x: hidden;
         scroll-behavior: smooth;
-        padding-right: 12px;
+        padding-right: 8px;
         padding-bottom: 24px;
+        width: 100%;
       }
       .console-main-content::-webkit-scrollbar {
         width: 8px;
@@ -1425,20 +1434,29 @@
     .map-split-layout {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 18px;
+      width: 100%;
     }
     @media (min-width: 980px) {
       .map-split-layout.has-selection {
-        grid-template-columns: 1.4fr 1fr;
+        grid-template-columns: minmax(0, 1fr) 400px;
+      }
+    }
+    @media (min-width: 1440px) {
+      .map-split-layout.has-selection {
+        grid-template-columns: minmax(0, 1fr) 440px;
       }
     }
 
     #parent-safety-map {
-      height: 520px;
+      height: 580px;
+      min-height: 520px;
       width: 100%;
       border-radius: 16px;
       border: 1.5px solid var(--dash-border);
       z-index: 5;
+      background: #EAE5D9;
+      position: relative;
     }
 
     /* Custom Leaflet Pulsing Markers */
