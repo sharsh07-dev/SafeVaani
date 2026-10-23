@@ -3819,7 +3819,7 @@
       });
     }
 
-    // Emergency Siren Audio Synthesizer (Web Audio API Dual-Tone Alarm + Fallback)
+    // Emergency Siren Audio Synthesizer (Instant 0ms Attack + Zero-Latency In-Memory Fallback)
     class EmergencySiren {
       constructor() {
         this.audioCtx = null;
@@ -3827,7 +3827,7 @@
         this.gain = null;
         this.isPlaying = false;
         this.stopTimeout = null;
-        this.sirenAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+        this.fallbackAudio = this.createFallbackAudio();
       }
       ensureContext() {
         try {
@@ -3840,31 +3840,62 @@
           }
         } catch(e){}
       }
+      createFallbackAudio() {
+        try {
+          const sampleRate = 8000;
+          const duration = 1.0;
+          const numSamples = Math.floor(sampleRate * duration);
+          const header = new Uint8Array(44 + numSamples);
+          const writeStr = (o, s) => { for (let i = 0; i < s.length; i++) header[o + i] = s.charCodeAt(i); };
+          const write32 = (o, v) => { header[o] = v & 0xff; header[o + 1] = (v >> 8) & 0xff; header[o + 2] = (v >> 16) & 0xff; header[o + 3] = (v >> 24) & 0xff; };
+          const write16 = (o, v) => { header[o] = v & 0xff; header[o + 1] = (v >> 8) & 0xff; };
+          writeStr(0, "RIFF"); write32(4, 36 + numSamples); writeStr(8, "WAVE"); writeStr(12, "fmt ");
+          write32(16, 16); write16(20, 1); write16(22, 1); write32(24, sampleRate); write32(28, sampleRate); write16(32, 1); write16(34, 8);
+          writeStr(36, "data"); write32(40, numSamples);
+          for (let i = 0; i < numSamples; i++) {
+            const t = i / sampleRate;
+            const freq = (t < 0.5) ? 960 : 770;
+            const sample = Math.sin(2 * Math.PI * freq * t);
+            header[44 + i] = Math.floor(128 + sample * 110);
+          }
+          let binary = "";
+          for (let i = 0; i < header.length; i++) binary += String.fromCharCode(header[i]);
+          const audio = new Audio("data:audio/wav;base64," + btoa(binary));
+          audio.loop = true;
+          return audio;
+        } catch(e) {
+          return null;
+        }
+      }
       play(duration = 6) {
         this.ensureContext();
         this.stop();
         this.isPlaying = true;
 
+        let audioSuccess = false;
+
         if (this.audioCtx) {
           try {
             const ctx = this.audioCtx;
+            if (ctx.state === "suspended") ctx.resume();
             const now = ctx.currentTime;
             const masterGain = ctx.createGain();
-            masterGain.gain.setValueAtTime(0.001, now);
-            masterGain.gain.exponentialRampToValueAtTime(0.4, now + 0.15);
-            masterGain.gain.setValueAtTime(0.4, now + duration - 0.4);
-            masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            // Immediate full attack volume with 0ms delay
+            masterGain.gain.setValueAtTime(0.42, now);
+            masterGain.gain.setValueAtTime(0.42, now + Math.max(0.1, duration - 0.2));
+            masterGain.gain.linearRampToValueAtTime(0.001, now + duration);
             masterGain.connect(ctx.destination);
 
             const osc = ctx.createOscillator();
             osc.type = "sawtooth";
-            const cycle = 0.7;
+            const halfCycle = 0.35;
             let t = 0;
+            let high = true;
             while (t < duration) {
-              osc.frequency.setValueAtTime(650, now + t);
-              osc.frequency.linearRampToValueAtTime(1150, now + t + 0.35);
-              osc.frequency.linearRampToValueAtTime(650, now + Math.min(duration, t + cycle));
-              t += cycle;
+              const freq = high ? 960 : 770;
+              osc.frequency.setValueAtTime(freq, now + t);
+              t += halfCycle;
+              high = !high;
             }
             osc.connect(masterGain);
             osc.start(now);
@@ -3872,21 +3903,23 @@
 
             this.osc = osc;
             this.gain = masterGain;
-
-            clearTimeout(this.stopTimeout);
-            this.stopTimeout = setTimeout(() => {
-              this.stop();
-            }, duration * 1000);
-            return;
+            audioSuccess = true;
           } catch(e){
             console.warn("Oscillator siren error:", e);
           }
         }
 
-        try {
-          this.sirenAudio.currentTime = 0;
-          this.sirenAudio.play().catch(e => console.log("Audio play note:", e));
-        } catch(e){}
+        if (!audioSuccess && this.fallbackAudio) {
+          try {
+            this.fallbackAudio.currentTime = 0;
+            this.fallbackAudio.play().catch(e => console.log("Audio play note:", e));
+          } catch(e){}
+        }
+
+        clearTimeout(this.stopTimeout);
+        this.stopTimeout = setTimeout(() => {
+          this.stop();
+        }, duration * 1000);
       }
       stop() {
         clearTimeout(this.stopTimeout);
@@ -3898,16 +3931,21 @@
           try { this.gain.disconnect(); } catch(e){}
           this.gain = null;
         }
-        if (this.sirenAudio) {
-          try { this.sirenAudio.pause(); } catch(e){}
+        if (this.fallbackAudio) {
+          try { this.fallbackAudio.pause(); } catch(e){}
         }
         this.isPlaying = false;
       }
     }
 
     const emergencySiren = new EmergencySiren();
-    window.addEventListener("click", () => emergencySiren.ensureContext(), { once: true });
-    window.addEventListener("keydown", () => emergencySiren.ensureContext(), { once: true });
+    let parentLastSeenAlertId = null;
+    let parentInitialLoad = false;
+
+    // Pre-unlock audio context on ANY user interaction
+    ["click", "pointerdown", "mousedown", "keydown", "touchstart"].forEach(evt => {
+      window.addEventListener(evt, () => emergencySiren.ensureContext(), { passive: true });
+    });
 
     // Parent Action: Ring Device (Loud Alarm with Real Emergency Siren Sound)
     const btnPanelRing = document.getElementById("btn-panel-ring");
@@ -3924,10 +3962,70 @@
       });
     }
 
+    // Process parent alert updates and trigger siren without delay
+    function applyParentAlertsData(liveAlerts) {
+      if (!liveAlerts || typeof liveAlerts !== 'object' || Object.keys(liveAlerts).length === 0) return;
+      const alertsList = Object.entries(liveAlerts).map(([k, v]) => ({ id: k, alertId: v.alertId || k, ...v }));
+      alertsList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      const latestAlert = alertsList[0];
+      if (!latestAlert) return;
+
+      const isNewAlert = parentInitialLoad &&
+        parentLastSeenAlertId &&
+        (latestAlert.alertId !== parentLastSeenAlertId || (latestAlert.id !== parentLastSeenAlertId)) &&
+        (latestAlert.isEmergency || String(latestAlert.status).toUpperCase().includes("EMERGENCY") || latestAlert.emotion === "Voice SOS");
+
+      if (isNewAlert) {
+        emergencySiren.play(6);
+      }
+
+      parentLastSeenAlertId = latestAlert.alertId || latestAlert.id;
+      parentInitialLoad = true;
+
+      // Update Sham Dhangar live waypoint if present
+      const shamNode = childWaypointsData.find(n => n.id === "vUyAvPgDTYNzzqt01kNHol5316E3");
+      if (shamNode) {
+        if (latestAlert.latitude) shamNode.lastLatitude = Number(latestAlert.latitude);
+        if (latestAlert.longitude) shamNode.lastLongitude = Number(latestAlert.longitude);
+        shamNode.dangerZoneActive = Boolean(latestAlert.isEmergency);
+        shamNode.history = { [latestAlert.id || "live"]: latestAlert };
+        if (typeof renderChildMarkers === 'function') {
+          renderChildMarkers();
+        }
+      }
+    }
+
+    // Realtime Firebase RTDB SSE Stream for Parent Portal
+    function initParentRealtimeStream() {
+      try {
+        const streamUrl = "https://woshild-f4df5-default-rtdb.firebaseio.com/sos_alerts.json";
+        const evtSource = new EventSource(streamUrl);
+
+        evtSource.addEventListener("put", (e) => {
+          try {
+            const payload = JSON.parse(e.data);
+            if (!payload || !payload.data) return;
+            if (payload.path === "/") {
+              applyParentAlertsData(payload.data);
+            } else if (typeof payload.data === "object") {
+              applyParentAlertsData({ [payload.path.replace(/^\//, '')]: payload.data });
+            }
+          } catch(err){}
+        });
+
+        evtSource.addEventListener("patch", (e) => {
+          try {
+            const payload = JSON.parse(e.data);
+            if (payload && payload.data) applyParentAlertsData(payload.data);
+          } catch(err){}
+        });
+      } catch(e){}
+    }
+
     // Realtime Firebase RTDB Sync for Parent Portal
     async function loadParentRealtimeData() {
       try {
-        const fetchTimeout = (url, ms = 4000) => {
+        const fetchTimeout = (url, ms = 3000) => {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), ms);
           return fetch(url, { signal: controller.signal })
@@ -3945,32 +4043,21 @@
         if (usersRes && usersRes.ok) liveUsers = await usersRes.json().catch(() => null);
         if (sosRes && sosRes.ok) liveAlerts = await sosRes.json().catch(() => null);
 
-        if (liveAlerts && typeof liveAlerts === 'object' && Object.keys(liveAlerts).length > 0) {
-          const alertsList = Object.entries(liveAlerts).map(([k, v]) => ({ id: k, ...v }));
-          alertsList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-          const latestAlert = alertsList[0];
-          if (latestAlert) {
-            // Update Sham Dhangar live waypoint if present
-            const shamNode = childWaypointsData.find(n => n.id === "vUyAvPgDTYNzzqt01kNHol5316E3");
-            if (shamNode) {
-              if (latestAlert.latitude) shamNode.lastLatitude = Number(latestAlert.latitude);
-              if (latestAlert.longitude) shamNode.lastLongitude = Number(latestAlert.longitude);
-              shamNode.dangerZoneActive = Boolean(latestAlert.isEmergency);
-              shamNode.history = { [latestAlert.id || "live"]: latestAlert };
-            }
-          }
+        if (liveAlerts && typeof liveAlerts === 'object') {
+          applyParentAlertsData(liveAlerts);
         }
       } catch(err) {
         console.warn("Parent live RTDB sync note:", err);
       }
     }
 
-    // Auto-poll parent RTDB every 15 seconds
+    // Auto-poll parent RTDB every 4s and listen on realtime stream
     setInterval(() => {
       if (document.documentElement.classList.contains("parent-session-active")) {
         loadParentRealtimeData();
       }
-    }, 15000);
+    }, 4000);
+    initParentRealtimeStream();
     loadParentRealtimeData();
 
     // Parent Action: Request GPS Ping

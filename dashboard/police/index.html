@@ -2246,6 +2246,8 @@
       startPatrolAnimation();
       updateDashboardCounters();
       renderEventFeed();
+      emergencySiren.ensureContext();
+      initPoliceRealtimeStream();
       loadRealtimeEvents();
       setTimeout(() => {
         initPoliceTacticalMap();
@@ -2304,7 +2306,7 @@
       consoleView.style.display = "none";
     });
 
-    // Emergency Siren Audio Synthesizer (Web Audio API Dual-Tone Police Siren + Fallback)
+    // Emergency Siren Audio Synthesizer (Instant 0ms Attack + Zero-Latency In-Memory Fallback)
     class EmergencySiren {
       constructor() {
         this.audioCtx = null;
@@ -2312,7 +2314,7 @@
         this.gain = null;
         this.isPlaying = false;
         this.stopTimeout = null;
-        this.sirenAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+        this.fallbackAudio = this.createFallbackAudio();
       }
       ensureContext() {
         try {
@@ -2325,10 +2327,39 @@
           }
         } catch(e){}
       }
+      createFallbackAudio() {
+        try {
+          // In-memory synthesized 8kHz 8-bit PCM WAV (dual-tone 960Hz / 770Hz) - 0ms network latency
+          const sampleRate = 8000;
+          const duration = 1.0;
+          const numSamples = Math.floor(sampleRate * duration);
+          const header = new Uint8Array(44 + numSamples);
+          const writeStr = (o, s) => { for (let i = 0; i < s.length; i++) header[o + i] = s.charCodeAt(i); };
+          const write32 = (o, v) => { header[o] = v & 0xff; header[o + 1] = (v >> 8) & 0xff; header[o + 2] = (v >> 16) & 0xff; header[o + 3] = (v >> 24) & 0xff; };
+          const write16 = (o, v) => { header[o] = v & 0xff; header[o + 1] = (v >> 8) & 0xff; };
+          writeStr(0, "RIFF"); write32(4, 36 + numSamples); writeStr(8, "WAVE"); writeStr(12, "fmt ");
+          write32(16, 16); write16(20, 1); write16(22, 1); write32(24, sampleRate); write32(28, sampleRate); write16(32, 1); write16(34, 8);
+          writeStr(36, "data"); write32(40, numSamples);
+          for (let i = 0; i < numSamples; i++) {
+            const t = i / sampleRate;
+            const freq = (t < 0.5) ? 960 : 770;
+            const sample = Math.sin(2 * Math.PI * freq * t);
+            header[44 + i] = Math.floor(128 + sample * 110);
+          }
+          let binary = "";
+          for (let i = 0; i < header.length; i++) binary += String.fromCharCode(header[i]);
+          const audio = new Audio("data:audio/wav;base64," + btoa(binary));
+          audio.loop = true;
+          return audio;
+        } catch(e) {
+          return null;
+        }
+      }
       play(duration = 5) {
         this.ensureContext();
         this.stop();
         this.isPlaying = true;
+
         const sirenBtnText = document.getElementById("siren-status-text");
         const sirenBtn = document.getElementById("btn-toggle-siren");
         if (sirenBtnText) sirenBtnText.textContent = "🚨 Siren: SOUNDING";
@@ -2337,27 +2368,31 @@
           sirenBtn.style.color = "#FFFFFF";
         }
 
-        // 1. Web Audio API synthesized high-low emergency police siren
+        let audioSuccess = false;
+
+        // 1. Instant Web Audio API Oscillator (Instant 0ms Attack)
         if (this.audioCtx) {
           try {
             const ctx = this.audioCtx;
+            if (ctx.state === "suspended") ctx.resume();
             const now = ctx.currentTime;
             const masterGain = ctx.createGain();
-            masterGain.gain.setValueAtTime(0.001, now);
-            masterGain.gain.exponentialRampToValueAtTime(0.35, now + 0.15);
-            masterGain.gain.setValueAtTime(0.35, now + duration - 0.4);
-            masterGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            // Immediate full attack volume with no delay ramp
+            masterGain.gain.setValueAtTime(0.42, now);
+            masterGain.gain.setValueAtTime(0.42, now + Math.max(0.1, duration - 0.2));
+            masterGain.gain.linearRampToValueAtTime(0.001, now + duration);
             masterGain.connect(ctx.destination);
 
             const osc = ctx.createOscillator();
             osc.type = "sawtooth";
-            const cycle = 0.7;
+            const halfCycle = 0.35;
             let t = 0;
+            let high = true;
             while (t < duration) {
-              osc.frequency.setValueAtTime(650, now + t);
-              osc.frequency.linearRampToValueAtTime(1150, now + t + 0.35);
-              osc.frequency.linearRampToValueAtTime(650, now + Math.min(duration, t + cycle));
-              t += cycle;
+              const freq = high ? 960 : 770;
+              osc.frequency.setValueAtTime(freq, now + t);
+              t += halfCycle;
+              high = !high;
             }
             osc.connect(masterGain);
             osc.start(now);
@@ -2365,22 +2400,24 @@
 
             this.osc = osc;
             this.gain = masterGain;
-
-            clearTimeout(this.stopTimeout);
-            this.stopTimeout = setTimeout(() => {
-              this.stop();
-            }, duration * 1000);
-            return;
-          } catch(e){
+            audioSuccess = true;
+          } catch(e) {
             console.warn("Oscillator siren error:", e);
           }
         }
 
-        // 2. Fallback audio element
-        try {
-          this.sirenAudio.currentTime = 0;
-          this.sirenAudio.play().catch(e => console.log("Audio play note:", e));
-        } catch(e){}
+        // 2. Instant In-Memory Fallback if Web Audio was suspended or errored
+        if (!audioSuccess && this.fallbackAudio) {
+          try {
+            this.fallbackAudio.currentTime = 0;
+            this.fallbackAudio.play().catch(e => console.log("Audio play note:", e));
+          } catch(e){}
+        }
+
+        clearTimeout(this.stopTimeout);
+        this.stopTimeout = setTimeout(() => {
+          this.stop();
+        }, duration * 1000);
       }
       stop() {
         clearTimeout(this.stopTimeout);
@@ -2392,8 +2429,8 @@
           try { this.gain.disconnect(); } catch(e){}
           this.gain = null;
         }
-        if (this.sirenAudio) {
-          try { this.sirenAudio.pause(); } catch(e){}
+        if (this.fallbackAudio) {
+          try { this.fallbackAudio.pause(); } catch(e){}
         }
         this.isPlaying = false;
         const sirenBtnText = document.getElementById("siren-status-text");
@@ -2407,11 +2444,14 @@
     }
 
     const emergencySiren = new EmergencySiren();
-    let previousEmergencyCount = 0;
+    let lastKnownTopAlertId = currentEvents.length > 0 ? (currentEvents[0].alertId || currentEvents[0].id) : null;
+    let lastKnownTopTimestamp = currentEvents.length > 0 ? (currentEvents[0].timestamp || 0) : 0;
+    let initialLoadComplete = false;
 
-    // Unlock audio context on ANY user touch or click
-    window.addEventListener("click", () => emergencySiren.ensureContext(), { once: true });
-    window.addEventListener("keydown", () => emergencySiren.ensureContext(), { once: true });
+    // Pre-unlock audio context on ANY user interaction
+    ["click", "pointerdown", "mousedown", "keydown", "touchstart"].forEach(evt => {
+      window.addEventListener(evt, () => emergencySiren.ensureContext(), { passive: true });
+    });
 
     const btnToggleSiren = document.getElementById("btn-toggle-siren");
     if (btnToggleSiren) {
@@ -2435,6 +2475,132 @@
       }, 800);
     }
 
+    // Standardized field extractor for Firebase RTDB alerts
+    function extractAlertFields(val, key) {
+      if (!val || typeof val !== 'object') return null;
+      return {
+        alertId: val.alertId || val.id || key,
+        audioUrl: val.audioUrl || "",
+        confidence: typeof val.confidence === "number" ? val.confidence : (Number(val.confidence) || 0),
+        contactsAlerted: Array.isArray(val.contactsAlerted) ? val.contactsAlerted.map(c => ({
+          name: c.name || "",
+          phone: c.phone || "",
+          relationship: c.relationship || ""
+        })) : [],
+        emotion: val.emotion || "",
+        etaMinutes: typeof val.etaMinutes === "number" ? val.etaMinutes : (Number(val.etaMinutes) || 0),
+        formattedTime: val.formattedTime || "",
+        id: val.id || val.alertId || key,
+        isEmergency: Boolean(val.isEmergency) || String(val.status).toUpperCase().includes("EMERGENCY") || val.emotion === "Voice SOS",
+        latitude: Number(val.latitude) || 0,
+        locationName: val.locationName || "",
+        longitude: Number(val.longitude) || 0,
+        mapUrl: val.mapUrl || (val.latitude && val.longitude ? `https://maps.google.com/?q=${val.latitude},${val.longitude}` : ""),
+        pcrUnit: val.pcrUnit || "",
+        reason: val.reason || "",
+        smsMessage: val.smsMessage || "",
+        status: val.status || "ACTIVE",
+        threatLevel: val.threatLevel || "High",
+        timestamp: Number(val.timestamp) || 0,
+        triggerSource: val.triggerSource || "",
+        userEmail: val.userEmail || "",
+        userId: val.userId || "",
+        userName: val.userName || "",
+        userPhone: val.userPhone || ""
+      };
+    }
+
+    // Unified Alert Processor: Updates UI and Sounds Siren simultaneously with 0ms delay
+    function processIncomingAlerts(alertsData, sourceName = "poll") {
+      if (!alertsData || typeof alertsData !== 'object' || Object.keys(alertsData).length === 0) return;
+
+      const parsed = [];
+      Object.entries(alertsData).forEach(([key, val]) => {
+        if (!val || typeof val !== 'object') return;
+        const item = extractAlertFields(val, key);
+        if (item && (item.emotion || item.latitude || item.timestamp || item.locationName || item.alertId)) {
+          parsed.push(item);
+        }
+      });
+
+      if (parsed.length === 0) return;
+      parsed.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+      const topAlert = parsed[0];
+      const isNewEmergency = initialLoadComplete &&
+        topAlert &&
+        (topAlert.alertId !== lastKnownTopAlertId || (topAlert.timestamp && topAlert.timestamp > lastKnownTopTimestamp)) &&
+        (topAlert.isEmergency || String(topAlert.status).toUpperCase().includes("EMERGENCY") || topAlert.emotion === "Voice SOS");
+
+      // 🚨 SOUND SIREN AND UPDATE UI IN THE EXACT SAME MILLISECOND
+      if (isNewEmergency) {
+        emergencySiren.play(6);
+      }
+
+      lastKnownTopAlertId = topAlert.alertId || topAlert.id;
+      lastKnownTopTimestamp = topAlert.timestamp || 0;
+      initialLoadComplete = true;
+
+      currentEvents = parsed;
+      try {
+        localStorage.setItem("cached_police_events", JSON.stringify(parsed));
+      } catch(e){}
+
+      if (syncIcon) syncIcon.classList.remove("spinning");
+      if (syncStatusIndicator) {
+        syncStatusIndicator.textContent = `● Synchronized (${currentEvents.length} live records)`;
+      }
+      updateDashboardCounters();
+      renderEventFeed();
+      if (typeof renderPoliceTacticalMarkers === 'function') {
+        renderPoliceTacticalMarkers("all");
+      }
+    }
+
+    // Realtime Firebase RTDB Server-Sent Events (SSE) Stream
+    function initPoliceRealtimeStream() {
+      try {
+        const streamUrl = "https://woshild-f4df5-default-rtdb.firebaseio.com/sos_alerts.json";
+        const evtSource = new EventSource(streamUrl);
+
+        evtSource.addEventListener("put", (e) => {
+          try {
+            const payload = JSON.parse(e.data);
+            if (!payload || !payload.data) return;
+            if (payload.path === "/") {
+              processIncomingAlerts(payload.data, "sse-put-all");
+            } else if (typeof payload.data === "object") {
+              const key = payload.path.replace(/^\//, '');
+              const updatedObj = {};
+              currentEvents.forEach(item => {
+                const k = item.alertId || item.id;
+                if (k) updatedObj[k] = item;
+              });
+              updatedObj[key] = payload.data;
+              processIncomingAlerts(updatedObj, "sse-put-child");
+            }
+          } catch(err) {
+            console.warn("RTDB SSE parse error:", err);
+          }
+        });
+
+        evtSource.addEventListener("patch", (e) => {
+          try {
+            const payload = JSON.parse(e.data);
+            if (payload && payload.data) {
+              processIncomingAlerts(payload.data, "sse-patch");
+            }
+          } catch(err){}
+        });
+
+        evtSource.onerror = () => {
+          console.log("RTDB SSE reconnecting...");
+        };
+      } catch(err) {
+        console.warn("RTDB SSE stream note:", err);
+      }
+    }
+
     async function loadRealtimeEvents() {
       if (syncIcon) syncIcon.classList.add("spinning");
       if (syncStatusIndicator) syncStatusIndicator.textContent = "Syncing live RTDB...";
@@ -2443,8 +2609,7 @@
       let usersData = {};
 
       try {
-        // Fetch live Firebase endpoints with safe timeouts
-        const fetchTimeout = (url, ms = 4000) => {
+        const fetchTimeout = (url, ms = 3000) => {
           const controller = new AbortController();
           const timer = setTimeout(() => controller.abort(), ms);
           return fetch(url, { signal: controller.signal })
@@ -2470,7 +2635,7 @@
           usersData = await usersRes.json().catch(() => ({})) || {};
         }
 
-        // Resilient fallback to local export JSON if remote RTDB was offline or empty
+        // Fallback to local export JSON if offline or empty
         if (Object.keys(alertsData).length === 0) {
           try {
             const localRes = await fetch("/woshild-f4df5-default-rtdb-export.json");
@@ -2483,81 +2648,16 @@
           } catch(e) {}
         }
 
-        const parsed = [];
-        if (alertsData && Object.keys(alertsData).length > 0) {
-          const extractAlertFields = (val, key) => {
-            if (!val || typeof val !== 'object') return null;
-            return {
-              alertId: val.alertId || val.id || key,
-              audioUrl: val.audioUrl || "",
-              confidence: typeof val.confidence === "number" ? val.confidence : (Number(val.confidence) || 0),
-              contactsAlerted: Array.isArray(val.contactsAlerted) ? val.contactsAlerted.map(c => ({
-                name: c.name || "",
-                phone: c.phone || "",
-                relationship: c.relationship || ""
-              })) : [],
-              emotion: val.emotion || "",
-              etaMinutes: typeof val.etaMinutes === "number" ? val.etaMinutes : (Number(val.etaMinutes) || 0),
-              formattedTime: val.formattedTime || "",
-              id: val.id || val.alertId || key,
-              isEmergency: Boolean(val.isEmergency),
-              latitude: Number(val.latitude) || 0,
-              locationName: val.locationName || "",
-              longitude: Number(val.longitude) || 0,
-              mapUrl: val.mapUrl || (val.latitude && val.longitude ? `https://maps.google.com/?q=${val.latitude},${val.longitude}` : ""),
-              pcrUnit: val.pcrUnit || "",
-              reason: val.reason || "",
-              smsMessage: val.smsMessage || "",
-              status: val.status || "ACTIVE",
-              threatLevel: val.threatLevel || "High",
-              timestamp: Number(val.timestamp) || 0,
-              triggerSource: val.triggerSource || "",
-              userEmail: val.userEmail || "",
-              userId: val.userId || "",
-              userName: val.userName || "",
-              userPhone: val.userPhone || ""
-            };
-          };
-
-          Object.entries(alertsData).forEach(([key, val]) => {
-            if (!val || typeof val !== 'object') return;
-            const item = extractAlertFields(val, key);
-            if (item && (item.emotion || item.latitude || item.timestamp || item.locationName || item.alertId)) {
-              parsed.push(item);
-            }
-          });
-        }
-
-        if (parsed.length > 0) {
-          parsed.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-          if (previousEmergencyCount > 0 && parsed.length > previousEmergencyCount) {
-            try {
-              emergencySiren.play(5);
-            } catch(e){}
-          }
-          previousEmergencyCount = parsed.length;
-          currentEvents = parsed;
-          try {
-            localStorage.setItem("cached_police_events", JSON.stringify(parsed));
-          } catch(e){}
-        } else if (!currentEvents || currentEvents.length === 0) {
-          currentEvents = [...fallbackAlerts];
-        }
+        processIncomingAlerts(alertsData, "fetch");
       } catch (err) {
         console.warn("RTDB sync note:", err);
         if (!currentEvents || currentEvents.length === 0) {
           currentEvents = [...fallbackAlerts];
+          updateDashboardCounters();
+          renderEventFeed();
         }
       } finally {
         if (syncIcon) syncIcon.classList.remove("spinning");
-        if (syncStatusIndicator) {
-          syncStatusIndicator.textContent = `● Synchronized (${currentEvents.length} live records)`;
-        }
-        updateDashboardCounters();
-        renderEventFeed();
-        if (typeof renderPoliceTacticalMarkers === 'function') {
-          renderPoliceTacticalMarkers("all");
-        }
       }
     }
 
@@ -3217,12 +3317,12 @@
       });
     }
 
-    // Auto-poll RTDB every 15s to keep feed fresh
+    // Realtime polling fallback every 4s to guarantee instant sync
     setInterval(() => {
       if (consoleView.style.display !== "none") {
         loadRealtimeEvents();
       }
-    }, 15000);
+    }, 4000);
 
     // Dark / Light Theme Manager
     function getSafeVaaniTheme() {
